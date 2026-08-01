@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vẫn Chẳng Có Gì Cả - Deluxe Edition</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+
+* { box-sizing: border-box; user-select: none; }
+body {
+    margin: 0;
+    background: #0a0a12;
+    color: #fff;
+    font-family: 'Orbitron', sans-serif;
+    text-align: center;
+    overflow: hidden;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: background 0.1s ease;
+}
+
+h1 {
+    margin: 0 0 10px 0;
+    font-size: 2.5rem;
+    text-shadow: 0 0 10px rgba(255,255,255,0.5);
+}
+
+.dev-info {
+    font-size: 0.85rem;
+    color: #888;
+    margin-bottom: 20px;
+    line-height: 1.4;
+}
+
+#so-container {
+    background: rgba(0, 0, 0, 0.6);
+    padding: 20px 40px;
+    border-radius: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 20px rgba(0,0,0,0.8);
+    margin-bottom: 20px;
+}
+
+#so {
+    font-size: 80px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-shadow: 0 0 20px currentColor;
+}
+
+#play {
+    width: 240px;
+    height: 70px;
+    font-size: 24px;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    color: #fff;
+    background: linear-gradient(45deg, #ff007f, #7f00ff);
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    box-shadow: 0 5px 20px rgba(255,0,127,0.4);
+    transition: transform 0.1s, box-shadow 0.1s;
+}
+
+#play:active {
+    transform: scale(0.95);
+}
+
+.sub-text {
+    margin-top: 15px;
+    font-size: 0.9rem;
+    color: #aaa;
+}
+
+#highscore {
+    margin-top: 10px;
+    font-size: 1rem;
+    color: #00ffcc;
+    font-weight: bold;
+}
+
+#secret {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 45px;
+    height: 45px;
+    background: #222;
+    color: #fff;
+    border: 2px solid #555;
+    border-radius: 50%;
+    font-size: 20px;
+    font-family: 'Orbitron', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+#secret:hover {
+    background: #ff007f;
+    border-color: #ff007f;
+    transform: rotate(90deg);
+}
+
+@keyframes shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    40% { transform: translate(1px, -1px) rotate(-1deg); }
+    60% { transform: translate(-1px, 2px) rotate(0deg); }
+    80% { transform: translate(3px, 1px) rotate(1deg); }
+    100% { transform: translate(0px, 0px) rotate(0deg); }
+}
+.shake-effect {
+    animation: shake 0.2s infinite;
+}
+</style>
+</head>
+<body>
+
+<button id="secret">?</button>
+
+<h1>🎮 CHẲNG CÓ GÌ CẢ</h1>
+<div class="dev-info">
+    <b>Nhà phát triển:</b> ChatGPT & cogon (Bản độ VIP)
+</div>
+
+<div id="so-container">
+    <div id="so">0</div>
+</div>
+
+<button id="play">BẤM NGAY</button>
+<div id="highscore">Kỷ lục dừng: Chưa có</div>
+<div class="sub-text">Cố gắng dừng lại ở con số đẹp xem sao...</div>
+
+<script>
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+function playBeep(freq, type, duration) {
+    if (audioCtx.state === 'suspended') { audioCtx.resume(); }
+    let osc = audioCtx.createOscillator();
+    let gain = audioCtx.createGain();
+    osc.type = type;
+    osc.frequency.value = freq;
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start();
+    gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + duration);
+    osc.stop(audioCtx.currentTime + duration);
+}
+
+const mau = ["#ff0055", "#ff7700", "#ffee00", "#00ff66", "#00ffff", "#0066ff", "#9900ff"];
+let run = false, timer;
+let bestScore = localStorage.getItem('cgn_best') || null;
+
+if(bestScore !== null) {
+    document.getElementById('highscore').innerText = "🏆 Kỷ lục: " + bestScore;
+}
+
+const playBtn = document.getElementById('play');
+const soEl = document.getElementById('so');
+
+playBtn.onclick = function() {
+    if(!run) {
+        run = true;
+        playBtn.innerText = "DỪNG LẠI!";
+        playBtn.style.background = "linear-gradient(45deg, #ff0000, #ff7700)";
+        document.body.classList.add('shake-effect');
+        
+        let i = 0;
+        timer = setInterval(() => {
+            let currentNum = Math.floor(Math.random() * 1000000);
+            soEl.innerText = currentNum;
+            soEl.style.color = mau[i % mau.length];
+            document.body.style.background = mau[i % mau.length] + "22";
+            playBeep(300 + (i % 10) * 50, 'square', 0.05);
+            i++;
+        }, 60);
+    } else {
+        run = false;
+        clearInterval(timer);
+        document.body.classList.remove('shake-effect');
+        playBtn.innerText = "BẤM NGAY";
+        playBtn.style.background = "linear-gradient(45deg, #ff007f, #7f00ff)";
+        document.body.style.background = "#0a0a12";
+        soEl.style.color = "#fff";
+        
+        let finalNum = parseInt(soEl.innerText);
+        playBeep(150, 'sawtooth', 0.3);
+
+        if(bestScore === null || finalNum > parseInt(bestScore)) {
+            bestScore = finalNum;
+            localStorage.setItem('cgn_best', bestScore);
+            document.getElementById('highscore').innerText = "🏆 Kỷ lục mới: " + bestScore;
+        }
+
+        setTimeout(() => {
+            alert("🎉 Bạn đã dừng ở số: " + finalNum);
+            alert("...");
+            if(finalNum === 888888 || finalNum === 777777 || finalNum === 123456) {
+                alert("🌟 Ồ! Bạn nhân phẩm cực cao mới trúng số đẹp thế này, nhưng... vẫn chẳng có gì xảy ra cả! 🤣");
+            } else {
+                alert("Và vâng, mọi nỗ lực đều vô nghĩa... Hoàn toàn chẳng có gì xảy ra cả! 🤣");
+            }
+        }, 100);
+    }
+};
+
+const secretBtn = document.getElementById('secret');
+secretBtn.onclick = function() {
+    playBeep(800, 'sine', 0.1);
+    if(confirm("🤫 Bạn đã tìm thấy nút bí mật tối thượng!\n\nBạn có đủ dũng cảm để mở video bí mật không?")) {
+       location.href = "https://youtu.be/08TzOa-G_YU?si=4UHadX_p4R7dyZqK";
+    }
+};
+</script>
+</body>
+</html>
