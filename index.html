@@ -32,7 +32,7 @@
             position: absolute;
             top: 0;
             left: 0;
-            padding: 15px;
+            padding: 10px;
         }
         .page.active {
             display: flex;
@@ -56,8 +56,8 @@
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: 2px solid rgba(255, 255, 255, 0.3);
-            padding: 20px;
-            border-radius: 24px;
+            padding: 14px 16px;
+            border-radius: 20px;
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
             display: flex;
             flex-direction: column;
@@ -74,12 +74,12 @@
         }
 
         h1 {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             text-shadow: 0 2px 8px rgba(0,0,0,0.4);
-            margin: 0 0 4px 0;
+            margin: 0 0 2px 0;
             text-align: center;
             background: linear-gradient(45deg, #fff, #ffd700);
             -webkit-background-clip: text;
@@ -87,20 +87,20 @@
         }
 
         p {
-            font-size: 11px;
-            margin: 0 0 12px 0;
+            font-size: 10px;
+            margin: 0 0 8px 0;
             opacity: 0.9;
             text-align: center;
-            line-height: 1.2;
+            line-height: 1.1;
         }
 
         .score-board {
             display: flex;
             justify-content: space-between;
             width: 100%;
-            margin-bottom: 12px;
-            padding: 0 5px;
-            font-size: 12px;
+            margin-bottom: 6px;
+            padding: 0 4px;
+            font-size: 11px;
             font-weight: bold;
             text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
@@ -108,16 +108,16 @@
         .btn-box {
             background: linear-gradient(135deg, #ffffff, #f0f0f0);
             color: #1a1a1a;
-            padding: 12px 20px;
-            font-size: 14px;
+            padding: 9px 15px;
+            font-size: 12px;
             font-weight: 900;
             border-radius: 50px;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
             letter-spacing: 0.5px;
             text-transform: uppercase;
             cursor: pointer;
             transition: transform 0.1s;
-            margin-top: 8px;
+            margin-top: 5px;
             text-align: center;
             width: 100%;
         }
@@ -130,17 +130,17 @@
             background: rgba(255, 255, 255, 0.22);
             color: #fff;
             border: 1px solid rgba(255, 255, 255, 0.5);
-            font-size: 12px;
-            padding: 10px 15px;
-            margin-top: 6px;
+            font-size: 11px;
+            padding: 7px 12px;
+            margin-top: 4px;
         }
 
         #numberContainer {
-            margin-top: 10px;
-            font-size: 52px;
+            margin-top: 4px;
+            font-size: 42px;
             font-weight: 900;
             text-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-            height: 60px;
+            height: 48px;
             letter-spacing: 2px;
             display: flex;
             align-items: center;
@@ -223,58 +223,71 @@
     
         .mystery-btn {
             position: absolute;
-            top: 15px;
-            left: 15px;
-            width: 36px;
-            height: 36px;
+            top: 10px;
+            left: 10px;
+            width: 32px;
+            height: 32px;
             background: rgba(255, 255, 255, 0.2);
             border: 2px solid rgba(255, 255, 255, 0.4);
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
             cursor: pointer;
             z-index: 20;
             backdrop-filter: blur(5px);
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            transition: transform 0.2s;
-        }
-        .mystery-btn:active {
-            transform: scale(0.9);
         }
 
-        /* NÚT PRO GÓC PHẢI */
         .pro-right-btn {
             position: absolute;
-            top: 15px;
-            right: 15px;
-            padding: 6px 12px;
+            top: 10px;
+            right: 10px;
+            padding: 5px 10px;
             background: linear-gradient(135deg, #ffd700, #ff8c00);
             border: 2px solid rgba(255, 255, 255, 0.6);
             border-radius: 20px;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 900;
             color: #1a1a1a;
             cursor: pointer;
             z-index: 20;
             backdrop-filter: blur(5px);
             box-shadow: 0 4px 10px rgba(0,0,0,0.25);
-            transition: transform 0.2s;
             text-transform: uppercase;
-        }
-        .pro-right-btn:active {
-            transform: scale(0.9);
         }
         
         .gamble-btn {
             background: linear-gradient(135deg, #ff9a9e, #fecfef);
             color: #d11a2a;
             border: none;
+        }
+
+        /* PHẦN NHÀ PHÁT TRIỂN ĐÃ THU GỌN VÀ NỔI BẬT */
+        .dev-container {
+            margin-top: 6px;
+            text-align: center;
+            font-size: 10px;
+            opacity: 0.9;
+            font-weight: 600;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+            border-top: 1px dashed rgba(255,255,255,0.3);
+            padding-top: 5px;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        .dev-title {
+            color: #ffd700;
+            text-transform: uppercase;
+            font-size: 9px;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -285,29 +298,35 @@
     <!-- TRANG 1: TRÒ CHƠI CHÍNH -->
     <div id="gamePage" class="page active">
         <div class="mystery-btn" onclick="window.open('https://youtu.be/vgUyuAloTgA?si=bUWeSZl_dzcRXEKs', '_blank')">?</div>
-        <!-- NÚT PRO GÓC PHẢI -->
         <div class="pro-right-btn" onclick="window.open('https://youtu.be/mc30SWcuink?si=gCQNU8upwgo6554A', '_blank')">🔥 PRO</div>
 
         <div class="card-container">
             <h1>⚡ Cuồng Phong Màu Sắc ⚡</h1>
-            <p>Chạm để Bật/Dừng. Chinh phục các mốc điểm để sưu tầm huy hiệu!</p>
+            <p>Chạm để Bật/Dừng. Chinh phục điểm số & sưu tầm huy hiệu!</p>
             
             <div class="score-board">
                 <span>🏆 Kỷ Lục: <strong id="highScore">0</strong></span>
                 <span>🔥 Điểm: <strong id="currentScore">0</strong></span>
             </div>
-            <div style="font-size: 11px; margin-bottom: 6px; font-weight: bold; text-shadow: 0 1px 2px rgba(0,0,0,0.3);">
-                🔄 Tái Sinh: <strong id="rebirthCount">0</strong> | ⚡ Hệ Số: <strong id="multiplierText">1.0x</strong> | 🎯 Lần Quay: <strong id="spinCount">0</strong>/20
+            <div style="font-size: 10px; margin-bottom: 4px; font-weight: bold; text-shadow: 0 1px 2px rgba(0,0,0,0.3);">
+                🔄 Tái Sinh: <strong id="rebirthCount">0</strong> | ⚡ Hệ Số: <strong id="multiplierText">1.0x</strong> | 🎯 Quay: <strong id="spinCount">0</strong>/20
             </div>
 
             <div class="btn-box" id="statusText">BẮT ĐẦU NGAY</div>
             <div id="numberContainer">68</div>
 
-            <!-- TÍNH NĂNG MỚI: CƯỢC NHÂN PHẨM -->
             <div class="btn-box btn-secondary gamble-btn" onclick="gambleScore()">🎲 Cược Nhân Phẩm (50/50)</div>
 
             <div class="btn-box btn-secondary" onclick="switchPage('achievementPage')">🏅 Sảnh Vinh Quang & Bộ Sưu Tập</div>
             <div class="btn-box btn-secondary" style="background: linear-gradient(135deg, #00f2fe, #4facfe); color: #fff; border: none;" onclick="switchPage('giftPage')">🎁 Phục Lợi & Nhập Mã</div>
+
+            <!-- CÁC NHÀ PHÁT TRIỂN GỌN GÀNG KHÔNG TRÀN MÀN HÌNH -->
+            <div class="dev-container">
+                <span class="dev-title">Dev Team:</span>
+                <span>1. Tui 📈</span>
+                <span>2. ChatGPT 😑</span>
+                <span>3. Gemini 🥳</span>
+            </div>
         </div>
     </div>
 
@@ -315,7 +334,7 @@
     <div id="achievementPage" class="page">
         <div class="achievement-page-container">
             <h1>🏅 Sảnh Vinh Quang</h1>
-            <p style="margin-bottom: 6px;">Kỷ Lục Cao Nhất: <strong id="page2HighScore" style="color: #ffd700; font-size: 15px;">0</strong></p>
+            <p style="margin-bottom: 6px;">Kỷ Lục Cao Nhất: <strong id="page2HighScore" style="color: #ffd700; font-size: 14px;">0</strong></p>
             
             <p style="font-weight: bold; margin-bottom: 4px; text-transform: uppercase; font-size: 10px; letter-spacing: 0.5px;">📦 Bộ Sưu Tập Thành Tích</p>
             
@@ -329,18 +348,18 @@
     <div id="giftPage" class="page">
         <div class="achievement-page-container" style="max-width: 340px;">
             <h1>🎁 Phục Lợi Quà Tặng</h1>
-            <p style="margin-bottom: 12px;">Nhập mã code để nhận quà Thành Tích hoặc May Mắn!</p>
+            <p style="margin-bottom: 10px;">Nhập mã code để nhận quà Thành Tích hoặc May Mắn!</p>
             
-            <div style="width: 100%; display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px;">
-                <input type="text" id="giftCodeInput" placeholder="Nhập mã code (VD: CUONGPHONG, MAYMAN)..." style="width: 100%; padding: 12px 15px; border-radius: 50px; border: 1px solid rgba(255,255,255,0.4); background: rgba(0,0,0,0.25); color: #fff; font-size: 13px; text-align: center; outline: none;">
-                <div class="btn-box" id="confirmBtn" style="margin-top: 0; padding: 10px; font-size: 13px;">XÁC NHẬN NHẬN QUÀ</div>
+            <div style="width: 100%; display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px;">
+                <input type="text" id="giftCodeInput" placeholder="Nhập mã code (VD: CUONGPHONG, MAYMAN)..." style="width: 100%; padding: 10px 14px; border-radius: 50px; border: 1px solid rgba(255,255,255,0.4); background: rgba(0,0,0,0.25); color: #fff; font-size: 12px; text-align: center; outline: none;">
+                <div class="btn-box" id="confirmBtn" style="margin-top: 0; padding: 9px; font-size: 12px;">XÁC NHẬN NHẬN QUÀ</div>
             </div>
 
-            <div id="giftResultBox" style="background: rgba(0,0,0,0.25); border: 1px dashed rgba(255,255,255,0.3); border-radius: 14px; padding: 12px; width: 100%; text-align: center; min-height: 65px; display: flex; align-items: center; justify-content: center; font-size: 12px; margin-bottom: 10px;">
+            <div id="giftResultBox" style="background: rgba(0,0,0,0.25); border: 1px dashed rgba(255,255,255,0.3); border-radius: 12px; padding: 10px; width: 100%; text-align: center; min-height: 55px; display: flex; align-items: center; justify-content: center; font-size: 11px; margin-bottom: 8px;">
                 Nhập mã code và bấm xác nhận để nhận thưởng!
             </div>
 
-            <div class="btn-box btn-secondary" style="font-size: 11px; padding: 8px; margin-bottom: 4px; background: rgba(255,255,255,0.1);" onclick="resetUsedCodes()">🔄 Nhập lại mã cũ (Xóa lịch sử)</div>
+            <div class="btn-box btn-secondary" style="font-size: 10px; padding: 7px; margin-bottom: 4px; background: rgba(255,255,255,0.1);" onclick="resetUsedCodes()">🔄 Nhập lại mã cũ (Xóa lịch sử)</div>
             <div class="btn-box btn-secondary" onclick="switchPage('gamePage')">⬅️ Quay Lại Trò Chơi</div>
         </div>
     </div>
@@ -382,7 +401,7 @@
                 achievements.push({
                     id: `pro_${i}`,
                     title: `Vinh Quang PRO ${i}`,
-                    desc: `Yêu cầu ngẫu nhiên: ${(randomReq).toLocaleString()} điểm`,
+                    desc: `Yêu cầu: ${(randomReq).toLocaleString()} điểm`,
                     req: randomReq,
                     unlocked: false,
                     icon: '💎'
@@ -552,7 +571,7 @@
                         highScoreEl.innerText = Math.floor(highScore);
                         localStorage.setItem('chaosHighScore', highScore);
                     }
-                    resultBox.innerHTML = `<span style="color: #ffd700; font-weight: bold;">${gift.msg} (Đã nhân hệ số: ${scoreMultiplier.toFixed(2)}x)</span>`;
+                    resultBox.innerHTML = `<span style="color: #ffd700; font-weight: bold;">${gift.msg} (Hệ số: ${scoreMultiplier.toFixed(2)}x)</span>`;
                 } else if (gift.type === "luck") {
                     const luckyScore = (Math.floor(Math.random() * 45000) + 5000) * scoreMultiplier;
                     currentScore += luckyScore;
@@ -563,7 +582,7 @@
                         highScoreEl.innerText = Math.floor(highScore);
                         localStorage.setItem('chaosHighScore', highScore);
                     }
-                    resultBox.innerHTML = `<span style="color: #00ffcc; font-weight: bold;">🍀 May mắn! Trúng thưởng ${Math.floor(luckyScore).toLocaleString()} điểm!</span>`;
+                    resultBox.innerHTML = `<span style="color: #00ffcc; font-weight: bold;">🍀 May mắn! Trúng ${Math.floor(luckyScore).toLocaleString()} điểm!</span>`;
                 }
                 
                 showToast("🎁 Nhận quà thành công!");
@@ -571,30 +590,29 @@
                 launchFireworks();
                 input.value = "";
             } else {
-                resultBox.innerHTML = "<span style='color: #ff5e62;'>❌ Mã code không chính xác! (Gợi ý: CUONGPHONG, MAYMAN, VIP2026)</span>";
+                resultBox.innerHTML = "<span style='color: #ff5e62;'>❌ Mã sai! (Gợi ý: CUONGPHONG, MAYMAN)</span>";
             }
         }
 
-        /* HÀM CƯỢC NHÂN PHẨM */
         function gambleScore() {
             if (isRunning) {
                 showToast("⚠️ Đang quay số, dừng lại mới cược được!");
                 return;
             }
             if (currentScore < 10000) {
-                showToast("💸 Nghèo quá! Cần tối thiểu 10,000 điểm để cược!");
+                showToast("💸 Cần tối thiểu 10,000 điểm để cược!");
                 return;
             }
             
-            const isWin = Math.random() > 0.5; // Tỷ lệ 50/50
+            const isWin = Math.random() > 0.5;
             if (isWin) {
                 currentScore *= 2;
-                showToast("🎲 BÙM! Nhân phẩm bùng nổ, NHÂN ĐÔI điểm! 🤑");
+                showToast("🎲 BÙM! Nhân đôi điểm số! 🤑");
                 launchFireworks();
                 playVictorySound();
             } else {
                 currentScore = Math.floor(currentScore / 2);
-                showToast("🎲 OÁI! Đen thôi đỏ quên đi, MẤT NỬA ĐIỂM! 😭");
+                showToast("🎲 OÁI! Mất nửa điểm rồi! 😭");
             }
             
             currentScoreEl.innerText = Math.floor(currentScore);
@@ -657,7 +675,7 @@
                         initAchievementsList();
                         renderBadges();
                         
-                        showToast(`🔄 Tái sinh thành công! Cấp độ: ${rebirthCount} (Hệ số: ${scoreMultiplier.toFixed(2)}x)`);
+                        showToast(`🔄 Tái sinh cấp ${rebirthCount}! (Hệ số: ${scoreMultiplier.toFixed(2)}x)`);
                     }
 
                     spinCountEl.innerText = spinCount;
@@ -711,7 +729,7 @@
         function launchFireworks() {
             const centerX = window.innerWidth / 2;
             const centerY = window.innerHeight / 2;
-            const particleCount = 50;
+            const particleCount = 40;
 
             for (let i = 0; i < particleCount; i++) {
                 const p = document.createElement('div');
@@ -719,7 +737,7 @@
                 p.style.left = centerX + 'px';
                 p.style.top = centerY + 'px';
                 
-                const size = Math.random() * 8 + 4;
+                const size = Math.random() * 7 + 3;
                 p.style.width = size + 'px';
                 p.style.height = size + 'px';
                 p.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
@@ -727,11 +745,11 @@
                 bodyEl.appendChild(p);
 
                 const angle = Math.random() * Math.PI * 2;
-                const speed = Math.random() * 180 + 50;
+                const speed = Math.random() * 150 + 40;
                 const tx = Math.cos(angle) * speed;
                 const ty = Math.sin(angle) * speed;
 
-                p.style.transition = 'transform 0.8s cubic-bezier(0.1, 0.8, 0.3, 1), opacity 0.8s ease-out';
+                p.style.transition = 'transform 0.7s cubic-bezier(0.1, 0.8, 0.3, 1), opacity 0.7s ease-out';
                 
                 requestAnimationFrame(() => {
                     p.style.transform = `translate(${tx}px, ${ty}px) scale(0.2)`;
@@ -740,7 +758,7 @@
 
                 setTimeout(() => {
                     p.remove();
-                }, 800);
+                }, 700);
             }
         }
     </script>
