@@ -268,7 +268,6 @@
             border: none;
         }
 
-        /* PHẦN NHÀ PHÁT TRIỂN ĐÃ THU GỌN VÀ NỔI BẬT */
         .dev-container {
             margin-top: 6px;
             text-align: center;
@@ -320,7 +319,6 @@
             <div class="btn-box btn-secondary" onclick="switchPage('achievementPage')">🏅 Sảnh Vinh Quang & Bộ Sưu Tập</div>
             <div class="btn-box btn-secondary" style="background: linear-gradient(135deg, #00f2fe, #4facfe); color: #fff; border: none;" onclick="switchPage('giftPage')">🎁 Phục Lợi & Nhập Mã</div>
 
-            <!-- CÁC NHÀ PHÁT TRIỂN GỌN GÀNG KHÔNG TRÀN MÀN HÌNH -->
             <div class="dev-container">
                 <span class="dev-title">Dev Team:</span>
                 <span>1. Tui 📈</span>
@@ -351,7 +349,7 @@
             <p style="margin-bottom: 10px;">Nhập mã code để nhận quà Thành Tích hoặc May Mắn!</p>
             
             <div style="width: 100%; display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px;">
-                <input type="text" id="giftCodeInput" placeholder="Nhập mã code (VD: CUONGPHONG, MAYMAN)..." style="width: 100%; padding: 10px 14px; border-radius: 50px; border: 1px solid rgba(255,255,255,0.4); background: rgba(0,0,0,0.25); color: #fff; font-size: 12px; text-align: center; outline: none;">
+                <input type="text" id="giftCodeInput" placeholder="Nhập mã code (VD: VINHQUANG, TANGQUA)..." style="width: 100%; padding: 10px 14px; border-radius: 50px; border: 1px solid rgba(255,255,255,0.4); background: rgba(0,0,0,0.25); color: #fff; font-size: 12px; text-align: center; outline: none;">
                 <div class="btn-box" id="confirmBtn" style="margin-top: 0; padding: 9px; font-size: 12px;">XÁC NHẬN NHẬN QUÀ</div>
             </div>
 
@@ -382,15 +380,57 @@
         let scoreMultiplier = parseFloat(localStorage.getItem('chaosMultiplier')) || 1.0;
         
         const baseAchievements = [
-            { id: 'novice', title: 'Tập Sự', desc: 'Đạt 50k điểm', req: 50000, unlocked: false, icon: '🌱' },
-            { id: 'runner', title: 'Tốc Độ', desc: 'Đạt 200k điểm', req: 200000, unlocked: false, icon: '⚡' },
-            { id: 'storm', title: 'Cuồng Phong', desc: 'Đạt 500k điểm', req: 500000, unlocked: false, icon: '🌪️' },
-            { id: 'master', title: 'Bậc Thầy', desc: 'Đạt 1 Triệu điểm', req: 1000000, unlocked: false, icon: '👑' },
-            { id: 'expert', title: 'Cao Thủ', desc: 'Đạt 2.5 Triệu điểm', req: 2500000, unlocked: false, icon: '🔮' },
-            { id: 'legend', title: 'Huyền Thoại', desc: 'Đạt 5 Triệu điểm', req: 5000000, unlocked: false, icon: '🏆' },
-            { id: 'titan', title: 'Titan Khổng Lồ', desc: 'Đạt 10 Triệu điểm', req: 10000000, unlocked: false, icon: '🗿' },
-            { id: 'galaxy', title: 'Vũ Trụ Sôi Động', desc: 'Đạt 25 Triệu điểm', req: 25000000, unlocked: false, icon: '🌌' },
-            { id: 'god', title: 'Thần Thánh Tối Thượng', desc: 'Đạt 50 Triệu điểm', req: 50000000, unlocked: false, icon: '🔥' }
+            { id: 'novice', title: 'Tập Sự', desc: 'Đạt 50k điểm', req: 50000, reqRebirth: 0, unlocked: false, icon: '🌱' },
+            { id: 'runner', title: 'Tốc Độ', desc: 'Đạt 200k điểm', req: 200000, reqRebirth: 0, unlocked: false, icon: '⚡' },
+            { id: 'storm', title: 'Cuồng Phong', desc: 'Đạt 500k điểm', req: 500000, reqRebirth: 0, unlocked: false, icon: '🌪️' },
+            { id: 'master', title: 'Bậc Thầy', desc: 'Đạt 1 Triệu điểm', req: 1000000, reqRebirth: 0, unlocked: false, icon: '👑' },
+            { id: 'expert', title: 'Cao Thủ', desc: 'Đạt 2.5 Triệu điểm', req: 2500000, reqRebirth: 0, unlocked: false, icon: '🔮' },
+            { id: 'legend', title: 'Huyền Thoại', desc: 'Đạt 5 Triệu điểm', req: 5000000, reqRebirth: 0, unlocked: false, icon: '🏆' },
+            { id: 'titan', title: 'Titan Khổng Lồ', desc: 'Đạt 10 Triệu điểm', req: 10000000, reqRebirth: 0, unlocked: false, icon: '🗿' },
+            { id: 'galaxy', title: 'Vũ Trụ Sôi Động', desc: 'Đạt 25 Triệu điểm', req: 25000000, reqRebirth: 0, unlocked: false, icon: '🌌' },
+            { id: 'god', title: 'Thần Thánh Tối Thượng', desc: 'Đạt 50 Triệu điểm', req: 50000000, reqRebirth: 0, unlocked: false, icon: '🔥' },
+            { id: 'top1_champion', title: 'Vô Địch Tối Thượng', desc: '1B điểm & 100 Tái Sinh', req: 1000000000, reqRebirth: 100, unlocked: false, icon: '👑🏆' },
+            
+            // 10 VINH QUANG CŨ
+            { id: 'avatar_11', title: 'Siêu Sao Nhí', desc: '100M điểm', req: 100000000, reqRebirth: 0, unlocked: false, icon: '😎' },
+            { id: 'avatar_12', title: 'Hỏa Long Vương', desc: '200M điểm', req: 200000000, reqRebirth: 0, unlocked: false, icon: '🐉' },
+            { id: 'avatar_13', title: 'Kỵ Sĩ Ánh Sáng', desc: '300M điểm', req: 300000000, reqRebirth: 0, unlocked: false, icon: '🦄' },
+            { id: 'avatar_14', title: 'Bóng Đêm Kỳ Bí', desc: '400M điểm', req: 400000000, reqRebirth: 0, unlocked: false, icon: '🐱' },
+            { id: 'avatar_15', title: 'Hổ Báo Cáo Chồn', desc: '500M điểm', req: 500000000, reqRebirth: 0, unlocked: false, icon: '🐯' },
+            { id: 'avatar_16', title: 'Cá Mập Đại Dương', desc: '600M điểm', req: 600000000, reqRebirth: 0, unlocked: false, icon: '🦈' },
+            { id: 'avatar_17', title: 'Đại Bàng Tung Cánh', desc: '700M điểm', req: 700000000, reqRebirth: 0, unlocked: false, icon: '🦅' },
+            { id: 'avatar_18', title: 'Thiên Thần Hộ Mệnh', desc: '800M điểm', req: 800000000, reqRebirth: 0, unlocked: false, icon: '👼' },
+            { id: 'avatar_19', title: 'Phù Thủy Tối Cao', desc: '900M điểm', req: 900000000, reqRebirth: 0, unlocked: false, icon: '🧙' },
+            { id: 'avatar_20', title: 'Robot Vô Song', desc: '950M điểm', req: 950000000, reqRebirth: 0, unlocked: false, icon: '🤖' },
+
+            // 20 VINH QUANG KHÁC
+            { id: 'avatar_21', title: 'Kiếm Sĩ Phong Vân', desc: '1.2B điểm', req: 1200000000, reqRebirth: 0, unlocked: false, icon: '⚔️' },
+            { id: 'avatar_22', title: 'Sấm Sét Hạ Thế', desc: '1.5B điểm', req: 1500000000, reqRebirth: 0, unlocked: false, icon: '⚡' },
+            { id: 'avatar_23', title: 'Băng Giá Vĩnh Cửu', desc: '1.8B điểm', req: 1800000000, reqRebirth: 0, unlocked: false, icon: '❄️' },
+            { id: 'avatar_24', title: 'Dung Nham Sục Sôi', desc: '2.0B điểm', req: 2000000000, reqRebirth: 0, unlocked: false, icon: '🌋' },
+            { id: 'avatar_25', title: 'Hắc Long Ma Tôn', desc: '2.5B điểm', req: 2500000000, reqRebirth: 0, unlocked: false, icon: '🖤' },
+            { id: 'avatar_26', title: 'Hoàng Kim Đại Tướng', desc: '3.0B điểm', req: 3000000000, reqRebirth: 0, unlocked: false, icon: '🛡️' },
+            { id: 'avatar_27', title: 'Tinh Tú Rực Rỡ', desc: '3.5B điểm', req: 3500000000, reqRebirth: 0, unlocked: false, icon: '🌟' },
+            { id: 'avatar_28', title: 'Ngân Hà Vô Tận', desc: '4.0B điểm', req: 4000000000, reqRebirth: 0, unlocked: false, icon: '☄️' },
+            { id: 'avatar_29', title: 'Hư Không Đại Sư', desc: '4.5B điểm', req: 4500000000, reqRebirth: 0, unlocked: false, icon: '🌀' },
+            { id: 'avatar_30', title: 'Chúa Tể Thời Gian', desc: '5.0B điểm', req: 5000000000, reqRebirth: 0, unlocked: false, icon: '⏳' },
+            { id: 'avatar_31', title: 'Phượng Hoàng Lửa', desc: '6.0B điểm', req: 6000000000, reqRebirth: 0, unlocked: false, icon: '🔥' },
+            { id: 'avatar_32', title: 'Kỳ Lân May Mắn', desc: '7.0B điểm', req: 7000000000, reqRebirth: 0, unlocked: false, icon: '🦄' },
+            { id: 'avatar_33', title: 'Sư Tử Hùng Dũng', desc: '8.0B điểm', req: 8000000000, reqRebirth: 0, unlocked: false, icon: '🦁' },
+            { id: 'avatar_34', title: 'Sói Xám Hoang Dã', desc: '9.0B điểm', req: 9000000000, reqRebirth: 0, unlocked: false, icon: '🐺' },
+            { id: 'avatar_35', title: 'Cáo Chín Đuôi', desc: '10.0B điểm', req: 10000000000, reqRebirth: 0, unlocked: false, icon: '🦊' },
+            { id: 'avatar_36', title: 'Hải Tặc Tự Do', desc: '12.0B điểm', req: 12000000000, reqRebirth: 0, unlocked: false, icon: '🏴‍☠️' },
+            { id: 'avatar_37', title: 'Ninja Bóng Tối', desc: '15.0B điểm', req: 15000000000, reqRebirth: 0, unlocked: false, icon: '🥷' },
+            { id: 'avatar_38', title: 'Hiệp Sĩ Không Mạng', desc: '20.0B điểm', req: 20000000000, reqRebirth: 0, unlocked: false, icon: '🦾' },
+            { id: 'avatar_39', title: 'Đế Vương Toàn Cõi', desc: '50.0B điểm', req: 50000000000, reqRebirth: 0, unlocked: false, icon: '👑' },
+            { id: 'avatar_40', title: 'Huyền Thoại Vĩnh Hằng', desc: '100.0B điểm', req: 100000000000, reqRebirth: 0, unlocked: false, icon: '💎' },
+
+            // BỔ SUNG THÊM 5 VINH QUANG MỚI THEO YÊU CẦU
+            { id: 'avatar_41', title: 'Thần Gió Vút Bay', desc: '150.0B điểm', req: 150000000000, reqRebirth: 0, unlocked: false, icon: '🍃' },
+            { id: 'avatar_42', title: 'Bạch Hổ Tôn Giả', desc: '200.0B điểm', req: 200000000000, reqRebirth: 0, unlocked: false, icon: '🐅' },
+            { id: 'avatar_43', title: 'Thanh Long Uy Nghi', desc: '300.0B điểm', req: 300000000000, reqRebirth: 0, unlocked: false, icon: '🐉' },
+            { id: 'avatar_44', title: 'Chu Tước Trùng Sinh', desc: '500.0B điểm', req: 500000000000, reqRebirth: 0, unlocked: false, icon: '🦚' },
+            { id: 'avatar_45', title: 'Đại Đạo Chí Tôn', desc: '1,000.0B điểm', req: 1000000000000, reqRebirth: 0, unlocked: false, icon: '🌌' }
         ];
 
         let achievements = [];
@@ -403,6 +443,7 @@
                     title: `Vinh Quang PRO ${i}`,
                     desc: `Yêu cầu: ${(randomReq).toLocaleString()} điểm`,
                     req: randomReq,
+                    reqRebirth: 0,
                     unlocked: false,
                     icon: '💎'
                 });
@@ -412,7 +453,8 @@
 
         let savedBadges = JSON.parse(localStorage.getItem('chaosBadges')) || {};
         achievements.forEach(b => {
-            if (savedBadges[b.id] || highScore >= b.req) {
+            const meetsRebirth = (b.reqRebirth || 0) === 0 || rebirthCount >= b.reqRebirth;
+            if (savedBadges[b.id] || (highScore >= b.req && meetsRebirth)) {
                 b.unlocked = true;
             }
         });
@@ -470,12 +512,18 @@
 
         function checkAchievements(score) {
             achievements.forEach(b => {
-                if (!b.unlocked && score >= b.req) {
-                    b.unlocked = true;
-                    savedBadges[b.id] = true;
-                    localStorage.setItem('chaosBadges', JSON.stringify(savedBadges));
-                    showToast(`🏆 Mở khóa: ${b.title}!`);
-                    renderBadges();
+                if (!b.unlocked) {
+                    const meetsScore = score >= b.req;
+                    const meetsRebirth = (b.reqRebirth || 0) === 0 || rebirthCount >= b.reqRebirth;
+                    if (meetsScore && meetsRebirth) {
+                        b.unlocked = true;
+                        savedBadges[b.id] = true;
+                        localStorage.setItem('chaosBadges', JSON.stringify(savedBadges));
+                        showToast(`👑 Mở khóa: ${b.title}!`);
+                        renderBadges();
+                        playVictorySound();
+                        launchFireworks();
+                    }
                 }
             });
         }
@@ -531,7 +579,12 @@
             "CUONGPHONG": { type: "score", val: 10000, msg: "🎉 Thành tích! Bạn nhận ngay +10,000 điểm!" },
             "MAYMAN": { type: "luck", msg: "🍀 Quà May Mắn: Quay trúng gói thưởng ngẫu nhiên!" },
             "VIP2026": { type: "score", val: 50000, msg: "👑 Mã VIP! Nhận ngay +50,000 điểm!" },
-            "THANGVON": { type: "score", val: 25000, msg: "💎 Quà Thành Tích: Nhận ngay +25,000 điểm!" }
+            "THANGVON": { type: "score", val: 25000, msg: "💎 Quà Thành Tích: Nhận ngay +25,000 điểm!" },
+            "CAMON": { type: "score", val: 100000, msg: "🙏 Quà Cảm Ơn: Tặng ngay +100,000 điểm tri ân vinh quang!" },
+            // BỔ SUNG THÊM 3 MÃ NHẬN QUÀ MỚI
+            "VINHQUANG": { type: "score", val: 200000, msg: "🏆 Mã Vinh Quang: Nhận ngay +200,000 điểm!" },
+            "TANGQUA": { type: "score", val: 350000, msg: "🎁 Mã Tặng Quà: Nhận ngay +350,000 điểm siêu khủng!" },
+            "PHUCLOI": { type: "score", val: 500000, msg: "🌟 Mã Phục Lợi: Nhận ngay +500,000 điểm tối thượng!" }
         };
         
         function resetUsedCodes() {
@@ -590,7 +643,7 @@
                 launchFireworks();
                 input.value = "";
             } else {
-                resultBox.innerHTML = "<span style='color: #ff5e62;'>❌ Mã sai! (Gợi ý: CUONGPHONG, MAYMAN)</span>";
+                resultBox.innerHTML = "<span style='color: #ff5e62;'>❌ Mã sai! (Gợi ý: VINHQUANG, TANGQUA, PHUCLOI)</span>";
             }
         }
 
@@ -662,18 +715,6 @@
                         spinCount = 0;
                         rebirthCount++;
                         scoreMultiplier += 0.75;
-                        
-                        localStorage.removeItem('chaosHighScore');
-                        localStorage.removeItem('chaosBadges');
-                        
-                        highScore = 0;
-                        currentScore = 0;
-                        highScoreEl.innerText = highScore;
-                        page2HighScoreEl.innerText = highScore;
-                        
-                        savedBadges = {};
-                        initAchievementsList();
-                        renderBadges();
                         
                         showToast(`🔄 Tái sinh cấp ${rebirthCount}! (Hệ số: ${scoreMultiplier.toFixed(2)}x)`);
                     }
