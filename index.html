@@ -261,6 +261,9 @@
                 <span>🏆 Kỷ Lục: <strong id="highScore">0</strong></span>
                 <span>🔥 Điểm: <strong id="currentScore">0</strong></span>
             </div>
+            <div style="font-size: 11px; margin-bottom: 6px; font-weight: bold; text-shadow: 0 1px 2px rgba(0,0,0,0.3);">
+                🔄 Tái Sinh: <strong id="rebirthCount">0</strong> | ⚡ Hệ Số: <strong id="multiplierText">1.0x</strong> | 🎯 Lần Quay: <strong id="spinCount">0</strong>/20
+            </div>
 
             <div class="btn-box" id="statusText">BẮT ĐẦU NGAY</div>
             <div id="numberContainer">68</div>
@@ -317,7 +320,11 @@
         let currentRandomNum = 0;
         let highScore = parseInt(localStorage.getItem('chaosHighScore')) || 0;
         
-        const achievements = [
+        let spinCount = parseInt(localStorage.getItem('chaosSpinCount')) || 0;
+        let rebirthCount = parseInt(localStorage.getItem('chaosRebirthCount')) || 0;
+        let scoreMultiplier = parseFloat(localStorage.getItem('chaosMultiplier')) || 1.0;
+        
+        const baseAchievements = [
             { id: 'novice', title: 'Tập Sự', desc: 'Đạt 50k điểm', req: 50000, unlocked: false, icon: '🌱' },
             { id: 'runner', title: 'Tốc Độ', desc: 'Đạt 200k điểm', req: 200000, unlocked: false, icon: '⚡' },
             { id: 'storm', title: 'Cuồng Phong', desc: 'Đạt 500k điểm', req: 500000, unlocked: false, icon: '🌪️' },
@@ -328,6 +335,22 @@
             { id: 'galaxy', title: 'Vũ Trụ Sôi Động', desc: 'Đạt 25 Triệu điểm', req: 25000000, unlocked: false, icon: '🌌' },
             { id: 'god', title: 'Thần Thánh Tối Thượng', desc: 'Đạt 50 Triệu điểm', req: 50000000, unlocked: false, icon: '🔥' }
         ];
+
+        let achievements = [];
+        function initAchievementsList() {
+            achievements = JSON.parse(JSON.stringify(baseAchievements));
+            for (let i = 1; i <= 10; i++) {
+                achievements.push({
+                    id: `pro_${i}`,
+                    title: `Vinh Quang PRO ${i}`,
+                    desc: `Cấp độ vinh quang bổ sung #${i}`,
+                    req: 100000000 * i,
+                    unlocked: false,
+                    icon: '💎'
+                });
+            }
+        }
+        initAchievementsList();
 
         let savedBadges = JSON.parse(localStorage.getItem('chaosBadges')) || {};
         achievements.forEach(b => {
@@ -341,12 +364,18 @@
         const highScoreEl = document.getElementById('highScore');
         const page2HighScoreEl = document.getElementById('page2HighScore');
         const currentScoreEl = document.getElementById('currentScore');
+        const spinCountEl = document.getElementById('spinCount');
+        const rebirthCountEl = document.getElementById('rebirthCount');
+        const multiplierTextEl = document.getElementById('multiplierText');
         const bodyEl = document.body;
         const badgesGrid = document.getElementById('badgesGrid');
         const unlockToast = document.getElementById('unlockToast');
 
         highScoreEl.innerText = highScore;
         page2HighScoreEl.innerText = highScore;
+        spinCountEl.innerText = spinCount;
+        rebirthCountEl.innerText = rebirthCount;
+        multiplierTextEl.innerText = scoreMultiplier.toFixed(2) + 'x';
 
         renderBadges();
 
@@ -473,34 +502,34 @@
                 usedCodes[code] = true;
                 localStorage.setItem('chaosUsedCodes', JSON.stringify(usedCodes));
 
+                let addedScore = 0;
                 if (gift.type === "score") {
-                    currentScore += gift.val;
-                    currentScoreEl.innerText = currentScore;
+                    addedScore = gift.val * scoreMultiplier;
+                    currentScore += addedScore;
+                    currentScoreEl.innerText = Math.floor(currentScore);
                     checkAchievements(currentScore);
                     if (currentScore > highScore) {
                         highScore = currentScore;
-                        highScoreEl.innerText = highScore;
+                        highScoreEl.innerText = Math.floor(highScore);
                         localStorage.setItem('chaosHighScore', highScore);
                     }
-                    resultBox.innerHTML = `<span style="color: #ffd700; font-weight: bold;">${gift.msg}</span>`;
-                    showToast("🎁 Nhận quà thành công!");
-                    playVictorySound();
-                    launchFireworks();
+                    resultBox.innerHTML = `<span style="color: #ffd700; font-weight: bold;">${gift.msg} (Đã nhân hệ số: ${scoreMultiplier.toFixed(2)}x)</span>`;
                 } else if (gift.type === "luck") {
-                    const luckyScore = Math.floor(Math.random() * 45000) + 5000;
+                    const luckyScore = (Math.floor(Math.random() * 45000) + 5000) * scoreMultiplier;
                     currentScore += luckyScore;
-                    currentScoreEl.innerText = currentScore;
+                    currentScoreEl.innerText = Math.floor(currentScore);
                     checkAchievements(currentScore);
                     if (currentScore > highScore) {
                         highScore = currentScore;
-                        highScoreEl.innerText = highScore;
+                        highScoreEl.innerText = Math.floor(highScore);
                         localStorage.setItem('chaosHighScore', highScore);
                     }
-                    resultBox.innerHTML = `<span style="color: #00ffcc; font-weight: bold;">🍀 May mắn! Bạn trúng gói thưởng ${luckyScore.toLocaleString()} điểm!</span>`;
-                    showToast("🍀 Trúng quà may mắn!");
-                    playVictorySound();
-                    launchFireworks();
+                    resultBox.innerHTML = `<span style="color: #00ffcc; font-weight: bold;">🍀 May mắn! Trúng thưởng ${Math.floor(luckyScore).toLocaleString()} điểm!</span>`;
                 }
+                
+                showToast("🎁 Nhận quà thành công!");
+                playVictorySound();
+                launchFireworks();
                 input.value = "";
             } else {
                 resultBox.innerHTML = "<span style='color: #ff5e62;'>❌ Mã code không chính xác! (Gợi ý: CUONGPHONG, MAYMAN, VIP2026)</span>";
@@ -535,14 +564,44 @@
                     currentRandomNum = Math.floor(Math.random() * 500000) + 1;
                     numEl.innerText = currentRandomNum;
                     
-                    currentScore += currentRandomNum;
-                    currentScoreEl.innerText = currentScore;
+                    let addedScore = currentRandomNum * scoreMultiplier;
+                    currentScore += addedScore;
+                    currentScoreEl.innerText = Math.floor(currentScore);
+
+                    spinCount++;
+                    if (spinCount >= 20) {
+                        spinCount = 0;
+                        rebirthCount++;
+                        scoreMultiplier *= 0.75;
+                        
+                        localStorage.removeItem('chaosHighScore');
+                        localStorage.removeItem('chaosBadges');
+                        
+                        highScore = 0;
+                        currentScore = 0;
+                        highScoreEl.innerText = highScore;
+                        page2HighScoreEl.innerText = highScore;
+                        
+                        savedBadges = {};
+                        initAchievementsList();
+                        renderBadges();
+                        
+                        showToast(`🔄 Tái sinh thành công! Cấp độ: ${rebirthCount} (Hệ số: ${scoreMultiplier.toFixed(2)}x)`);
+                    }
+
+                    spinCountEl.innerText = spinCount;
+                    rebirthCountEl.innerText = rebirthCount;
+                    multiplierTextEl.innerText = scoreMultiplier.toFixed(2) + 'x';
+                    
+                    localStorage.setItem('chaosSpinCount', spinCount);
+                    localStorage.setItem('chaosRebirthCount', rebirthCount);
+                    localStorage.setItem('chaosMultiplier', scoreMultiplier);
 
                     checkAchievements(currentScore);
 
                     if (currentScore > highScore) {
                         highScore = currentScore;
-                        highScoreEl.innerText = highScore;
+                        highScoreEl.innerText = Math.floor(highScore);
                         localStorage.setItem('chaosHighScore', highScore);
                     }
 
@@ -557,6 +616,14 @@
                 bodyEl.classList.remove('shaking');
                 bodyEl.style.backgroundColor = '#ff2a5f';
                 clearTimeout(animationTimer);
+
+                spinCountEl.innerText = spinCount;
+                rebirthCountEl.innerText = rebirthCount;
+                multiplierTextEl.innerText = scoreMultiplier.toFixed(2) + 'x';
+                
+                localStorage.setItem('chaosSpinCount', spinCount);
+                localStorage.setItem('chaosRebirthCount', rebirthCount);
+                localStorage.setItem('chaosMultiplier', scoreMultiplier);
 
                 checkAchievements(currentScore);
 
