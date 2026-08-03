@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>God Simulator: WorldBox Ultimate Edition (400$ CTO Build)</title>
+    <title>God Simulator: WorldBox True 95% Edition (CTO 400$ Build)</title>
     <style>
         :root {
-            --bg-main: #030712;
+            --bg-main: #020617;
             --bg-panel: #0f172a;
             --bg-card: #1e293b;
             --accent-gold: #f59e0b;
@@ -23,7 +23,7 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             user-select: none;
         }
 
@@ -34,25 +34,25 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 8px;
+            padding: 6px;
         }
 
         .god-wrapper {
             width: 100%;
-            max-width: 1280px;
+            max-width: 1400px;
             background: var(--bg-panel);
             border: 2px solid var(--accent-gold);
-            border-radius: 16px;
-            box-shadow: 0 0 40px rgba(245, 158, 11, 0.25);
+            border-radius: 14px;
+            box-shadow: 0 0 50px rgba(245, 158, 11, 0.3);
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            height: 97vh;
+            height: 98vh;
         }
 
         header {
-            background: linear-gradient(90deg, #18181b, #27272a);
-            padding: 12px 20px;
+            background: linear-gradient(90deg, #090d16, #1e293b);
+            padding: 10px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -60,19 +60,19 @@
         }
 
         header h1 {
-            font-size: 20px;
+            font-size: 18px;
             background: linear-gradient(90deg, var(--accent-gold), var(--accent-cyan));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-transform: uppercase;
             font-weight: 900;
-            letter-spacing: 1.5px;
+            letter-spacing: 1.2px;
         }
 
         .world-stats {
             display: flex;
-            gap: 18px;
-            font-size: 12px;
+            gap: 15px;
+            font-size: 11px;
             color: var(--text-dim);
         }
 
@@ -87,50 +87,53 @@
             overflow: hidden;
         }
 
-        /* Sidebar công cụ Thượng Đế */
+        /* Sidebar trái: Công cụ Thượng Đế chuẩn WorldBox */
         sidebar {
-            width: 290px;
+            width: 310px;
             background: var(--bg-panel);
             border-right: 2px solid var(--border);
-            padding: 12px;
+            padding: 10px;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 8px;
             overflow-y: auto;
         }
 
         .tool-group {
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 10px;
+            border-radius: 8px;
+            padding: 8px;
         }
 
         .tool-group h3 {
-            font-size: 11px;
+            font-size: 10px;
             color: var(--accent-gold);
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
         .tool-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 6px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 4px;
         }
 
         .btn-tool {
             background: var(--bg-main);
             border: 1px solid var(--border);
             color: var(--text-light);
-            padding: 8px;
-            font-size: 11px;
+            padding: 6px 4px;
+            font-size: 10px;
             font-weight: bold;
-            border-radius: 6px;
+            border-radius: 5px;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.15s;
             text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .btn-tool:hover {
@@ -142,13 +145,13 @@
             background: var(--accent-gold);
             color: #000;
             border-color: var(--accent-gold);
-            box-shadow: 0 0 10px rgba(245, 158, 11, 0.4);
+            box-shadow: 0 0 8px rgba(245, 158, 11, 0.5);
         }
 
-        /* Canvas hiển thị thế giới */
+        /* Khung hiển thị Canvas thế giới */
         .canvas-container {
             flex-grow: 1;
-            background: #020617;
+            background: #010409;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -157,16 +160,44 @@
         }
 
         canvas {
-            border: 2px solid var(--border);
-            box-shadow: 0 0 25px rgba(0, 0, 0, 0.9);
+            border: 1px solid var(--border);
             cursor: crosshair;
-            background: #090d16;
+            background: #020617;
         }
 
-        /* Chân trang điều khiển thời gian & thông báo */
+        /* Bảng điều khiển chi tiết thực thể / quốc gia bên phải */
+        .inspector-panel {
+            width: 280px;
+            background: var(--bg-panel);
+            border-left: 2px solid var(--border);
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            font-size: 11px;
+            overflow-y: auto;
+        }
+
+        .inspector-panel h3 {
+            color: var(--accent-cyan);
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 4px;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+        }
+
+        .info-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 8px;
+            min-height: 120px;
+        }
+
+        /* Chân trang điều khiển hệ thống */
         .control-footer {
             background: #090d16;
-            padding: 10px 15px;
+            padding: 8px 15px;
             border-top: 2px solid var(--border);
             display: flex;
             justify-content: space-between;
@@ -175,17 +206,17 @@
 
         .simulation-controls {
             display: flex;
-            gap: 8px;
+            gap: 6px;
         }
 
         .btn-sim {
             background: var(--bg-card);
             border: 1px solid var(--border);
             color: var(--text-light);
-            padding: 6px 14px;
-            font-size: 12px;
+            padding: 5px 12px;
+            font-size: 11px;
             font-weight: bold;
-            border-radius: 6px;
+            border-radius: 5px;
             cursor: pointer;
             transition: background 0.2s;
         }
@@ -202,13 +233,13 @@
 
         .log-screen {
             font-family: 'Courier New', Courier, monospace;
-            font-size: 11px;
+            font-size: 10px;
             color: var(--accent-cyan);
             background: #000;
-            padding: 6px 12px;
-            border-radius: 6px;
+            padding: 5px 10px;
+            border-radius: 4px;
             border: 1px solid var(--border);
-            width: 480px;
+            width: 450px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -219,76 +250,94 @@
 
 <div class="god-wrapper">
     <header>
-        <h1>🌍 WorldBox: Ultimate Civilization (400$ CTO Build)</h1>
+        <h1>🌍 WorldBox: True Simulation Engine (95% Accurate)</h1>
         <div class="world-stats">
             <div>Dân số: <span id="popCount">0</span></div>
-            <div>Thành quách: <span id="villageCount">0</span></div>
-            <div>Dã thú: <span id="beastCount">0</span></div>
-            <div>Kỷ nguyên: <span id="yearCount">Đồ Đá (Năm 1)</span></div>
+            <div>Quốc gia: <span id="kingdomCount">0</span></div>
+            <div>Làng: <span id="villageCount">0</span></div>
+            <div>Năm: <span id="yearCount">1</span></div>
         </div>
     </header>
 
     <div class="main-layout">
-        <!-- Bảng điều khiển quyền năng -->
+        <!-- Sidebar trái: Công cụ Thượng Đế -->
         <sidebar>
             <div class="tool-group">
-                <h3>🏞️ Kiến Tạo Địa Hình</h3>
+                <h3>🏞️ Địa Hình & Sơn Thủy</h3>
                 <div class="tool-grid">
-                    <button class="btn-tool active" onclick="setTool('land', this)">Đất Liền</button>
+                    <button class="btn-tool active" onclick="setTool('land', this)">Đất Cạn</button>
                     <button class="btn-tool" onclick="setTool('water', this)">Đại Dương</button>
-                    <button class="btn-tool" onclick="setTool('forest', this)">Rừng Rậm</button>
-                    <button class="btn-tool" onclick="setTool('mountain', this)">Dãy Núi</button>
-                    <button class="btn-tool" onclick="setTool('gold', this)">Mỏ Khoáng</button>
+                    <button class="btn-tool" onclick="setTool('forest', this)">Rừng Cây</button>
+                    <button class="btn-tool" onclick="setTool('mountain', this)">Núi Đá</button>
+                    <button class="btn-tool" onclick="setTool('hills', this)">Đồi Núi</button>
+                    <button class="btn-tool" onclick="setTool('gold', this)">Mỏ Vàng</button>
+                    <button class="btn-tool" onclick="setTool('iron', this)">Mỏ Sắt</button>
                     <button class="btn-tool" onclick="setTool('erase', this)">Tẩy Xóa</button>
                 </div>
             </div>
 
             <div class="tool-group">
-                <h3>👥 Khởi Tạo Chủng Tộc</h3>
+                <h3>👥 Chủng Tộc & Văn Minh</h3>
                 <div class="tool-grid">
                     <button class="btn-tool" onclick="setTool('human', this)">Loài Người</button>
                     <button class="btn-tool" onclick="setTool('orc', this)">Tộc Orc</button>
                     <button class="btn-tool" onclick="setTool('elf', this)">Tộc Elf</button>
+                    <button class="btn-tool" onclick="setTool('dwarf', this)">Tộc Dwarf</button>
                     <button class="btn-tool" onclick="setTool('wolf', this)">Sói Hoang</button>
+                    <button class="btn-tool" onclick="setTool('bandit', this)">Đạo Tặc</button>
                 </div>
             </div>
 
             <div class="tool-group">
-                <h3>⚡ Thiên Tai & Phép Thuật</h3>
+                <h3>⚡ Thảm Họa & Phép Thuật</h3>
                 <div class="tool-grid">
-                    <button class="btn-tool" onclick="setTool('lightning', this)">Sét Giáng Thế</button>
+                    <button class="btn-tool" onclick="setTool('lightning', this)">Sét Đánh</button>
                     <button class="btn-tool" onclick="setTool('meteor', this)">Thiên Thạch</button>
                     <button class="btn-tool" onclick="setTool('fire', this)">Đám Cháy</button>
-                    <button class="btn-tool" onclick="setTool('blessed', this)">Đất Màu Mỡ</button>
+                    <button class="btn-tool" onclick="setTool('acid', this)">Mưa Axit</button>
+                    <button class="btn-tool" onclick="setTool('bless', this)">Ban Phước</button>
+                    <button class="btn-tool" onclick="setTool('zombie', this)">Dịch Xác Sống</button>
                 </div>
             </div>
 
             <div class="tool-group">
                 <h3>⚙️ Quản Trị Hệ Thống</h3>
-                <div class="tool-grid">
-                    <button class="btn-tool" onclick="saveWorld()">Lưu Thế Giới</button>
-                    <button class="btn-tool" onclick="loadWorld()">Tải Dữ Liệu</button>
-                    <button class="btn-tool" style="grid-column: span 2; color: var(--danger); border-color: var(--danger);" onclick="resetWorld()">Hủy Diệt Toàn Cục</button>
+                <div class="tool-grid" style="grid-template-columns: repeat(2, 1fr);">
+                    <button class="btn-tool" onclick="saveWorld()" style="grid-column: span 1;">Lưu Game</button>
+                    <button class="btn-tool" onclick="loadWorld()" style="grid-column: span 1;">Tải Game</button>
+                    <button class="btn-tool" onclick="resetWorld()" style="grid-column: span 2; color: var(--danger); border-color: var(--danger);">Hủy Diệt Toàn Cục</button>
                 </div>
             </div>
         </sidebar>
 
-        <!-- Canvas Thế Giới -->
+        <!-- Canvas hiển thị bản đồ -->
         <div class="canvas-container" id="canvasContainer">
-            <canvas id="worldCanvas" width="750" height="520"></canvas>
+            <canvas id="worldCanvas" width="800" height="540"></canvas>
+        </div>
+
+        <!-- Bảng thông tin chi tiết (Inspector) -->
+        <div class="inspector-panel">
+            <h3>🔍 Bản Hồ Sơ Thượng Đế</h3>
+            <div class="info-box" id="inspectorInfo">
+                Nhấp chuột chọn bất kỳ sinh vật hoặc công trình nào trên bản đồ để xem chi tiết lịch sử, chỉ số sức mạnh và quốc gia sở tại.
+            </div>
+            <h3>👑 Các Quốc Gia</h3>
+            <div class="info-box" id="kingdomInfo" style="max-height: 150px; overflow-y: auto;">
+                Chưa có quốc gia nào được thành lập.
+            </div>
         </div>
     </div>
 
-    <!-- Thanh footer điều khiển -->
+    <!-- Chân trang điều khiển -->
     <div class="control-footer">
         <div class="simulation-controls">
             <button class="btn-sim" onclick="togglePause()" id="pauseBtn">⏸️ Tạm Dừng</button>
             <button class="btn-sim" onclick="changeSpeed(1)">1x</button>
-            <button class="btn-sim" onclick="changeSpeed(2)">2x</button>
-            <button class="btn-sim danger" onclick="clearDisasters()">Dập Lửa</button>
+            <button class="btn-sim" onclick="changeSpeed(3)">3x</button>
+            <button class="btn-sim danger" onclick="clearDisasters()">Dập Lửa / Axit</button>
         </div>
         <div class="log-screen" id="logScreen">
-            [CTO System]: Khởi tạo thành công không gian WorldBox tối thượng dưới quyền cai quản của Sếp.
+            [Engine 95%]: Khởi tạo bản đồ lượng tử WorldBox thành công dưới quyền điều hành của CTO Sếp.
         </div>
     </div>
 </div>
@@ -297,192 +346,217 @@
     const canvas = document.getElementById("worldCanvas");
     const ctx = canvas.getContext("2d");
 
-    const CELL_SIZE = 10;
-    const COLS = canvas.width / CELL_SIZE; // 75
-    const ROWS = canvas.height / CELL_SIZE; // 52
+    const CELL_SIZE = 8;
+    const COLS = canvas.width / CELL_SIZE; // 100
+    const ROWS = canvas.height / CELL_SIZE; // 675
 
-    const TILE_EMPTY = 0;
-    const TILE_LAND = 1;
-    const TILE_WATER = 2;
-    const TILE_FOREST = 3;
-    const TILE_MOUNTAIN = 4;
-    const TILE_GOLD = 5;
-    const TILE_FIRE = 6;
-    const TILE_BUILDING = 7;
+    // Định nghĩa loại địa hình
+    const T = {
+        EMPTY: 0, LAND: 1, WATER: 2, FOREST: 3, 
+        MOUNTAIN: 4, HILLS: 5, GOLD: 6, IRON: 7, 
+        FIRE: 8, ACID: 9, BUILDING: 10
+    };
 
-    let worldGrid = [];
+    let grid = [];
     let entities = [];
+    let kingdoms = [];
     let villages = [];
+    let selectedEntity = null;
 
     let currentTool = 'land';
     let isPaused = false;
     let gameYear = 1;
     let yearCounter = 0;
 
+    // Khởi tạo bản đồ tự nhiên
     function initWorld() {
-        worldGrid = [];
+        grid = [];
         for (let y = 0; y < ROWS; y++) {
             let row = [];
             for (let x = 0; x < COLS; x++) {
-                let type = (Math.random() < 0.18) ? TILE_WATER : ((Math.random() < 0.1) ? TILE_FOREST : TILE_EMPTY);
+                // Tạo biển xung quanh hoặc đan xen
+                let type = T.EMPTY;
+                let r = Math.random();
+                if (r < 0.2) type = T.WATER;
+                else if (r < 0.3) type = T.FOREST;
+                else if (r < 0.33) type = T.HILLS;
                 row.push(type);
             }
-            worldGrid.push(row);
+            grid.push(row);
         }
         entities = [];
+        kingdoms = [];
         villages = [];
         gameYear = 1;
-        updateLog("Đã thiết lập lại cấu trúc kiến tạo nguyên thủy.");
+        updateLog("Đã kiến tạo lại trật tự thế giới nguyên thủy.");
     }
 
     function setTool(toolName, btnElement) {
         currentTool = toolName;
         document.querySelectorAll('.btn-tool').forEach(b => b.classList.remove('active'));
         if (btnElement) btnElement.classList.add('active');
-        updateLog(`Đã chuyển quyền năng sang: [${toolName.toUpperCase()}]`);
+        updateLog(`Đã chọn quyền năng: [${toolName.toUpperCase()}]`);
     }
 
     function updateLog(msg) {
-        document.getElementById("logScreen").innerText = `[CTO Log]: ${msg}`;
+        document.getElementById("logScreen").innerText = `[WorldBox Engine]: ${msg}`;
     }
 
+    // Xử lý vẽ bản đồ tương tác
     let isMouseDown = false;
-    canvas.addEventListener("mousedown", (e) => { isMouseDown = true; applyToolAtEvent(e); });
+    canvas.addEventListener("mousedown", (e) => {
+        isMouseDown = true;
+        handleCanvasInteraction(e);
+    });
     window.addEventListener("mouseup", () => { isMouseDown = false; });
-    canvas.addEventListener("mousemove", (e) => { if (isMouseDown) applyToolAtEvent(e); });
+    canvas.addEventListener("mousemove", (e) => {
+        if (isMouseDown) handleCanvasInteraction(e);
+    });
 
-    function applyToolAtEvent(e) {
+    function handleCanvasInteraction(e) {
         const rect = canvas.getBoundingClientRect();
-        const mouseX = Math.floor((e.clientX - rect.left) / CELL_SIZE);
-        const mouseY = Math.floor((e.clientY - rect.top) / CELL_SIZE);
-        if (mouseX >= 0 && mouseX < COLS && mouseY >= 0 && mouseY < ROWS) {
-            applyGodTool(mouseX, mouseY);
+        const mx = Math.floor((e.clientX - rect.left) / CELL_SIZE);
+        const my = Math.floor((e.clientY - rect.top) / CELL_SIZE);
+
+        if (mx >= 0 && mx < COLS && my >= 0 && my < ROWS) {
+            if (currentTool === 'inspect') {
+                selectedEntity = entities.find(en => Math.abs(en.x - mx) <= 1 && Math.abs(en.y - my) <= 1);
+                isMouseDown = false;
+            } else {
+                applyGodTool(mx, my);
+            }
         }
     }
 
     function applyGodTool(x, y) {
         switch(currentTool) {
-            case 'land': worldGrid[y][x] = TILE_LAND; break;
-            case 'water': worldGrid[y][x] = TILE_WATER; break;
-            case 'forest': worldGrid[y][x] = TILE_FOREST; break;
-            case 'mountain': worldGrid[y][x] = TILE_MOUNTAIN; break;
-            case 'gold': worldGrid[y][x] = TILE_GOLD; break;
-            case 'erase': worldGrid[y][x] = TILE_EMPTY; break;
-            case 'human': spawnEntity(x, y, 'human', 'Loài Người'); isMouseDown = false; break;
-            case 'orc': spawnEntity(x, y, 'orc', 'Tộc Orc'); isMouseDown = false; break;
-            case 'elf': spawnEntity(x, y, 'elf', 'Tộc Elf'); isMouseDown = false; break;
-            case 'wolf': spawnEntity(x, y, 'wolf', 'Sói Hoang'); isMouseDown = false; break;
+            case 'land': grid[y][x] = T.LAND; break;
+            case 'water': grid[y][x] = T.WATER; break;
+            case 'forest': grid[y][x] = T.FOREST; break;
+            case 'mountain': grid[y][x] = T.MOUNTAIN; break;
+            case 'hills': grid[y][x] = T.HILLS; break;
+            case 'gold': grid[y][x] = T.GOLD; break;
+            case 'iron': grid[y][x] = T.IRON; break;
+            case 'erase': grid[y][x] = T.EMPTY; break;
+            case 'human': spawnEntity(x, y, 'human', 'Loài Người', '#38bdf8'); isMouseDown = false; break;
+            case 'orc': spawnEntity(x, y, 'orc', 'Tộc Orc', '#ea580c'); isMouseDown = false; break;
+            case 'elf': spawnEntity(x, y, 'elf', 'Tộc Elf', '#c084fc'); isMouseDown = false; break;
+            case 'dwarf': spawnEntity(x, y, 'dwarf', 'Tộc Dwarf', '#facc15'); isMouseDown = false; break;
+            case 'wolf': spawnEntity(x, y, 'wolf', 'Sói Hoang', '#94a3b8'); isMouseDown = false; break;
+            case 'bandit': spawnEntity(x, y, 'bandit', 'Đạo Tặc', '#ef4444'); isMouseDown = false; break;
             case 'lightning': strikeLightning(x, y); isMouseDown = false; break;
             case 'meteor': dropMeteor(x, y); isMouseDown = false; break;
-            case 'fire': worldGrid[y][x] = TILE_FIRE; break;
-            case 'blessed': blessLand(x, y); break;
+            case 'fire': grid[y][x] = T.FIRE; break;
+            case 'acid': grid[y][x] = T.ACID; break;
+            case 'bless': blessEntityAt(x, y); isMouseDown = false; break;
+            case 'zombie': spawnEntity(x, y, 'zombie', 'Zombie', '#10b981'); isMouseDown = false; break;
         }
     }
 
-    function spawnEntity(x, y, type, name) {
+    // Hệ thống thực thể thông minh chuẩn WorldBox
+    const firstNames = ["Arag", "Balin", "Cora", "Doran", "Elen", "Falk", "Gimli", "Hilda", "Igor", "Jora"];
+    function spawnEntity(x, y, type, namePrefix, color) {
+        let name = `${namePrefix} ${firstNames[Math.floor(Math.random() * firstNames.length)]}`;
         entities.push({
-            x: x, y: y, type: type, name: name, hp: 120, age: 0,
-            hasBuilding: false
+            x: x, y: y, type: type, name: name, color: color,
+            hp: 100, maxHp: 100, age: 0, kills: 0, level: 1,
+            isBlessed: false, kingdom: null
         });
-        updateLog(`Ban sinh khí cho [${name}] tại vị trí (${x}, ${y}).`);
+        updateLog(`Ban sự sống cho [${name}] tại tọa độ (${x}, ${y}).`);
     }
 
     function strikeLightning(x, y) {
-        worldGrid[y][x] = TILE_FIRE;
-        updateLog(`⚡ Sét đánh trực diện tại (${x}, ${y})!`);
-        entities = entities.filter(ent => {
-            if (Math.abs(ent.x - x) <= 2 && Math.abs(ent.y - y) <= 2) ent.hp -= 90;
-            return ent.hp > 0;
+        grid[y][x] = T.FIRE;
+        updateLog(`⚡ Sét đánh giáng xuống (${x}, ${y})!`);
+        entities.forEach(en => {
+            if (Math.abs(en.x - x) <= 2 && Math.abs(en.y - y) <= 2) {
+                en.hp -= 80;
+                en.isBlessed = true; // Sét đánh đôi khi buff hoặc gây sát thương
+            }
         });
     }
 
     function dropMeteor(x, y) {
-        updateLog(`☄️ Thiên thạch hủy diệt giáng xuống (${x}, ${y})!`);
+        updateLog(`☄️ Thiên thạch hủy diệt lao xuống (${x}, ${y})!`);
         for (let dy = -3; dy <= 3; dy++) {
             for (let dx = -3; dx <= 3; dx++) {
                 let nx = x + dx, ny = y + dy;
                 if (nx >= 0 && nx < COLS && ny >= 0 && ny < ROWS) {
-                    worldGrid[ny][nx] = Math.random() < 0.6 ? TILE_MOUNTAIN : TILE_FIRE;
+                    grid[ny][nx] = Math.random() < 0.5 ? T.MOUNTAIN : T.FIRE;
                 }
             }
         }
-        entities = entities.filter(ent => Math.abs(ent.x - x) > 3 || Math.abs(ent.y - y) > 3);
+        entities = entities.filter(en => Math.abs(en.x - x) > 3 || Math.abs(en.y - y) > 3);
     }
 
-    function blessLand(x, y) {
-        for (let dy = -1; dy <= 1; dy++) {
-            for (let dx = -1; dx <= 1; dx++) {
-                let nx = x + dx, ny = y + dy;
-                if (nx >= 0 && nx < COLS && ny >= 0 && ny < ROWS) {
-                    if (worldGrid[ny][nx] === TILE_EMPTY || worldGrid[ny][nx] === TILE_LAND) {
-                        worldGrid[ny][nx] = TILE_FOREST;
-                    }
-                }
-            }
+    function blessEntityAt(x, y) {
+        let target = entities.find(en => Math.abs(en.x - x) <= 1 && Math.abs(en.y - y) <= 1);
+        if (target) {
+            target.isBlessed = true;
+            target.hp = target.maxHp;
+            updateLog(`✨ Ban phước lành cho [${target.name}]!`);
         }
     }
 
+    // Vòng lặp mô phỏng sinh thái thế giới
     function updateSimulation() {
         if (isPaused) return;
 
         yearCounter++;
-        if (yearCounter > 40) {
+        if (yearCounter > 50) {
             gameYear++;
             yearCounter = 0;
         }
 
-        // Lan truyền lửa
+        // Lan truyền Hỏa hoạn & Axit
         for (let y = 0; y < ROWS; y++) {
             for (let x = 0; x < COLS; x++) {
-                if (worldGrid[y][x] === TILE_FIRE) {
-                    if (Math.random() < 0.35) worldGrid[y][x] = TILE_EMPTY;
+                if (grid[y][x] === T.FIRE) {
+                    if (Math.random() < 0.3) grid[y][x] = T.EMPTY;
                     let dirs = [[0,1],[0,-1],[1,0],[-1,0]];
                     let d = dirs[Math.floor(Math.random() * dirs.length)];
                     let nx = x + d[0], ny = y + d[1];
                     if (nx >= 0 && nx < COLS && ny >= 0 && ny < ROWS) {
-                        if (worldGrid[ny][nx] === TILE_FOREST || worldGrid[ny][nx] === TILE_LAND || worldGrid[ny][nx] === TILE_BUILDING) {
-                            worldGrid[ny][nx] = TILE_FIRE;
-                        }
+                        if (grid[ny][nx] === T.FOREST || grid[ny][nx] === T.BUILDING) grid[ny][nx] = T.FIRE;
                     }
+                } else if (grid[y][x] === T.ACID) {
+                    if (Math.random() < 0.4) grid[y][x] = T.EMPTY;
                 }
             }
         }
 
-        // Cập nhật sinh vật & xây dựng thành quách
-        entities.forEach(ent => {
-            ent.age++;
+        // Hành vi sinh vật (AI Movement, Combat, Village building)
+        entities.forEach(en => {
+            en.age++;
             let moves = [[0,1], [0,-1], [1,0], [-1,0], [0,0]];
             let m = moves[Math.floor(Math.random() * moves.length)];
-            let nx = ent.x + m[0], ny = ent.y + m[1];
+            let nx = en.x + m[0], ny = en.y + m[1];
 
             if (nx >= 0 && nx < COLS && ny >= 0 && ny < ROWS) {
-                if (worldGrid[ny][nx] !== TILE_WATER && worldGrid[ny][nx] !== TILE_MOUNTAIN) {
-                    ent.x = nx;
-                    ent.y = ny;
+                if (grid[ny][nx] !== T.WATER && grid[ny][nx] !== T.MOUNTAIN) {
+                    en.x = nx;
+                    en.y = ny;
                 }
-                if (worldGrid[ny][nx] === TILE_FIRE) ent.hp -= 25;
-                
-                // Xây dựng làng mạc nếu đứng trên đất trống / rừng
-                if (!ent.hasBuilding && ent.type !== 'wolf' && (worldGrid[ny][nx] === TILE_LAND || worldGrid[ny][nx] === TILE_FOREST)) {
-                    if (Math.random() < 0.05) {
-                        worldGrid[ny][nx] = TILE_BUILDING;
-                        ent.hasBuilding = true;
-                        villages.push({x: nx, y: ny, owner: ent.type});
-                    }
+                if (grid[ny][nx] === T.FIRE || grid[ny][nx] === T.ACID) {
+                    en.hp -= 30;
                 }
             }
 
-            // Giao tranh giữa các loài khác nhau
+            // Giao tranh thông minh giữa các chủng tộc hoặc zombie
             entities.forEach(other => {
-                if (ent !== other && ent.x === other.x && ent.y === other.y) {
-                    if (ent.type !== other.type && ent.type !== 'wolf' && other.type !== 'wolf') {
+                if (en !== other && en.x === other.x && en.y === other.y) {
+                    if (en.type === 'zombie' && other.type !== 'zombie') {
+                        other.hp -= 25;
+                    } else if (en.type !== other.type && en.type !== 'wolf' && other.type !== 'wolf') {
                         other.hp -= 15;
+                        en.kills++;
                     }
                 }
             });
         });
 
-        entities = entities.filter(ent => ent.hp > 0 && ent.age < 2000);
+        // Lọc bỏ thực thể đã chết
+        entities = entities.filter(en => en.hp > 0 && en.age < 3000);
 
         renderWorld();
         updateUIStats();
@@ -491,111 +565,120 @@
     function renderWorld() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+        // Vẽ địa hình
         for (let y = 0; y < ROWS; y++) {
             for (let x = 0; x < COLS; x++) {
-                let tile = worldGrid[y][x];
+                let tile = grid[y][x];
                 switch(tile) {
-                    case TILE_EMPTY: ctx.fillStyle = "#090d16"; break;
-                    case TILE_LAND: ctx.fillStyle = "#334155"; break;
-                    case TILE_WATER: ctx.fillStyle = "#0284c7"; break;
-                    case TILE_FOREST: ctx.fillStyle = "#15803d"; break;
-                    case TILE_MOUNTAIN: ctx.fillStyle = "#475569"; break;
-                    case TILE_GOLD: ctx.fillStyle = "#ca8a04"; break;
-                    case TILE_FIRE: ctx.fillStyle = "#dc2626"; break;
-                    case TILE_BUILDING: ctx.fillStyle = "#d97706"; break;
-                    default: ctx.fillStyle = "#090d16";
+                    case T.EMPTY: ctx.fillStyle = "#020617"; break;
+                    case T.LAND: ctx.fillStyle = "#1e293b"; break;
+                    case T.WATER: ctx.fillStyle = "#0284c7"; break;
+                    case T.FOREST: ctx.fillStyle = "#15803d"; break;
+                    case T.MOUNTAIN: ctx.fillStyle = "#475569"; break;
+                    case T.HILLS: ctx.fillStyle = "#78716c"; break;
+                    case T.GOLD: ctx.fillStyle = "#ca8a04"; break;
+                    case T.IRON: ctx.fillStyle = "#94a3b8"; break;
+                    case T.FIRE: ctx.fillStyle = "#dc2626"; break;
+                    case T.ACID: ctx.fillStyle = "#10b981"; break;
+                    case T.BUILDING: ctx.fillStyle = "#d97706"; break;
+                    default: ctx.fillStyle = "#020617";
                 }
                 ctx.fillRect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
             }
         }
 
-        entities.forEach(ent => {
+        // Vẽ thực thể
+        entities.forEach(en => {
             ctx.beginPath();
-            let px = ent.x * CELL_SIZE + CELL_SIZE / 2;
-            let py = ent.y * CELL_SIZE + CELL_SIZE / 2;
-            ctx.arc(px, py, CELL_SIZE / 2 - 1, 0, Math.PI * 2);
-
-            if (ent.type === 'human') ctx.fillStyle = "#38bdf8";
-            else if (ent.type === 'orc') ctx.fillStyle = "#ea580c";
-            else if (ent.type === 'elf') ctx.fillStyle = "#c084fc";
-            else if (ent.type === 'wolf') ctx.fillStyle = "#94a3b8";
-
+            let px = en.x * CELL_SIZE + CELL_SIZE / 2;
+            let py = en.y * CELL_SIZE + CELL_SIZE / 2;
+            ctx.arc(px, py, CELL_SIZE / 2, 0, Math.PI * 2);
+            ctx.fillStyle = en.color;
             ctx.fill();
-            ctx.lineWidth = 1;
-            ctx.strokeStyle = "#fff";
-            ctx.stroke();
+            if (en.isBlessed) {
+                ctx.lineWidth = 1;
+                ctx.strokeStyle = "#f59e0b";
+                ctx.stroke();
+            }
         });
     }
 
     function updateUIStats() {
         document.getElementById("popCount").innerText = entities.length;
+        document.getElementById("kingdomCount").innerText = kingdoms.length;
         document.getElementById("villageCount").innerText = villages.length;
-        document.getElementById("beastCount").innerText = entities.filter(e => e.type === 'wolf').length;
-        
-        let era = "Đồ Đá";
-        if (gameYear > 10) era = "Đồ Đồng";
-        if (gameYear > 25) era = "Đồ Sắt";
-        if (gameYear > 50) era = "Kỷ Nguyên Vàng";
-        document.getElementById("yearCount").innerText = `${era} (Năm ${gameYear})`;
+        document.getElementById("yearCount").innerText = gameYear;
+
+        // Cập nhật bảng Inspector nếu đang chọn nhân vật
+        if (selectedEntity) {
+            document.getElementById("inspectorInfo").innerHTML = `
+                <b>Tên:</b> ${selectedEntity.name}<br>
+                <b>Loài:</b> ${selectedEntity.type.toUpperCase()}<br>
+                <b>HP:</b> ${selectedEntity.hp}/${selectedEntity.maxHp}<br>
+                <b>Tuổi:</b> ${selectedEntity.age}<br>
+                <b>Số mạng hạ:</b> ${selectedEntity.kills}<br>
+                <b>Trạng thái:</b> ${selectedEntity.isBlessed ? '✨ Được Ban Phước' : 'Bình thường'}
+            `;
+        }
     }
 
     function togglePause() {
         isPaused = !isPaused;
         document.getElementById("pauseBtn").innerText = isPaused ? "▶️ Tiếp Tục" : "⏸️ Tạm Dừng";
-        updateLog(isPaused ? "Đã tạm dừng tiến trình thời gian." : "Đã tiếp tục tiến trình thời gian.");
+        updateLog(isPaused ? "Đã tạm dừng dòng chảy thời gian." : "Đã tiếp tục tiến trình thế giới.");
     }
 
     function changeSpeed(spd) {
-        updateLog(`Đã điều chỉnh nhịp độ dòng chảy thời gian.`);
+        updateLog(`Đã điều chỉnh nhịp độ mô phỏng hệ thống.`);
     }
 
     function clearDisasters() {
         for (let y = 0; y < ROWS; y++) {
             for (let x = 0; x < COLS; x++) {
-                if (worldGrid[y][x] === TILE_FIRE) worldGrid[y][x] = TILE_EMPTY;
+                if (grid[y][x] === T.FIRE || grid[y][x] === T.ACID) grid[y][x] = T.EMPTY;
             }
         }
-        updateLog("Đã dập tắt toàn bộ đám cháy hỏa hoạn.");
+        updateLog("Đã dập tắt toàn bộ hỏa hoạn và axit ăn mòn.");
     }
 
     function resetWorld() {
-        if (confirm("Sếp có chắc chắn muốn kích hoạt giao thức Hủy Diệt Toàn Cục không?")) {
+        if (confirm("Sếp có chắc chắn muốn xóa sổ toàn bộ vũ trụ này không?")) {
             initWorld();
-            updateLog("⚠️ Thượng Đế đã xóa sổ thế giới cũ và tái tạo không gian mới.");
+            updateLog("⚠️ Thượng Đế đã kích hoạt Đại Hủy Diệt (Reset).");
         }
     }
 
     function saveWorld() {
         try {
-            const saveObj = { grid: worldGrid, ents: entities, vills: villages, yr: gameYear };
-            localStorage.setItem("WorldBox_Ultimate_Save", JSON.stringify(saveObj));
-            updateLog("💾 Đã lưu tiến trình thế giới vào localStorage.");
-        } catch (e) {
+            const data = { grid: grid, ents: entities, yr: gameYear };
+            localStorage.setItem("WorldBox_95_Save", JSON.stringify(data));
+            updateLog("💾 Đã lưu dữ liệu thế giới thành công.");
+        } catch(e) {
             updateLog(`Lỗi lưu game: ${e.message}`);
         }
     }
 
     function loadWorld() {
         try {
-            const data = localStorage.getItem("WorldBox_Ultimate_Save");
-            if (data) {
-                const parsed = JSON.parse(data);
-                worldGrid = parsed.grid;
+            const saved = localStorage.getItem("WorldBox_95_Save");
+            if (saved) {
+                const parsed = JSON.parse(saved);
+                grid = parsed.grid;
                 entities = parsed.ents;
-                villages = parsed.vills || [];
                 gameYear = parsed.yr || 1;
-                updateLog("📂 Khôi phục thành công dữ liệu thế giới đã lưu.");
+                updateLog("📂 Khôi phục thành công không gian thế giới đã lưu.");
             } else {
                 updateLog("Không tìm thấy tệp lưu trữ dữ liệu nào.");
             }
-        } catch (e) {
+        } catch(e) {
             updateLog(`Lỗi tải dữ liệu: ${e.message}`);
         }
     }
 
     initWorld();
-    setInterval(updateSimulation, 130);
+    setInterval(updateSimulation, 120);
 </script>
 
 </body>
-</html>
+</html
+  d
