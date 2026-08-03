@@ -2,683 +2,609 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>God Simulator: WorldBox True 95% Edition (CTO 400$ Build)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Cuồng Phong Màu Sắc - Sảnh Vinh Quang & Phục Lợi</title>
     <style>
-        :root {
-            --bg-main: #020617;
-            --bg-panel: #0f172a;
-            --bg-card: #1e293b;
-            --accent-gold: #f59e0b;
-            --accent-cyan: #06b6d4;
-            --accent-pink: #f43f5e;
-            --success: #10b981;
-            --danger: #ef4444;
-            --text-light: #f8fafc;
-            --text-dim: #94a3b8;
-            --border: #334155;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            user-select: none;
-        }
-
+        * { box-sizing: border-box; user-select: none; -webkit-touch-callout: none; -webkit-tap-highlight-color: transparent; }
         body {
-            background: var(--bg-main);
-            color: var(--text-light);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 6px;
-        }
-
-        .god-wrapper {
-            width: 100%;
-            max-width: 1400px;
-            background: var(--bg-panel);
-            border: 2px solid var(--accent-gold);
-            border-radius: 14px;
-            box-shadow: 0 0 50px rgba(245, 158, 11, 0.3);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            height: 98vh;
-        }
-
-        header {
-            background: linear-gradient(90deg, #090d16, #1e293b);
-            padding: 10px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid var(--border);
-        }
-
-        header h1 {
-            font-size: 18px;
-            background: linear-gradient(90deg, var(--accent-gold), var(--accent-cyan));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-transform: uppercase;
-            font-weight: 900;
-            letter-spacing: 1.2px;
-        }
-
-        .world-stats {
-            display: flex;
-            gap: 15px;
-            font-size: 11px;
-            color: var(--text-dim);
-        }
-
-        .world-stats span {
-            color: var(--success);
-            font-weight: bold;
-        }
-
-        .main-layout {
-            display: flex;
-            flex-grow: 1;
-            overflow: hidden;
-        }
-
-        /* Sidebar trái: Công cụ Thượng Đế chuẩn WorldBox */
-        sidebar {
-            width: 310px;
-            background: var(--bg-panel);
-            border-right: 2px solid var(--border);
-            padding: 10px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            overflow-y: auto;
-        }
-
-        .tool-group {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 8px;
-        }
-
-        .tool-group h3 {
-            font-size: 10px;
-            color: var(--accent-gold);
-            margin-bottom: 6px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .tool-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 4px;
-        }
-
-        .btn-tool {
-            background: var(--bg-main);
-            border: 1px solid var(--border);
-            color: var(--text-light);
-            padding: 6px 4px;
-            font-size: 10px;
-            font-weight: bold;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.15s;
-            text-align: center;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .btn-tool:hover {
-            border-color: var(--accent-cyan);
-            background: rgba(6, 182, 212, 0.1);
-        }
-
-        .btn-tool.active {
-            background: var(--accent-gold);
-            color: #000;
-            border-color: var(--accent-gold);
-            box-shadow: 0 0 8px rgba(245, 158, 11, 0.5);
-        }
-
-        /* Khung hiển thị Canvas thế giới */
-        .canvas-container {
-            flex-grow: 1;
-            background: #010409;
+            margin: 0;
+            background: #ff2a5f;
+            color: #fff;
             display: flex;
             justify-content: center;
             align-items: center;
-            position: relative;
+            height: 100vh;
+            height: 100dvh;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            flex-direction: column;
             overflow: hidden;
+            position: relative;
+            touch-action: manipulation;
         }
 
-        canvas {
-            border: 1px solid var(--border);
-            cursor: crosshair;
-            background: #020617;
+        .page {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            justify-content: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding: 15px;
+        }
+        .page.active {
+            display: flex;
         }
 
-        /* Bảng điều khiển chi tiết thực thể / quốc gia bên phải */
-        .inspector-panel {
-            width: 280px;
-            background: var(--bg-panel);
-            border-left: 2px solid var(--border);
-            padding: 12px;
+        @keyframes screenShake {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            20% { transform: translate(-10px, 8px) rotate(-2deg); }
+            40% { transform: translate(10px, -8px) rotate(2deg); }
+            60% { transform: translate(-6px, -10px) rotate(-1deg); }
+            80% { transform: translate(8px, 6px) rotate(1.5deg); }
+            100% { transform: translate(0, 0) rotate(0deg); }
+        }
+
+        .shaking {
+            animation: screenShake 0.12s infinite ease-in-out;
+        }
+
+        .card-container, .achievement-page-container {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 20px;
+            border-radius: 24px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            font-size: 11px;
-            overflow-y: auto;
+            align-items: center;
+            width: 100%;
+            max-width: 360px;
+            z-index: 10;
         }
 
-        .inspector-panel h3 {
-            color: var(--accent-cyan);
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 4px;
-            margin-bottom: 6px;
+        .achievement-page-container {
+            max-height: 85vh;
+            justify-content: flex-start;
+            padding-bottom: 15px;
+        }
+
+        h1 {
+            font-size: 18px;
+            font-weight: 800;
             text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+            margin: 0 0 4px 0;
+            text-align: center;
+            background: linear-gradient(45deg, #fff, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .info-box {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 8px;
-            min-height: 120px;
+        p {
+            font-size: 11px;
+            margin: 0 0 12px 0;
+            opacity: 0.9;
+            text-align: center;
+            line-height: 1.2;
         }
 
-        /* Chân trang điều khiển hệ thống */
-        .control-footer {
-            background: #090d16;
-            padding: 8px 15px;
-            border-top: 2px solid var(--border);
+        .score-board {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-        }
-
-        .simulation-controls {
-            display: flex;
-            gap: 6px;
-        }
-
-        .btn-sim {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            color: var(--text-light);
-            padding: 5px 12px;
-            font-size: 11px;
+            width: 100%;
+            margin-bottom: 12px;
+            padding: 0 5px;
+            font-size: 12px;
             font-weight: bold;
-            border-radius: 5px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .btn-box {
+            background: linear-gradient(135deg, #ffffff, #f0f0f0);
+            color: #1a1a1a;
+            padding: 12px 20px;
+            font-size: 14px;
+            font-weight: 900;
+            border-radius: 50px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
             cursor: pointer;
-            transition: background 0.2s;
+            transition: transform 0.1s;
+            margin-top: 8px;
+            text-align: center;
+            width: 100%;
         }
 
-        .btn-sim:hover {
-            background: var(--border);
+        .btn-box:active {
+            transform: scale(0.96);
         }
 
-        .btn-sim.danger {
-            background: rgba(239, 68, 68, 0.2);
-            border-color: var(--danger);
-            color: var(--danger);
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.22);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            font-size: 12px;
+            padding: 10px 15px;
+            margin-top: 6px;
         }
 
-        .log-screen {
-            font-family: 'Courier New', Courier, monospace;
+        #numberContainer {
+            margin-top: 10px;
+            font-size: 52px;
+            font-weight: 900;
+            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            height: 60px;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .firework-particle {
+            position: absolute;
+            pointer-events: none;
+            border-radius: 50%;
+        }
+
+        .badges-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            overflow-y: auto;
+            margin: 8px 0;
+            width: 100%;
+            padding-right: 2px;
+            max-height: 240px;
+        }
+
+        .badge-item {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            opacity: 0.35;
+            transition: all 0.3s;
+        }
+
+        .badge-item.unlocked {
+            opacity: 1;
+            background: rgba(255, 215, 0, 0.25);
+            border-color: #ffd700;
+            box-shadow: 0 0 12px rgba(255, 215, 0, 0.3);
+        }
+
+        .badge-icon {
+            font-size: 22px;
+            margin-bottom: 2px;
+        }
+
+        .badge-title {
             font-size: 10px;
-            color: var(--accent-cyan);
-            background: #000;
-            padding: 5px 10px;
-            border-radius: 4px;
-            border: 1px solid var(--border);
-            width: 450px;
+            font-weight: bold;
+            margin-bottom: 1px;
+        }
+
+        .badge-desc {
+            font-size: 8px;
+            opacity: 0.8;
+        }
+
+        #unlockToast {
+            position: absolute;
+            top: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            color: #1a1a1a;
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-weight: 900;
+            font-size: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transition: top 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 100;
+            pointer-events: none;
             white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+        }
+        #unlockToast.show {
+            top: 15px;
+        }
+    
+        .mystery-btn {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            width: 36px;
+            height: 36px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 20;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+        }
+        .mystery-btn:active {
+            transform: scale(0.9);
         }
     </style>
 </head>
 <body>
 
-<div class="god-wrapper">
-    <header>
-        <h1>🌍 WorldBox: True Simulation Engine (95% Accurate)</h1>
-        <div class="world-stats">
-            <div>Dân số: <span id="popCount">0</span></div>
-            <div>Quốc gia: <span id="kingdomCount">0</span></div>
-            <div>Làng: <span id="villageCount">0</span></div>
-            <div>Năm: <span id="yearCount">1</span></div>
-        </div>
-    </header>
+    <div id="unlockToast">🏆 Đã Mở Khóa Huy Hiệu Mới!</div>
 
-    <div class="main-layout">
-        <!-- Sidebar trái: Công cụ Thượng Đế -->
-        <sidebar>
-            <div class="tool-group">
-                <h3>🏞️ Địa Hình & Sơn Thủy</h3>
-                <div class="tool-grid">
-                    <button class="btn-tool active" onclick="setTool('land', this)">Đất Cạn</button>
-                    <button class="btn-tool" onclick="setTool('water', this)">Đại Dương</button>
-                    <button class="btn-tool" onclick="setTool('forest', this)">Rừng Cây</button>
-                    <button class="btn-tool" onclick="setTool('mountain', this)">Núi Đá</button>
-                    <button class="btn-tool" onclick="setTool('hills', this)">Đồi Núi</button>
-                    <button class="btn-tool" onclick="setTool('gold', this)">Mỏ Vàng</button>
-                    <button class="btn-tool" onclick="setTool('iron', this)">Mỏ Sắt</button>
-                    <button class="btn-tool" onclick="setTool('erase', this)">Tẩy Xóa</button>
-                </div>
+    <!-- TRANG 1: TRÒ CHƠI CHÍNH -->
+    <div id="gamePage" class="page active">
+        <div class="mystery-btn" onclick="window.open('https://youtu.be/vgUyuAloTgA?si=bUWeSZl_dzcRXEKs', '_blank')">?</div>
+        <div class="card-container">
+            <h1>⚡ Cuồng Phong Màu Sắc ⚡</h1>
+            <p>Chạm để Bật/Dừng. Chinh phục các mốc điểm để sưu tầm huy hiệu!</p>
+            
+            <div class="score-board">
+                <span>🏆 Kỷ Lục: <strong id="highScore">0</strong></span>
+                <span>🔥 Điểm: <strong id="currentScore">0</strong></span>
             </div>
 
-            <div class="tool-group">
-                <h3>👥 Chủng Tộc & Văn Minh</h3>
-                <div class="tool-grid">
-                    <button class="btn-tool" onclick="setTool('human', this)">Loài Người</button>
-                    <button class="btn-tool" onclick="setTool('orc', this)">Tộc Orc</button>
-                    <button class="btn-tool" onclick="setTool('elf', this)">Tộc Elf</button>
-                    <button class="btn-tool" onclick="setTool('dwarf', this)">Tộc Dwarf</button>
-                    <button class="btn-tool" onclick="setTool('wolf', this)">Sói Hoang</button>
-                    <button class="btn-tool" onclick="setTool('bandit', this)">Đạo Tặc</button>
-                </div>
-            </div>
+            <div class="btn-box" id="statusText">BẮT ĐẦU NGAY</div>
+            <div id="numberContainer">68</div>
 
-            <div class="tool-group">
-                <h3>⚡ Thảm Họa & Phép Thuật</h3>
-                <div class="tool-grid">
-                    <button class="btn-tool" onclick="setTool('lightning', this)">Sét Đánh</button>
-                    <button class="btn-tool" onclick="setTool('meteor', this)">Thiên Thạch</button>
-                    <button class="btn-tool" onclick="setTool('fire', this)">Đám Cháy</button>
-                    <button class="btn-tool" onclick="setTool('acid', this)">Mưa Axit</button>
-                    <button class="btn-tool" onclick="setTool('bless', this)">Ban Phước</button>
-                    <button class="btn-tool" onclick="setTool('zombie', this)">Dịch Xác Sống</button>
-                </div>
-            </div>
-
-            <div class="tool-group">
-                <h3>⚙️ Quản Trị Hệ Thống</h3>
-                <div class="tool-grid" style="grid-template-columns: repeat(2, 1fr);">
-                    <button class="btn-tool" onclick="saveWorld()" style="grid-column: span 1;">Lưu Game</button>
-                    <button class="btn-tool" onclick="loadWorld()" style="grid-column: span 1;">Tải Game</button>
-                    <button class="btn-tool" onclick="resetWorld()" style="grid-column: span 2; color: var(--danger); border-color: var(--danger);">Hủy Diệt Toàn Cục</button>
-                </div>
-            </div>
-        </sidebar>
-
-        <!-- Canvas hiển thị bản đồ -->
-        <div class="canvas-container" id="canvasContainer">
-            <canvas id="worldCanvas" width="800" height="540"></canvas>
-        </div>
-
-        <!-- Bảng thông tin chi tiết (Inspector) -->
-        <div class="inspector-panel">
-            <h3>🔍 Bản Hồ Sơ Thượng Đế</h3>
-            <div class="info-box" id="inspectorInfo">
-                Nhấp chuột chọn bất kỳ sinh vật hoặc công trình nào trên bản đồ để xem chi tiết lịch sử, chỉ số sức mạnh và quốc gia sở tại.
-            </div>
-            <h3>👑 Các Quốc Gia</h3>
-            <div class="info-box" id="kingdomInfo" style="max-height: 150px; overflow-y: auto;">
-                Chưa có quốc gia nào được thành lập.
-            </div>
+            <div class="btn-box btn-secondary" onclick="switchPage('achievementPage')">🏅 Sảnh Vinh Quang & Bộ Sưu Tập</div>
+            <div class="btn-box btn-secondary" style="background: linear-gradient(135deg, #00f2fe, #4facfe); color: #fff; border: none;" onclick="switchPage('giftPage')">🎁 Phục Lợi & Nhập Mã</div>
         </div>
     </div>
 
-    <!-- Chân trang điều khiển -->
-    <div class="control-footer">
-        <div class="simulation-controls">
-            <button class="btn-sim" onclick="togglePause()" id="pauseBtn">⏸️ Tạm Dừng</button>
-            <button class="btn-sim" onclick="changeSpeed(1)">1x</button>
-            <button class="btn-sim" onclick="changeSpeed(3)">3x</button>
-            <button class="btn-sim danger" onclick="clearDisasters()">Dập Lửa / Axit</button>
-        </div>
-        <div class="log-screen" id="logScreen">
-            [Engine 95%]: Khởi tạo bản đồ lượng tử WorldBox thành công dưới quyền điều hành của CTO Sếp.
+    <!-- TRANG 2: SẢNH VINH QUANG & BỘ SƯU TẬP THÀNH TÍCH -->
+    <div id="achievementPage" class="page">
+        <div class="achievement-page-container">
+            <h1>🏅 Sảnh Vinh Quang</h1>
+            <p style="margin-bottom: 6px;">Kỷ Lục Cao Nhất: <strong id="page2HighScore" style="color: #ffd700; font-size: 15px;">0</strong></p>
+            
+            <p style="font-weight: bold; margin-bottom: 4px; text-transform: uppercase; font-size: 10px; letter-spacing: 0.5px;">📦 Bộ Sưu Tập Thành Tích</p>
+            
+            <div class="badges-grid" id="badgesGrid"></div>
+
+            <div class="btn-box btn-secondary" onclick="switchPage('gamePage')">⬅️ Quay Lại Trò Chơi</div>
         </div>
     </div>
-</div>
 
-<script>
-    const canvas = document.getElementById("worldCanvas");
-    const ctx = canvas.getContext("2d");
+    <!-- TRANG 3: PHỤC LỢI & NHẬP MÃ (THÀNH TÍCH HOẶC MAY MẮN) -->
+    <div id="giftPage" class="page">
+        <div class="achievement-page-container" style="max-width: 340px;">
+            <h1>🎁 Phục Lợi Quà Tặng</h1>
+            <p style="margin-bottom: 12px;">Nhập mã code để nhận quà Thành Tích hoặc May Mắn!</p>
+            
+            <div style="width: 100%; display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px;">
+                <input type="text" id="giftCodeInput" placeholder="Nhập mã code (VD: CUONGPHONG, MAYMAN)..." style="width: 100%; padding: 12px 15px; border-radius: 50px; border: 1px solid rgba(255,255,255,0.4); background: rgba(0,0,0,0.25); color: #fff; font-size: 13px; text-align: center; outline: none;">
+                <div class="btn-box" id="confirmBtn" style="margin-top: 0; padding: 10px; font-size: 13px;">XÁC NHẬN NHẬN QUÀ</div>
+            </div>
 
-    const CELL_SIZE = 8;
-    const COLS = canvas.width / CELL_SIZE; // 100
-    const ROWS = canvas.height / CELL_SIZE; // 675
+            <div id="giftResultBox" style="background: rgba(0,0,0,0.25); border: 1px dashed rgba(255,255,255,0.3); border-radius: 14px; padding: 12px; width: 100%; text-align: center; min-height: 65px; display: flex; align-items: center; justify-content: center; font-size: 12px; margin-bottom: 10px;">
+                Nhập mã code và bấm xác nhận để nhận thưởng!
+            </div>
 
-    // Định nghĩa loại địa hình
-    const T = {
-        EMPTY: 0, LAND: 1, WATER: 2, FOREST: 3, 
-        MOUNTAIN: 4, HILLS: 5, GOLD: 6, IRON: 7, 
-        FIRE: 8, ACID: 9, BUILDING: 10
-    };
+            <div class="btn-box btn-secondary" style="font-size: 11px; padding: 8px; margin-bottom: 4px; background: rgba(255,255,255,0.1);" onclick="resetUsedCodes()">🔄 Nhập lại mã cũ (Xóa lịch sử)</div>
+            <div class="btn-box btn-secondary" onclick="switchPage('gamePage')">⬅️ Quay Lại Trò Chơi</div>
+        </div>
+    </div>
 
-    let grid = [];
-    let entities = [];
-    let kingdoms = [];
-    let villages = [];
-    let selectedEntity = null;
+    <script>
+        const colors = [
+            '#ff2a5f', '#ff9f00', '#00f2fe', '#9b51e0', 
+            '#ff007f', '#00ffcc', '#ffcc00', '#7209b7', 
+            '#3a86ff', '#fb5607', '#ff006e', '#8338ec', '#06d6a0'
+        ];
+        
+        let isRunning = false;
+        let animationTimer = null;
+        let currentScore = 0;
+        let currentRandomNum = 0;
+        let highScore = parseInt(localStorage.getItem('chaosHighScore')) || 0;
+        
+        const achievements = [
+            { id: 'novice', title: 'Tập Sự', desc: 'Đạt 50k điểm', req: 50000, unlocked: false, icon: '🌱' },
+            { id: 'runner', title: 'Tốc Độ', desc: 'Đạt 200k điểm', req: 200000, unlocked: false, icon: '⚡' },
+            { id: 'storm', title: 'Cuồng Phong', desc: 'Đạt 500k điểm', req: 500000, unlocked: false, icon: '🌪️' },
+            { id: 'master', title: 'Bậc Thầy', desc: 'Đạt 1 Triệu điểm', req: 1000000, unlocked: false, icon: '👑' },
+            { id: 'expert', title: 'Cao Thủ', desc: 'Đạt 2.5 Triệu điểm', req: 2500000, unlocked: false, icon: '🔮' },
+            { id: 'legend', title: 'Huyền Thoại', desc: 'Đạt 5 Triệu điểm', req: 5000000, unlocked: false, icon: '🏆' },
+            { id: 'titan', title: 'Titan Khổng Lồ', desc: 'Đạt 10 Triệu điểm', req: 10000000, unlocked: false, icon: '🗿' },
+            { id: 'galaxy', title: 'Vũ Trụ Sôi Động', desc: 'Đạt 25 Triệu điểm', req: 25000000, unlocked: false, icon: '🌌' },
+            { id: 'god', title: 'Thần Thánh Tối Thượng', desc: 'Đạt 50 Triệu điểm', req: 50000000, unlocked: false, icon: '🔥' }
+        ];
 
-    let currentTool = 'land';
-    let isPaused = false;
-    let gameYear = 1;
-    let yearCounter = 0;
-
-    // Khởi tạo bản đồ tự nhiên
-    function initWorld() {
-        grid = [];
-        for (let y = 0; y < ROWS; y++) {
-            let row = [];
-            for (let x = 0; x < COLS; x++) {
-                // Tạo biển xung quanh hoặc đan xen
-                let type = T.EMPTY;
-                let r = Math.random();
-                if (r < 0.2) type = T.WATER;
-                else if (r < 0.3) type = T.FOREST;
-                else if (r < 0.33) type = T.HILLS;
-                row.push(type);
-            }
-            grid.push(row);
-        }
-        entities = [];
-        kingdoms = [];
-        villages = [];
-        gameYear = 1;
-        updateLog("Đã kiến tạo lại trật tự thế giới nguyên thủy.");
-    }
-
-    function setTool(toolName, btnElement) {
-        currentTool = toolName;
-        document.querySelectorAll('.btn-tool').forEach(b => b.classList.remove('active'));
-        if (btnElement) btnElement.classList.add('active');
-        updateLog(`Đã chọn quyền năng: [${toolName.toUpperCase()}]`);
-    }
-
-    function updateLog(msg) {
-        document.getElementById("logScreen").innerText = `[WorldBox Engine]: ${msg}`;
-    }
-
-    // Xử lý vẽ bản đồ tương tác
-    let isMouseDown = false;
-    canvas.addEventListener("mousedown", (e) => {
-        isMouseDown = true;
-        handleCanvasInteraction(e);
-    });
-    window.addEventListener("mouseup", () => { isMouseDown = false; });
-    canvas.addEventListener("mousemove", (e) => {
-        if (isMouseDown) handleCanvasInteraction(e);
-    });
-
-    function handleCanvasInteraction(e) {
-        const rect = canvas.getBoundingClientRect();
-        const mx = Math.floor((e.clientX - rect.left) / CELL_SIZE);
-        const my = Math.floor((e.clientY - rect.top) / CELL_SIZE);
-
-        if (mx >= 0 && mx < COLS && my >= 0 && my < ROWS) {
-            if (currentTool === 'inspect') {
-                selectedEntity = entities.find(en => Math.abs(en.x - mx) <= 1 && Math.abs(en.y - my) <= 1);
-                isMouseDown = false;
-            } else {
-                applyGodTool(mx, my);
-            }
-        }
-    }
-
-    function applyGodTool(x, y) {
-        switch(currentTool) {
-            case 'land': grid[y][x] = T.LAND; break;
-            case 'water': grid[y][x] = T.WATER; break;
-            case 'forest': grid[y][x] = T.FOREST; break;
-            case 'mountain': grid[y][x] = T.MOUNTAIN; break;
-            case 'hills': grid[y][x] = T.HILLS; break;
-            case 'gold': grid[y][x] = T.GOLD; break;
-            case 'iron': grid[y][x] = T.IRON; break;
-            case 'erase': grid[y][x] = T.EMPTY; break;
-            case 'human': spawnEntity(x, y, 'human', 'Loài Người', '#38bdf8'); isMouseDown = false; break;
-            case 'orc': spawnEntity(x, y, 'orc', 'Tộc Orc', '#ea580c'); isMouseDown = false; break;
-            case 'elf': spawnEntity(x, y, 'elf', 'Tộc Elf', '#c084fc'); isMouseDown = false; break;
-            case 'dwarf': spawnEntity(x, y, 'dwarf', 'Tộc Dwarf', '#facc15'); isMouseDown = false; break;
-            case 'wolf': spawnEntity(x, y, 'wolf', 'Sói Hoang', '#94a3b8'); isMouseDown = false; break;
-            case 'bandit': spawnEntity(x, y, 'bandit', 'Đạo Tặc', '#ef4444'); isMouseDown = false; break;
-            case 'lightning': strikeLightning(x, y); isMouseDown = false; break;
-            case 'meteor': dropMeteor(x, y); isMouseDown = false; break;
-            case 'fire': grid[y][x] = T.FIRE; break;
-            case 'acid': grid[y][x] = T.ACID; break;
-            case 'bless': blessEntityAt(x, y); isMouseDown = false; break;
-            case 'zombie': spawnEntity(x, y, 'zombie', 'Zombie', '#10b981'); isMouseDown = false; break;
-        }
-    }
-
-    // Hệ thống thực thể thông minh chuẩn WorldBox
-    const firstNames = ["Arag", "Balin", "Cora", "Doran", "Elen", "Falk", "Gimli", "Hilda", "Igor", "Jora"];
-    function spawnEntity(x, y, type, namePrefix, color) {
-        let name = `${namePrefix} ${firstNames[Math.floor(Math.random() * firstNames.length)]}`;
-        entities.push({
-            x: x, y: y, type: type, name: name, color: color,
-            hp: 100, maxHp: 100, age: 0, kills: 0, level: 1,
-            isBlessed: false, kingdom: null
-        });
-        updateLog(`Ban sự sống cho [${name}] tại tọa độ (${x}, ${y}).`);
-    }
-
-    function strikeLightning(x, y) {
-        grid[y][x] = T.FIRE;
-        updateLog(`⚡ Sét đánh giáng xuống (${x}, ${y})!`);
-        entities.forEach(en => {
-            if (Math.abs(en.x - x) <= 2 && Math.abs(en.y - y) <= 2) {
-                en.hp -= 80;
-                en.isBlessed = true; // Sét đánh đôi khi buff hoặc gây sát thương
+        let savedBadges = JSON.parse(localStorage.getItem('chaosBadges')) || {};
+        achievements.forEach(b => {
+            if (savedBadges[b.id] || highScore >= b.req) {
+                b.unlocked = true;
             }
         });
-    }
 
-    function dropMeteor(x, y) {
-        updateLog(`☄️ Thiên thạch hủy diệt lao xuống (${x}, ${y})!`);
-        for (let dy = -3; dy <= 3; dy++) {
-            for (let dx = -3; dx <= 3; dx++) {
-                let nx = x + dx, ny = y + dy;
-                if (nx >= 0 && nx < COLS && ny >= 0 && ny < ROWS) {
-                    grid[ny][nx] = Math.random() < 0.5 ? T.MOUNTAIN : T.FIRE;
-                }
+        const statusText = document.getElementById('statusText');
+        const numEl = document.getElementById('numberContainer');
+        const highScoreEl = document.getElementById('highScore');
+        const page2HighScoreEl = document.getElementById('page2HighScore');
+        const currentScoreEl = document.getElementById('currentScore');
+        const bodyEl = document.body;
+        const badgesGrid = document.getElementById('badgesGrid');
+        const unlockToast = document.getElementById('unlockToast');
+
+        highScoreEl.innerText = highScore;
+        page2HighScoreEl.innerText = highScore;
+
+        renderBadges();
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const btn = document.getElementById('confirmBtn');
+            const input = document.getElementById('giftCodeInput');
+            
+            if(btn) {
+                btn.addEventListener('click', redeemGiftCode);
+                btn.addEventListener('touchstart', (e) => { e.preventDefault(); redeemGiftCode(); }, {passive: false});
             }
-        }
-        entities = entities.filter(en => Math.abs(en.x - x) > 3 || Math.abs(en.y - y) > 3);
-    }
-
-    function blessEntityAt(x, y) {
-        let target = entities.find(en => Math.abs(en.x - x) <= 1 && Math.abs(en.y - y) <= 1);
-        if (target) {
-            target.isBlessed = true;
-            target.hp = target.maxHp;
-            updateLog(`✨ Ban phước lành cho [${target.name}]!`);
-        }
-    }
-
-    // Vòng lặp mô phỏng sinh thái thế giới
-    function updateSimulation() {
-        if (isPaused) return;
-
-        yearCounter++;
-        if (yearCounter > 50) {
-            gameYear++;
-            yearCounter = 0;
-        }
-
-        // Lan truyền Hỏa hoạn & Axit
-        for (let y = 0; y < ROWS; y++) {
-            for (let x = 0; x < COLS; x++) {
-                if (grid[y][x] === T.FIRE) {
-                    if (Math.random() < 0.3) grid[y][x] = T.EMPTY;
-                    let dirs = [[0,1],[0,-1],[1,0],[-1,0]];
-                    let d = dirs[Math.floor(Math.random() * dirs.length)];
-                    let nx = x + d[0], ny = y + d[1];
-                    if (nx >= 0 && nx < COLS && ny >= 0 && ny < ROWS) {
-                        if (grid[ny][nx] === T.FOREST || grid[ny][nx] === T.BUILDING) grid[ny][nx] = T.FIRE;
+            if(input) {
+                input.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        redeemGiftCode();
                     }
-                } else if (grid[y][x] === T.ACID) {
-                    if (Math.random() < 0.4) grid[y][x] = T.EMPTY;
-                }
+                });
             }
+        });
+
+        function renderBadges() {
+            badgesGrid.innerHTML = '';
+            achievements.forEach(b => {
+                const div = document.createElement('div');
+                div.className = `badge-item ${b.unlocked ? 'unlocked' : ''}`;
+                div.innerHTML = `
+                    <div class="badge-icon">${b.icon}</div>
+                    <div class="badge-title">${b.title}</div>
+                    <div class="badge-desc">${b.desc}</div>
+                `;
+                badgesGrid.appendChild(div);
+            });
         }
 
-        // Hành vi sinh vật (AI Movement, Combat, Village building)
-        entities.forEach(en => {
-            en.age++;
-            let moves = [[0,1], [0,-1], [1,0], [-1,0], [0,0]];
-            let m = moves[Math.floor(Math.random() * moves.length)];
-            let nx = en.x + m[0], ny = en.y + m[1];
-
-            if (nx >= 0 && nx < COLS && ny >= 0 && ny < ROWS) {
-                if (grid[ny][nx] !== T.WATER && grid[ny][nx] !== T.MOUNTAIN) {
-                    en.x = nx;
-                    en.y = ny;
-                }
-                if (grid[ny][nx] === T.FIRE || grid[ny][nx] === T.ACID) {
-                    en.hp -= 30;
-                }
-            }
-
-            // Giao tranh thông minh giữa các chủng tộc hoặc zombie
-            entities.forEach(other => {
-                if (en !== other && en.x === other.x && en.y === other.y) {
-                    if (en.type === 'zombie' && other.type !== 'zombie') {
-                        other.hp -= 25;
-                    } else if (en.type !== other.type && en.type !== 'wolf' && other.type !== 'wolf') {
-                        other.hp -= 15;
-                        en.kills++;
-                    }
+        function checkAchievements(score) {
+            achievements.forEach(b => {
+                if (!b.unlocked && score >= b.req) {
+                    b.unlocked = true;
+                    savedBadges[b.id] = true;
+                    localStorage.setItem('chaosBadges', JSON.stringify(savedBadges));
+                    showToast(`🏆 Mở khóa: ${b.title}!`);
+                    renderBadges();
                 }
             });
-        });
+        }
 
-        // Lọc bỏ thực thể đã chết
-        entities = entities.filter(en => en.hp > 0 && en.age < 3000);
+        function showToast(text) {
+            unlockToast.innerText = text;
+            unlockToast.classList.add('show');
+            setTimeout(() => {
+                unlockToast.classList.remove('show');
+            }, 3000);
+        }
 
-        renderWorld();
-        updateUIStats();
-    }
-
-    function renderWorld() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        // Vẽ địa hình
-        for (let y = 0; y < ROWS; y++) {
-            for (let x = 0; x < COLS; x++) {
-                let tile = grid[y][x];
-                switch(tile) {
-                    case T.EMPTY: ctx.fillStyle = "#020617"; break;
-                    case T.LAND: ctx.fillStyle = "#1e293b"; break;
-                    case T.WATER: ctx.fillStyle = "#0284c7"; break;
-                    case T.FOREST: ctx.fillStyle = "#15803d"; break;
-                    case T.MOUNTAIN: ctx.fillStyle = "#475569"; break;
-                    case T.HILLS: ctx.fillStyle = "#78716c"; break;
-                    case T.GOLD: ctx.fillStyle = "#ca8a04"; break;
-                    case T.IRON: ctx.fillStyle = "#94a3b8"; break;
-                    case T.FIRE: ctx.fillStyle = "#dc2626"; break;
-                    case T.ACID: ctx.fillStyle = "#10b981"; break;
-                    case T.BUILDING: ctx.fillStyle = "#d97706"; break;
-                    default: ctx.fillStyle = "#020617";
+        let audioCtx = null;
+        function playVictorySound() {
+            try {
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
                 }
-                ctx.fillRect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+                
+                const notes = [261.63, 329.63, 392.00, 523.25, 659.25, 783.99, 1046.50];
+                notes.forEach((freq, index) => {
+                    let osc = audioCtx.createOscillator();
+                    let gain = audioCtx.createGain();
+                    
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(freq, audioCtx.currentTime + index * 0.08);
+                    
+                    gain.gain.setValueAtTime(0.2, audioCtx.currentTime + index * 0.08);
+                    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + index * 0.08 + 0.4);
+                    
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    
+                    osc.start(audioCtx.currentTime + index * 0.08);
+                    osc.stop(audioCtx.currentTime + index * 0.08 + 0.4);
+                });
+            } catch(e) {
+                console.log("Audio not allowed yet");
             }
         }
 
-        // Vẽ thực thể
-        entities.forEach(en => {
-            ctx.beginPath();
-            let px = en.x * CELL_SIZE + CELL_SIZE / 2;
-            let py = en.y * CELL_SIZE + CELL_SIZE / 2;
-            ctx.arc(px, py, CELL_SIZE / 2, 0, Math.PI * 2);
-            ctx.fillStyle = en.color;
-            ctx.fill();
-            if (en.isBlessed) {
-                ctx.lineWidth = 1;
-                ctx.strokeStyle = "#f59e0b";
-                ctx.stroke();
+        function switchPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            page2HighScoreEl.innerText = highScore;
+            renderBadges();
+        }
+
+        const validGiftCodes = {
+            "CUONGPHONG": { type: "score", val: 10000, msg: "🎉 Thành tích! Bạn nhận ngay +10,000 điểm!" },
+            "MAYMAN": { type: "luck", msg: "🍀 Quà May Mắn: Quay trúng gói thưởng ngẫu nhiên!" },
+            "VIP2026": { type: "score", val: 50000, msg: "👑 Mã VIP! Nhận ngay +50,000 điểm!" },
+            "THANGVON": { type: "score", val: 25000, msg: "💎 Quà Thành Tích: Nhận ngay +25,000 điểm!" }
+        };
+        
+        function resetUsedCodes() {
+            localStorage.removeItem('chaosUsedCodes');
+            document.getElementById('giftResultBox').innerHTML = "<span style='color: #00ffcc;'>✨ Đã làm mới! Bạn có thể nhập lại các mã từ đầu.</span>";
+        }
+
+        function redeemGiftCode() {
+            const input = document.getElementById('giftCodeInput');
+            const resultBox = document.getElementById('giftResultBox');
+            const code = input.value.trim().toUpperCase();
+
+            if (!code) {
+                resultBox.innerHTML = "<span style='color: #ff9f00;'>⚠️ Vui lòng nhập mã code!</span>";
+                return;
             }
-        });
-    }
 
-    function updateUIStats() {
-        document.getElementById("popCount").innerText = entities.length;
-        document.getElementById("kingdomCount").innerText = kingdoms.length;
-        document.getElementById("villageCount").innerText = villages.length;
-        document.getElementById("yearCount").innerText = gameYear;
-
-        // Cập nhật bảng Inspector nếu đang chọn nhân vật
-        if (selectedEntity) {
-            document.getElementById("inspectorInfo").innerHTML = `
-                <b>Tên:</b> ${selectedEntity.name}<br>
-                <b>Loài:</b> ${selectedEntity.type.toUpperCase()}<br>
-                <b>HP:</b> ${selectedEntity.hp}/${selectedEntity.maxHp}<br>
-                <b>Tuổi:</b> ${selectedEntity.age}<br>
-                <b>Số mạng hạ:</b> ${selectedEntity.kills}<br>
-                <b>Trạng thái:</b> ${selectedEntity.isBlessed ? '✨ Được Ban Phước' : 'Bình thường'}
-            `;
-        }
-    }
-
-    function togglePause() {
-        isPaused = !isPaused;
-        document.getElementById("pauseBtn").innerText = isPaused ? "▶️ Tiếp Tục" : "⏸️ Tạm Dừng";
-        updateLog(isPaused ? "Đã tạm dừng dòng chảy thời gian." : "Đã tiếp tục tiến trình thế giới.");
-    }
-
-    function changeSpeed(spd) {
-        updateLog(`Đã điều chỉnh nhịp độ mô phỏng hệ thống.`);
-    }
-
-    function clearDisasters() {
-        for (let y = 0; y < ROWS; y++) {
-            for (let x = 0; x < COLS; x++) {
-                if (grid[y][x] === T.FIRE || grid[y][x] === T.ACID) grid[y][x] = T.EMPTY;
+            let usedCodes = JSON.parse(localStorage.getItem('chaosUsedCodes')) || {};
+            if (usedCodes[code]) {
+                resultBox.innerHTML = "<span style='color: #ff5e62;'>❌ Mã này đã được sử dụng rồi!</span>";
+                return;
             }
-        }
-        updateLog("Đã dập tắt toàn bộ hỏa hoạn và axit ăn mòn.");
-    }
 
-    function resetWorld() {
-        if (confirm("Sếp có chắc chắn muốn xóa sổ toàn bộ vũ trụ này không?")) {
-            initWorld();
-            updateLog("⚠️ Thượng Đế đã kích hoạt Đại Hủy Diệt (Reset).");
-        }
-    }
+            if (validGiftCodes[code]) {
+                const gift = validGiftCodes[code];
+                usedCodes[code] = true;
+                localStorage.setItem('chaosUsedCodes', JSON.stringify(usedCodes));
 
-    function saveWorld() {
-        try {
-            const data = { grid: grid, ents: entities, yr: gameYear };
-            localStorage.setItem("WorldBox_95_Save", JSON.stringify(data));
-            updateLog("💾 Đã lưu dữ liệu thế giới thành công.");
-        } catch(e) {
-            updateLog(`Lỗi lưu game: ${e.message}`);
-        }
-    }
-
-    function loadWorld() {
-        try {
-            const saved = localStorage.getItem("WorldBox_95_Save");
-            if (saved) {
-                const parsed = JSON.parse(saved);
-                grid = parsed.grid;
-                entities = parsed.ents;
-                gameYear = parsed.yr || 1;
-                updateLog("📂 Khôi phục thành công không gian thế giới đã lưu.");
+                if (gift.type === "score") {
+                    currentScore += gift.val;
+                    currentScoreEl.innerText = currentScore;
+                    checkAchievements(currentScore);
+                    if (currentScore > highScore) {
+                        highScore = currentScore;
+                        highScoreEl.innerText = highScore;
+                        localStorage.setItem('chaosHighScore', highScore);
+                    }
+                    resultBox.innerHTML = `<span style="color: #ffd700; font-weight: bold;">${gift.msg}</span>`;
+                    showToast("🎁 Nhận quà thành công!");
+                    playVictorySound();
+                    launchFireworks();
+                } else if (gift.type === "luck") {
+                    const luckyScore = Math.floor(Math.random() * 45000) + 5000;
+                    currentScore += luckyScore;
+                    currentScoreEl.innerText = currentScore;
+                    checkAchievements(currentScore);
+                    if (currentScore > highScore) {
+                        highScore = currentScore;
+                        highScoreEl.innerText = highScore;
+                        localStorage.setItem('chaosHighScore', highScore);
+                    }
+                    resultBox.innerHTML = `<span style="color: #00ffcc; font-weight: bold;">🍀 May mắn! Bạn trúng gói thưởng ${luckyScore.toLocaleString()} điểm!</span>`;
+                    showToast("🍀 Trúng quà may mắn!");
+                    playVictorySound();
+                    launchFireworks();
+                }
+                input.value = "";
             } else {
-                updateLog("Không tìm thấy tệp lưu trữ dữ liệu nào.");
+                resultBox.innerHTML = "<span style='color: #ff5e62;'>❌ Mã code không chính xác! (Gợi ý: CUONGPHONG, MAYMAN, VIP2026)</span>";
             }
-        } catch(e) {
-            updateLog(`Lỗi tải dữ liệu: ${e.message}`);
         }
-    }
 
-    initWorld();
-    setInterval(updateSimulation, 120);
-</script>
+        statusText.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleAction();
+        });
+        statusText.addEventListener('touchstart', (e) => {
+            e.stopPropagation();
+            e.preventDefault();
+            toggleAction();
+        }, { passive: false });
 
+        function toggleAction() {
+            isRunning = !isRunning;
+
+            if (isRunning) {
+                statusText.innerText = "💥 ĐANG QUẨY (CHẠM DỪNG)";
+                bodyEl.classList.add('shaking');
+                
+                clearTimeout(animationTimer);
+
+                function loopChaos() {
+                    if (!isRunning) return;
+
+                    const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                    bodyEl.style.backgroundColor = randomColor;
+
+                    currentRandomNum = Math.floor(Math.random() * 500000) + 1;
+                    numEl.innerText = currentRandomNum;
+                    
+                    currentScore += currentRandomNum;
+                    currentScoreEl.innerText = currentScore;
+
+                    checkAchievements(currentScore);
+
+                    if (currentScore > highScore) {
+                        highScore = currentScore;
+                        highScoreEl.innerText = highScore;
+                        localStorage.setItem('chaosHighScore', highScore);
+                    }
+
+                    const randomSpeed = Math.floor(Math.random() * 100) + 150; 
+                    animationTimer = setTimeout(loopChaos, randomSpeed);
+                }
+
+                loopChaos();
+
+            } else {
+                statusText.innerText = "✨ ĐÃ DỪNG (CHẠM TIẾP TỤC)";
+                bodyEl.classList.remove('shaking');
+                bodyEl.style.backgroundColor = '#ff2a5f';
+                clearTimeout(animationTimer);
+
+                checkAchievements(currentScore);
+
+                if (currentScore > highScore) {
+                    highScore = currentScore;
+                    localStorage.setItem('chaosHighScore', highScore);
+                }
+
+                playVictorySound();
+                launchFireworks();
+            }
+        }
+
+        function launchFireworks() {
+            const centerX = window.innerWidth / 2;
+            const centerY = window.innerHeight / 2;
+            const particleCount = 50;
+
+            for (let i = 0; i < particleCount; i++) {
+                const p = document.createElement('div');
+                p.className = 'firework-particle';
+                p.style.left = centerX + 'px';
+                p.style.top = centerY + 'px';
+                
+                const size = Math.random() * 8 + 4;
+                p.style.width = size + 'px';
+                p.style.height = size + 'px';
+                p.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                
+                bodyEl.appendChild(p);
+
+                const angle = Math.random() * Math.PI * 2;
+                const speed = Math.random() * 180 + 50;
+                const tx = Math.cos(angle) * speed;
+                const ty = Math.sin(angle) * speed;
+
+                p.style.transition = 'transform 0.8s cubic-bezier(0.1, 0.8, 0.3, 1), opacity 0.8s ease-out';
+                
+                requestAnimationFrame(() => {
+                    p.style.transform = `translate(${tx}px, ${ty}px) scale(0.2)`;
+                    p.style.opacity = '0';
+                });
+
+                setTimeout(() => {
+                    p.remove();
+                }, 800);
+            }
+        }
+    </script>
 </body>
-</html
-  d
+</html>
