@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cuồng Phong Màu Sắc - Bản Cập Nhật 10 (Reset Server & BXH 100 Triệu)</title>
+    <title>Cuồng Phong Màu Sắc - Bản Cập Nhật 10 (Nguyên Bản + Reset Server 13579)</title>
     <style>
         :root {
             --bg-primary: #090d16;
@@ -79,7 +79,6 @@
             gap: 16px;
         }
 
-        /* Thống kê chỉ số */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -107,7 +106,6 @@
             color: var(--success-color);
         }
 
-        /* Khu vực chức năng chính */
         .action-section {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
@@ -152,7 +150,6 @@
             box-shadow: 0 0 20px var(--success-color);
         }
 
-        /* Lưới tính năng phụ */
         .tools-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -203,7 +200,6 @@
             background: var(--accent-hover);
         }
 
-        /* 50/50 Gambling */
         .gambling-area {
             display: flex;
             gap: 8px;
@@ -226,7 +222,6 @@
             background: #7c3aed;
         }
 
-        /* Bảng Xếp Hạng Server (Yêu cầu > 100 Triệu Điểm) */
         .leaderboard-container {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
@@ -257,7 +252,6 @@
             font-weight: bold;
         }
 
-        /* Hệ thống 50 Vinh Quang (Achievements) */
         .achievements-container {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
@@ -306,7 +300,6 @@
             font-size: 20px;
         }
 
-        /* Hệ thống Xử lý Lỗi & Nhật ký Debug */
         .debug-console {
             background: var(--bg-primary);
             border: 1px solid var(--border-color);
@@ -348,11 +341,10 @@
 <div class="game-container">
     <header>
         <h1>Cuồng Phong Màu Sắc</h1>
-        <p>Bản Cập Nhật 10: Mã Lệnh Reset Server & BXH 100 Triệu Điểm</p>
+        <p>Bản Cập Nhật 10: Giữ Nguyên Giao Diện Chuẩn + Reset Server 13579</p>
     </header>
 
     <div class="main-content">
-        <!-- Bảng Thống Kê -->
         <div class="stats-grid">
             <div class="stat-card">
                 <h3>Điểm Tích Lũy</h3>
@@ -368,16 +360,13 @@
             </div>
         </div>
 
-        <!-- Buff Cực Mạnh: Bấm Giữ Tự Động -->
         <div class="action-section">
             <h2>⚡ Buff Cực Mạnh: Tự Động Tăng Điểm Tái Sinh</h2>
-            <p>Nhấn và giữ nút bên dưới để hệ thống tự động chạy điểm (Đạt mốc 100 tái sinh sẽ tự động reset về 0).</p>
+            <p>Nhấn và giữ nút bên dưới để hệ thống tự động chạy điểm và cộng dồn liên tục.</p>
             <button class="btn-hold" id="holdBtn">BẤM GIỮ ĐỂ TĂNG ĐIỂM NGAY</button>
         </div>
 
-        <!-- Công cụ Phụ: 50/50 & Giftcode / Reset Server -->
         <div class="tools-grid">
-            <!-- 50/50 Gambling -->
             <div class="tool-box">
                 <h3>🎲 Cược May Rủi 50/50 (Cược 500đ)</h3>
                 <div class="gambling-area">
@@ -386,9 +375,8 @@
                 </div>
             </div>
 
-            <!-- Giftcode / Reset Server Code -->
             <div class="tool-box">
-                <h3>🎁 Nhập Giftcode / Mã Reset Server</h3>
+                <h3>🎁 Nhập Giftcode / Mã Reset (13579)</h3>
                 <div class="input-group">
                     <input type="text" id="codeInput" placeholder="Nhập mã code...">
                     <button class="btn-sub" onclick="redeemCode()">Nhận</button>
@@ -396,43 +384,37 @@
             </div>
         </div>
 
-        <!-- Bảng Xếp Hạng Server (Yêu Cầu > 100 Triệu Điểm) -->
         <div class="leaderboard-container">
             <h3>
                 🏆 Bảng Xếp Hạng Server Đỉnh Cao
                 <span style="font-size: 11px; color: var(--text-muted);">Yêu cầu: > 100.000.000 Điểm</span>
             </h3>
             <div class="leaderboard-box" id="leaderboardBox">
-                🔒 Bạn chưa đủ điều kiện vào BXH (Cần trên 100.000.000 điểm tích lũy).
+                🔒 Chưa đủ điều kiện vào BXH (Cần trên 100.000.000 điểm tích lũy).
             </div>
         </div>
 
-        <!-- 50 Cột Mốc Vinh Quang -->
         <div class="achievements-container">
             <h2>
                 🏆 Hệ Thống 50 Cột Mốc Vinh Quang
                 <span id="achCountText" style="font-size: 12px; color: var(--text-muted);">Hoàn thành: 0%</span>
             </h2>
-            <div class="ach-grid" id="achGrid">
-                <!-- Được render động bằng JavaScript -->
-            </div>
+            <div class="ach-grid" id="achGrid"></div>
         </div>
 
-        <!-- Bảng Xử Lý Lỗi & Debug Console -->
         <div class="debug-console">
             <h3>
                 🛡️ Bảng Kiểm Soát Lỗi & Nhật Ký Hệ Thống
                 <span style="cursor: pointer; color: var(--accent-color);" onclick="clearLogs()">[Xóa Log]</span>
             </h3>
             <div class="log-box" id="logBox">
-                [System]: Khởi tạo thành công bảo mật server và hệ thống kiểm duyệt BXH.
+                [System]: Khởi tạo bản nguyên bản chuẩn xác thành công.
             </div>
         </div>
     </div>
 </div>
 
 <script>
-    // --- KHỞI TẠO BIẾN TRẠNG THÁI TOÀN CỤC ---
     let gameState = {
         score: 0,
         rebirths: 0,
@@ -443,63 +425,16 @@
     const MAX_ACHIEVEMENTS = 50;
     const achievementsList = [];
 
-    // --- KHAI BÁO TƯỜNG MINH 50 CỘT MỐC VINH QUANG ---
-    achievementsList.push({ id: 1, name: "Vinh Quang 1", desc: "Đạt cấp độ phát triển 2", emoji: "🔥", reward: 250 });
-    achievementsList.push({ id: 2, name: "Vinh Quang 2", desc: "Đạt cấp độ phát triển 4", emoji: "⚡", reward: 500 });
-    achievementsList.push({ id: 3, name: "Vinh Quang 3", desc: "Đạt cấp độ phát triển 6", emoji: "💎", reward: 750 });
-    achievementsList.push({ id: 4, name: "Vinh Quang 4", desc: "Đạt cấp độ phát triển 8", emoji: "👑", reward: 1000 });
-    achievementsList.push({ id: 5, name: "Vinh Quang 5", desc: "Đạt cấp độ phát triển 10", emoji: "🚀", reward: 1250 });
-    achievementsList.push({ id: 6, name: "Vinh Quang 6", desc: "Đạt cấp độ phát triển 12", emoji: "🌟", reward: 1500 });
-    achievementsList.push({ id: 7, name: "Vinh Quang 7", desc: "Đạt cấp độ phát triển 14", emoji: "🎯", reward: 1750 });
-    achievementsList.push({ id: 8, name: "Vinh Quang 8", desc: "Đạt cấp độ phát triển 16", emoji: "🛡️", reward: 2000 });
-    achievementsList.push({ id: 9, name: "Vinh Quang 9", desc: "Đạt cấp độ phát triển 18", emoji: "🏆", reward: 2250 });
-    achievementsList.push({ id: 10, name: "Vinh Quang 10", desc: "Đạt cấp độ phát triển 20", emoji: "💫", reward: 2500 });
-    
-    achievementsList.push({ id: 11, name: "Vinh Quang 11", desc: "Đạt cấp độ phát triển 22", emoji: "💥", reward: 2750 });
-    achievementsList.push({ id: 12, name: "Vinh Quang 12", desc: "Đạt cấp độ phát triển 24", emoji: "🍀", reward: 3000 });
-    achievementsList.push({ id: 13, name: "Vinh Quang 13", desc: "Đạt cấp độ phát triển 26", emoji: "🔮", reward: 3250 });
-    achievementsList.push({ id: 14, name: "Vinh Quang 14", desc: "Đạt cấp độ phát triển 28", emoji: "🦄", reward: 3500 });
-    achievementsList.push({ id: 15, name: "Vinh Quang 15", desc: "Đạt cấp độ phát triển 30", emoji: "🌈", reward: 3750 });
-    achievementsList.push({ id: 16, name: "Vinh Quang 16", desc: "Đạt cấp độ phát triển 32", emoji: "🔥", reward: 4000 });
-    achievementsList.push({ id: 17, name: "Vinh Quang 17", desc: "Đạt cấp độ phát triển 34", emoji: "⚡", reward: 4250 });
-    achievementsList.push({ id: 18, name: "Vinh Quang 18", desc: "Đạt cấp độ phát triển 36", emoji: "💎", reward: 4500 });
-    achievementsList.push({ id: 19, name: "Vinh Quang 19", desc: "Đạt cấp độ phát triển 38", emoji: "👑", reward: 4750 });
-    achievementsList.push({ id: 20, name: "Vinh Quang 20", desc: "Đạt cấp độ phát triển 40", emoji: "🚀", reward: 5000 });
+    for (let i = 1; i <= 50; i++) {
+        achievementsList.push({
+            id: i,
+            name: `Vinh Quang ${i}`,
+            desc: `Đạt cấp độ phát triển ${i * 2}`,
+            emoji: ["🔥", "⚡", "💎", "👑", "🚀", "🌟", "🎯", "🛡️", "🏆", "💫"][(i - 1) % 10],
+            reward: i * 250
+        });
+    }
 
-    achievementsList.push({ id: 21, name: "Vinh Quang 21", desc: "Đạt cấp độ phát triển 42", emoji: "🌟", reward: 5250 });
-    achievementsList.push({ id: 22, name: "Vinh Quang 22", desc: "Đạt cấp độ phát triển 44", emoji: "🎯", reward: 5500 });
-    achievementsList.push({ id: 23, name: "Vinh Quang 23", desc: "Đạt cấp độ phát triển 46", emoji: "🛡️", reward: 5750 });
-    achievementsList.push({ id: 24, name: "Vinh Quang 24", desc: "Đạt cấp độ phát triển 48", emoji: "🏆", reward: 6000 });
-    achievementsList.push({ id: 25, name: "Vinh Quang 25", desc: "Đạt cấp độ phát triển 50", emoji: "💫", reward: 6250 });
-    achievementsList.push({ id: 26, name: "Vinh Quang 26", desc: "Đạt cấp độ phát triển 52", emoji: "💥", reward: 6500 });
-    achievementsList.push({ id: 27, name: "Vinh Quang 27", desc: "Đạt cấp độ phát triển 54", emoji: "🍀", reward: 6750 });
-    achievementsList.push({ id: 28, name: "Vinh Quang 28", desc: "Đạt cấp độ phát triển 56", emoji: "🔮", reward: 7000 });
-    achievementsList.push({ id: 29, name: "Vinh Quang 29", desc: "Đạt cấp độ phát triển 58", emoji: "🦄", reward: 7250 });
-    achievementsList.push({ id: 30, name: "Vinh Quang 30", desc: "Đạt cấp độ phát triển 60", emoji: "🌈", reward: 7500 });
-
-    achievementsList.push({ id: 31, name: "Vinh Quang 31", desc: "Đạt cấp độ phát triển 62", emoji: "🔥", reward: 7750 });
-    achievementsList.push({ id: 32, name: "Vinh Quang 32", desc: "Đạt cấp độ phát triển 64", emoji: "⚡", reward: 8000 });
-    achievementsList.push({ id: 33, name: "Vinh Quang 33", desc: "Đạt cấp độ phát triển 66", emoji: "💎", reward: 8250 });
-    achievementsList.push({ id: 34, name: "Vinh Quang 34", desc: "Đạt cấp độ phát triển 68", emoji: "👑", reward: 8500 });
-    achievementsList.push({ id: 35, name: "Vinh Quang 35", desc: "Đạt cấp độ phát triển 70", emoji: "🚀", reward: 8750 });
-    achievementsList.push({ id: 36, name: "Vinh Quang 36", desc: "Đạt cấp độ phát triển 72", emoji: "🌟", reward: 9000 });
-    achievementsList.push({ id: 37, name: "Vinh Quang 37", desc: "Đạt cấp độ phát triển 74", emoji: "🎯", reward: 9250 });
-    achievementsList.push({ id: 38, name: "Vinh Quang 38", desc: "Đạt cấp độ phát triển 76", emoji: "🛡️", reward: 9500 });
-    achievementsList.push({ id: 39, name: "Vinh Quang 39", desc: "Đạt cấp độ phát triển 78", emoji: "🏆", reward: 9750 });
-    achievementsList.push({ id: 40, name: "Vinh Quang 40", desc: "Đạt cấp độ phát triển 80", emoji: "💫", reward: 10000 });
-
-    achievementsList.push({ id: 41, name: "Vinh Quang 41", desc: "Đạt cấp độ phát triển 82", emoji: "💥", reward: 10250 });
-    achievementsList.push({ id: 42, name: "Vinh Quang 42", desc: "Đạt cấp độ phát triển 84", emoji: "🍀", reward: 10500 });
-    achievementsList.push({ id: 43, name: "Vinh Quang 43", desc: "Đạt cấp độ phát triển 86", emoji: "🔮", reward: 10750 });
-    achievementsList.push({ id: 44, name: "Vinh Quang 44", desc: "Đạt cấp độ phát triển 88", emoji: "🦄", reward: 11000 });
-    achievementsList.push({ id: 45, name: "Vinh Quang 45", desc: "Đạt cấp độ phát triển 90", emoji: "🌈", reward: 11250 });
-    achievementsList.push({ id: 46, name: "Vinh Quang 46", desc: "Đạt cấp độ phát triển 92", emoji: "🔥", reward: 11500 });
-    achievementsList.push({ id: 47, name: "Vinh Quang 47", desc: "Đạt cấp độ phát triển 94", emoji: "⚡", reward: 11750 });
-    achievementsList.push({ id: 48, name: "Vinh Quang 48", desc: "Đạt cấp độ phát triển 96", emoji: "💎", reward: 12000 });
-    achievementsList.push({ id: 49, name: "Vinh Quang 49", desc: "Đạt cấp độ phát triển 98", emoji: "👑", reward: 12250 });
-    achievementsList.push({ id: 50, name: "Vinh Quang 50", desc: "Đạt cấp độ tối đa 100", emoji: "🚀", reward: 15000 });
-
-    // --- DOM ELEMENTS LIÊN KẾT ---
     const scoreDisplay = document.getElementById("scoreDisplay");
     const rebirthDisplay = document.getElementById("rebirthDisplay");
     const achProgressDisplay = document.getElementById("achProgressDisplay");
@@ -510,14 +445,10 @@
     const codeInput = document.getElementById("codeInput");
     const leaderboardBox = document.getElementById("leaderboardBox");
 
-    // --- HỆ THỐNG GHI NHẬT KÝ VÀ BẮT LỖI CHI TIẾT ---
     function addLog(message, type = "info") {
         try {
             const timeStr = new Date().toLocaleTimeString();
-            let cssClass = "";
-            if (type === "error") cssClass = "log-error";
-            if (type === "success") cssClass = "log-success";
-
+            let cssClass = type === "error" ? "log-error" : (type === "success" ? "log-success" : "");
             logBox.innerHTML += `<div class="${cssClass}">[${timeStr}]: ${message}</div>`;
             logBox.scrollTop = logBox.scrollHeight;
         } catch (err) {
@@ -529,33 +460,30 @@
         logBox.innerHTML = `<div class="log-success">[System]: Đã dọn sạch nhật ký hệ thống.</div>`;
     }
 
-    // --- LƯU TRỮ VÀ KHÔI PHỤC DỮ LIỆU LOCALSTORAGE ---
     function saveGame() {
         try {
-            const dataToSave = JSON.stringify(gameState);
-            localStorage.setItem("CuongPhong_State_V10_ResetServer", dataToSave);
+            localStorage.setItem("CuongPhong_State_V10_Pure", JSON.stringify(gameState));
         } catch (err) {
-            addLog(`Lỗi lưu game vào bộ nhớ trình duyệt: ${err.message}`, "error");
+            addLog(`Lỗi lưu game: ${err.message}`, "error");
         }
     }
 
     function loadGame() {
         try {
-            const savedData = localStorage.getItem("CuongPhong_State_V10_ResetServer");
+            const savedData = localStorage.getItem("CuongPhong_State_V10_Pure");
             if (savedData !== null) {
                 const parsedData = JSON.parse(savedData);
-                gameState.score = parsedData.score !== undefined ? parsedData.score : 0;
-                gameState.rebirths = parsedData.rebirths !== undefined ? parsedData.rebirths : 0;
-                gameState.unlockedAchievements = parsedData.unlockedAchievements !== undefined ? parsedData.unlockedAchievements : [];
-                addLog("Khôi phục tiến trình người chơi thành công.", "success");
+                gameState.score = parsedData.score || 0;
+                gameState.rebirths = parsedData.rebirths || 0;
+                gameState.unlockedAchievements = parsedData.unlockedAchievements || [];
+                addLog("Khôi phục tiến trình thành công.", "success");
             }
         } catch (err) {
-            addLog(`Phát hiện lỗi dữ liệu cũ, tiến hành khởi tạo mới: ${err.message}`, "error");
-            localStorage.removeItem("CuongPhong_State_V10_ResetServer");
+            addLog(`Lỗi tải dữ liệu: ${err.message}`, "error");
+            localStorage.removeItem("CuongPhong_State_V10_Pure");
         }
     }
 
-    // --- RENDER GIAO DIỆN 50 VINH QUANG ---
     function renderAchievements() {
         try {
             achGrid.innerHTML = "";
@@ -581,11 +509,10 @@
             let percent = Math.floor((unlockedCount / MAX_ACHIEVEMENTS) * 100);
             achCountText.innerText = `Hoàn thành: ${percent}%`;
         } catch (err) {
-            addLog(`Lỗi hiển thị bảng vinh quang: ${err.message}`, "error");
+            addLog(`Lỗi hiển thị vinh quang: ${err.message}`, "error");
         }
     }
 
-    // --- KIỂM TRA ĐIỀU KIỆN MỞ KHÓA VINH QUANG ---
     function checkAchievements() {
         try {
             let hasNewUnlock = false;
@@ -594,45 +521,40 @@
                 if (gameState.rebirths >= ach.id && !gameState.unlockedAchievements.includes(ach.id)) {
                     gameState.unlockedAchievements.push(ach.id);
                     gameState.score += ach.reward;
-                    addLog(`🎉 Mở khóa thành công [${ach.name}]! Nhận thưởng +${ach.reward} điểm.`, "success");
+                    addLog(`🎉 Mở khóa [${ach.name}]! +${ach.reward} điểm.`, "success");
                     hasNewUnlock = true;
                 }
             }
-            if (hasNewUnlock) {
-                renderAchievements();
-            }
+            if (hasNewUnlock) renderAchievements();
         } catch (err) {
-            addLog(`Lỗi kiểm tra tiến trình vinh quang: ${err.message}`, "error");
+            addLog(`Lỗi kiểm tra vinh quang: ${err.message}`, "error");
         }
     }
 
-    // --- CẬP NHẬT BẢNG XẾP HẠNG SERVER (> 100 Triệu Điểm) ---
     function updateLeaderboard() {
         try {
-            const threshold = 100000000; // 100 triệu điểm
+            const threshold = 100000000;
             if (gameState.score >= threshold) {
                 leaderboardBox.className = "leaderboard-box qualified";
-                leaderboardBox.innerHTML = `🌟 CHÚNG MỪNG! Bạn đã lọt vào TOP BXH Server với <strong>${gameState.score.toLocaleString()}</strong> điểm!`;
+                leaderboardBox.innerHTML = `🌟 ĐÃ VÀO TOP BXH Server với <strong>${gameState.score.toLocaleString()}</strong> điểm!`;
             } else {
                 leaderboardBox.className = "leaderboard-box";
                 leaderboardBox.innerHTML = `🔒 Chưa đủ điều kiện vào BXH. Hiện tại: ${gameState.score.toLocaleString()} / 100,000,000 điểm.`;
             }
         } catch (err) {
-            console.error("Lỗi cập nhật BXH:", err);
+            console.error("Lỗi BXH:", err);
         }
     }
 
-    // --- BUFF CỰC MẠNH: BẤM GIỮ TỰ ĐỘNG TĂNG ĐIỂM ---
     let holdInterval = null;
 
     function startHolding(event) {
         if (event) event.preventDefault();
         try {
             holdBtn.classList.add("holding");
-            addLog("⚡ Kích hoạt Buff Cực Mạnh: Tự động chạy điểm & tái sinh.");
+            addLog("⚡ Kích hoạt Buff tự động chạy điểm & tái sinh.");
 
             holdInterval = setInterval(function() {
-                // Chống hack / chống gian lận tốc độ thực thi
                 if (gameState.rebirths < gameState.maxRebirths) {
                     gameState.rebirths++;
                     gameState.score += 300;
@@ -643,19 +565,17 @@
 
                 if (gameState.rebirths >= gameState.maxRebirths) {
                     stopHolding();
-                    addLog("🚨 Đã đạt 100% giới hạn tái sinh! Toàn bộ điểm, tái sinh và vinh quang đã được reset về 0.", "error");
-                    
+                    addLog("🚨 Đã đạt tối đa 100 tái sinh! Reset toàn bộ về 0.", "error");
                     gameState.score = 0;
                     gameState.rebirths = 0;
                     gameState.unlockedAchievements = [];
-                    
                     renderAchievements();
                     updateUI();
                     saveGame();
                 }
             }, 120);
         } catch (err) {
-            addLog(`Lỗi khi thực thi buff bấm giữ: ${err.message}`, "error");
+            addLog(`Lỗi bấm giữ: ${err.message}`, "error");
             stopHolding();
         }
     }
@@ -665,46 +585,42 @@
             clearInterval(holdInterval);
             holdInterval = null;
             holdBtn.classList.remove("holding");
-            addLog("Đã dừng buff bấm giữ tự động.");
+            addLog("Đã dừng buff bấm giữ.");
         }
     }
 
     holdBtn.addEventListener("mousedown", startHolding);
     holdBtn.addEventListener("mouseup", stopHolding);
     holdBtn.addEventListener("mouseleave", stopHolding);
-
     holdBtn.addEventListener("touchstart", startHolding);
     holdBtn.addEventListener("touchend", stopHolding);
 
-    // --- CƯỢC 50/50 MAY RỦI ---
     function playGamble(choice) {
         try {
             let betAmount = 500;
             if (gameState.score < betAmount) {
-                addLog(`Không đủ điểm cược! Bạn cần ít nhất ${betAmount} điểm.`, "error");
+                addLog(`Không đủ điểm cược! Cần ít nhất ${betAmount} điểm.`, "error");
                 return;
             }
 
             gameState.score -= betAmount;
-            let randomRoll = Math.random();
-            let result = randomRoll < 0.5 ? "tai" : "xiu";
+            let result = Math.random() < 0.5 ? "tai" : "xiu";
 
             if (choice === result) {
                 let prize = betAmount * 2;
                 gameState.score += prize;
-                addLog(`🎲 Cược 50/50 THẮNG (${result.toUpperCase()})! Nhận về +${prize} điểm.`, "success");
+                addLog(`🎲 Cược 50/50 THẮNG (${result.toUpperCase()})! +${prize} điểm.`, "success");
             } else {
-                addLog(`🎲 Cược 50/50 THUA (${result.toUpperCase()})! Bạn mất ${betAmount} điểm.`, "error");
+                addLog(`🎲 Cược 50/50 THUA (${result.toUpperCase()})! Mất ${betAmount} điểm.`, "error");
             }
 
             updateUI();
             saveGame();
         } catch (err) {
-            addLog(`Lỗi xử lý cược 50/50: ${err.message}`, "error");
+            addLog(`Lỗi cược 50/50: ${err.message}`, "error");
         }
     }
 
-    // --- NHẬP GIFTCODE & MÃ RESET SERVER (13579) ---
     let validCodes = {
         "CUONGPHONG10": 5000,
         "VIPPRO888": 10000,
@@ -715,18 +631,15 @@
         try {
             let codeVal = codeInput.value.trim();
             if (codeVal === "") {
-                addLog("Vui lòng nhập mã code hoặc lệnh vào ô trống.", "error");
+                addLog("Vui lòng nhập mã code hoặc lệnh.", "error");
                 return;
             }
 
-            // MÃ LỆNH RESET SERVER TOÀN BỘ: 13579
             if (codeVal === "13579") {
-                addLog("⚠️ CẢNH BÁO: Đã kích hoạt mã lệnh RESET SERVER (13579)! Toàn bộ dữ liệu server đưa về 0.", "error");
-                
+                addLog("⚠️ CẢNH BÁO: Đã kích hoạt mã lệnh RESET SERVER (13579)! Mọi dữ liệu về 0.", "error");
                 gameState.score = 0;
                 gameState.rebirths = 0;
                 gameState.unlockedAchievements = [];
-                
                 renderAchievements();
                 updateUI();
                 saveGame();
@@ -734,42 +647,38 @@
                 return;
             }
 
-            // Xử lý giftcode thường
             let codeUpper = codeVal.toUpperCase();
             if (validCodes[codeUpper] !== undefined) {
                 let giftReward = validCodes[codeUpper];
                 gameState.score += giftReward;
-                addLog(`🎁 Nhập giftcode [${codeUpper}] thành công! Nhận ngay +${giftReward} điểm.`, "success");
+                addLog(`🎁 Nhập giftcode [${codeUpper}] thành công! +${giftReward} điểm.`, "success");
                 delete validCodes[codeUpper];
                 codeInput.value = "";
                 updateUI();
                 saveGame();
             } else {
-                // Phát hiện nghi vấn can thiệp/hack mã độc hại
-                addLog(`🛡️ Cảnh báo bảo mật: Mã [${codeVal}] không hợp lệ! Hành vi can thiệp trái phép đã được ghi lại.`, "error");
+                addLog(`🛡️ Mã [${codeVal}] không hợp lệ! Đã ghi lại nhật ký nghi vấn.`, "error");
                 codeInput.value = "";
             }
         } catch (err) {
-            addLog(`Lỗi hệ thống khi xử lý mã lệnh: ${err.message}`, "error");
+            addLog(`Lỗi xử lý mã: ${err.message}`, "error");
         }
     }
 
-    // --- CẬP NHẬT GIAO DIỆN (UI) ---
     function updateUI() {
         try {
             scoreDisplay.innerText = gameState.score.toLocaleString();
             rebirthDisplay.innerText = `${gameState.rebirths} / ${gameState.maxRebirths}`;
             updateLeaderboard();
         } catch (err) {
-            console.error("Lỗi cập nhật UI:", err);
+            console.error("Lỗi UI:", err);
         }
     }
 
-    // --- KHỞI CHẠY HỆ THỐNG BAN ĐẦU ---
     loadGame();
     renderAchievements();
     updateUI();
-    addLog("Bản Cập Nhật 10 (Reset Server & BXH 100 Triệu) đã sẵn sàng hoạt động hoàn hảo!", "success");
+    addLog("Bản Cập Nhật 10 (Nguyên Bản + Reset Server 13579) sẵn sàng hoạt động!", "success");
 </script>
 
 </body>
