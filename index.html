@@ -3,36 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cuồng Phong Màu Sắc - Cyberpunk Edition v11.2 (Ultimate)</title>
+    <title>Cuồng Phong Màu Sắc - Bản Cập Nhật 10 (Reset Về 0 Chuẩn)</title>
     <style>
         :root {
-            --bg-main: #030712;
-            --bg-panel: #0b132b;
-            --bg-card: #111e38;
-            --accent-cyan: #00f2fe;
-            --accent-pink: #ff007f;
-            --accent-purple: #7928ca;
-            --success: #00ff87;
-            --danger: #ff3366;
-            --warning: #ffcc00;
-            --text-light: #f8fafc;
-            --text-dim: #64748b;
-            --border: #1e293b;
-            --glow-cyan: rgba(0, 242, 254, 0.3);
-            --glow-pink: rgba(255, 0, 127, 0.3);
+            --bg-primary: #090d16;
+            --bg-secondary: #111827;
+            --bg-card: #1f2937;
+            --accent-color: #38bdf8;
+            --accent-hover: #0ea5e9;
+            --danger-color: #f43f5e;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Courier New', Courier, monospace, 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             user-select: none;
         }
 
         body {
-            background: radial-gradient(circle at center, #0c1a30 0%, var(--bg-main) 100%);
-            color: var(--text-light);
+            background: linear-gradient(135deg, var(--bg-primary), var(--bg-secondary));
+            color: var(--text-main);
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -40,13 +37,13 @@
             padding: 12px;
         }
 
-        .game-wrapper {
+        .game-container {
             width: 100%;
-            max-width: 1100px;
-            background: var(--bg-panel);
-            border: 2px solid var(--accent-cyan);
+            max-width: 950px;
+            background: var(--bg-secondary);
+            border: 2px solid var(--border-color);
             border-radius: 20px;
-            box-shadow: 0 0 50px var(--glow-cyan), inset 0 0 25px rgba(0, 242, 254, 0.05);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
             overflow: hidden;
             display: flex;
             flex-direction: column;
@@ -54,31 +51,26 @@
         }
 
         header {
-            background: linear-gradient(90deg, #091224, #1b0c2e);
-            padding: 18px 24px;
+            background: var(--bg-card);
+            padding: 16px 20px;
             text-align: center;
-            border-bottom: 2px solid var(--border);
-            position: relative;
+            border-bottom: 2px solid var(--border-color);
         }
 
         header h1 {
-            font-size: 26px;
-            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-pink));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            font-weight: 900;
+            font-size: 24px;
+            color: var(--accent-color);
             margin-bottom: 4px;
-        }
-
-        header p {
-            color: var(--text-dim);
-            font-size: 12px;
+            text-transform: uppercase;
             letter-spacing: 1px;
         }
 
-        .dashboard {
+        header p {
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
+        .main-content {
             padding: 16px;
             overflow-y: auto;
             flex-grow: 1;
@@ -87,705 +79,619 @@
             gap: 16px;
         }
 
-        /* Metrics Grid */
-        .metrics-grid {
+        /* Thống kê chỉ số */
+        .stats-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 12px;
         }
 
-        .metric-card {
+        .stat-card {
             background: var(--bg-card);
-            border: 1px solid var(--border);
+            border: 1px solid var(--border-color);
+            padding: 12px;
             border-radius: 12px;
-            padding: 14px;
             text-align: center;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.2s ease;
         }
 
-        .metric-card:hover {
-            border-color: var(--accent-cyan);
-            box-shadow: 0 0 15px var(--glow-cyan);
-            transform: translateY(-2px);
-        }
-
-        .metric-card h3 {
-            font-size: 10px;
-            color: var(--text-dim);
+        .stat-card h3 {
+            font-size: 11px;
+            color: var(--text-muted);
             margin-bottom: 6px;
             text-transform: uppercase;
-            letter-spacing: 1px;
         }
 
-        .metric-card .value {
-            font-size: 20px;
-            font-weight: 800;
-            color: var(--success);
-            text-shadow: 0 0 8px rgba(0, 255, 135, 0.4);
+        .stat-card .value {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--success-color);
         }
 
-        /* Core Action Section */
-        .core-action {
+        /* Khu vực chức năng chính */
+        .action-section {
             background: var(--bg-card);
-            border: 1px solid var(--border);
+            border: 1px solid var(--border-color);
             border-radius: 12px;
-            padding: 20px;
+            padding: 16px;
             text-align: center;
-            position: relative;
         }
 
-        .core-action h2 {
+        .action-section h2 {
             font-size: 16px;
-            color: var(--warning);
-            margin-bottom: 6px;
-            text-shadow: 0 0 8px rgba(255, 204, 0, 0.3);
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            color: var(--warning-color);
+            margin-bottom: 8px;
         }
 
-        .core-action p {
+        .action-section p {
             font-size: 12px;
-            color: var(--text-dim);
-            margin-bottom: 14px;
+            color: var(--text-muted);
+            margin-bottom: 12px;
         }
 
-        .btn-cyber-hold {
-            background: linear-gradient(135deg, var(--accent-cyan), #0072ff);
-            color: #000;
-            border: none;
-            padding: 14px 28px;
-            font-size: 15px;
-            font-weight: 900;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.15s ease;
-            width: 100%;
-            max-width: 450px;
-            box-shadow: 0 0 20px var(--glow-cyan);
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-        }
-
-        .btn-cyber-hold:hover {
-            box-shadow: 0 0 30px rgba(0, 242, 254, 0.8);
-            transform: scale(1.01);
-        }
-
-        .btn-cyber-hold:active {
-            transform: scale(0.98);
-        }
-
-        .btn-cyber-hold.active-hold {
-            background: linear-gradient(135deg, var(--success), #008f4c);
-            box-shadow: 0 0 35px var(--success);
-            color: #fff;
-        }
-
-        /* Split Section: Tools & Upgrades */
-        .split-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-        }
-
-        .tool-panel {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 14px;
-        }
-
-        .tool-panel h3 {
-            font-size: 13px;
-            color: var(--accent-cyan);
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .gamble-controls {
-            display: flex;
-            gap: 8px;
-        }
-
-        .btn-gamble {
-            flex: 1;
-            background: linear-gradient(135deg, var(--accent-purple), #4c1d95);
+        .btn-hold {
+            background: var(--success-color);
             color: white;
             border: none;
-            padding: 10px;
-            border-radius: 8px;
+            padding: 14px 24px;
+            font-size: 16px;
             font-weight: bold;
+            border-radius: 12px;
             cursor: pointer;
-            transition: opacity 0.2s;
-            font-size: 12px;
-            text-transform: uppercase;
+            transition: transform 0.1s, background 0.2s;
+            width: 100%;
+            max-width: 350px;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
         }
 
-        .btn-gamble:hover {
-            opacity: 0.85;
+        .btn-hold:active {
+            transform: scale(0.97);
         }
 
-        .input-box-group {
+        .btn-hold.holding {
+            background: #059669;
+            box-shadow: 0 0 20px var(--success-color);
+        }
+
+        /* Lưới tính năng phụ: 50/50, Giftcode, Reset */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .tool-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 12px;
+        }
+
+        .tool-box h3 {
+            font-size: 13px;
+            color: var(--accent-color);
+            margin-bottom: 8px;
+        }
+
+        .input-group {
             display: flex;
             gap: 8px;
+            margin-top: 6px;
         }
 
         input[type="text"] {
             flex-grow: 1;
-            background: var(--bg-main);
-            border: 1px solid var(--border);
-            color: var(--text-light);
-            padding: 8px 12px;
-            border-radius: 8px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 6px 10px;
+            border-radius: 6px;
             font-size: 12px;
-            outline: none;
-            transition: border-color 0.2s;
         }
 
-        input[type="text"]:focus {
-            border-color: var(--accent-cyan);
-        }
-
-        .btn-submit {
-            background: var(--accent-cyan);
-            color: #000;
+        button.btn-sub {
+            background: var(--accent-color);
+            color: var(--bg-primary);
             border: none;
-            padding: 0 16px;
-            font-weight: 800;
-            border-radius: 8px;
+            padding: 6px 12px;
+            font-weight: bold;
+            border-radius: 6px;
             cursor: pointer;
-            transition: background 0.2s;
             font-size: 12px;
-            text-transform: uppercase;
         }
 
-        .btn-submit:hover {
-            background: #fff;
+        button.btn-sub:hover {
+            background: var(--accent-hover);
         }
 
-        /* Leaderboard Box (> 100M requirement) */
-        .leaderboard-box {
+        /* 50/50 Gambling */
+        .gambling-area {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .btn-gamble {
+            flex: 1;
+            background: #8b5cf6;
+            color: white;
+            border: none;
+            padding: 8px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .btn-gamble:hover {
+            background: #7c3aed;
+        }
+
+        /* Hệ thống 50 Vinh Quang (Achievements) */
+        .achievements-container {
             background: var(--bg-card);
-            border: 1px solid var(--border);
+            border: 1px solid var(--border-color);
             border-radius: 12px;
-            padding: 14px;
+            padding: 12px;
         }
 
-        .leaderboard-box h3 {
-            font-size: 13px;
-            color: var(--warning);
+        .achievements-container h2 {
+            font-size: 15px;
+            color: var(--danger-color);
             margin-bottom: 8px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            text-transform: uppercase;
         }
 
-        .leaderboard-content {
-            background: var(--bg-main);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 10px;
-            text-align: center;
-            font-size: 12px;
-            color: var(--text-dim);
-        }
-
-        .leaderboard-content.unlocked {
-            color: var(--success);
-            font-weight: bold;
-            border-color: var(--success);
-            box-shadow: inset 0 0 10px rgba(0, 255, 135, 0.1);
-        }
-
-        /* Achievements System (50 Items) */
-        .achievements-box {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 14px;
-        }
-
-        .achievements-box h2 {
-            font-size: 13px;
-            color: var(--accent-pink);
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            text-transform: uppercase;
-        }
-
-        .ach-scroll-grid {
+        .ach-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
             gap: 8px;
             max-height: 180px;
             overflow-y: auto;
             padding-right: 4px;
         }
 
-        .ach-card {
-            background: var(--bg-main);
-            border: 1px solid var(--border);
+        .ach-item {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
             border-radius: 8px;
-            padding: 8px 10px;
+            padding: 8px;
             font-size: 11px;
             display: flex;
             align-items: center;
             gap: 8px;
-            opacity: 0.35;
-            transition: all 0.2s;
+            opacity: 0.5;
+            transition: opacity 0.2s, border-color 0.2s;
         }
 
-        .ach-card.unlocked {
+        .ach-item.unlocked {
             opacity: 1;
-            border-color: var(--success);
-            background: rgba(0, 255, 135, 0.04);
-            box-shadow: 0 0 8px rgba(0, 255, 135, 0.1);
+            border-color: var(--success-color);
+            background: rgba(16, 185, 129, 0.05);
         }
 
-        .ach-emoji {
-            font-size: 18px;
+        .ach-icon {
+            font-size: 20px;
         }
 
-        /* Terminal Debug */
-        .terminal-box {
-            background: var(--bg-main);
-            border: 1px solid var(--border);
+        /* Hệ thống Xử lý Lỗi & Nhật ký Debug */
+        .debug-console {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 12px;
         }
 
-        .terminal-box h3 {
+        .debug-console h3 {
             font-size: 12px;
-            color: var(--warning);
+            color: var(--warning-color);
             margin-bottom: 6px;
             display: flex;
             justify-content: space-between;
-            text-transform: uppercase;
         }
 
-        .terminal-screen {
+        .log-box {
             background: #000;
-            border: 1px solid #1a2736;
-            border-radius: 8px;
-            padding: 8px 10px;
-            height: 80px;
+            border: 1px solid #1e293b;
+            border-radius: 6px;
+            padding: 8px;
+            height: 70px;
             overflow-y: auto;
             font-family: 'Courier New', Courier, monospace;
             font-size: 11px;
-            color: var(--accent-cyan);
-            line-height: 1.4;
+            color: var(--accent-color);
         }
 
-        .log-err { color: var(--danger); }
-        .log-ok { color: var(--success); }
+        .log-error {
+            color: var(--danger-color);
+        }
+
+        .log-success {
+            color: var(--success-color);
+        }
     </style>
 </head>
 <body>
 
-<div class="game-wrapper">
+<div class="game-container">
     <header>
         <h1>Cuồng Phong Màu Sắc</h1>
-        <p>Bản Cập Nhật 11.2 Ultimate: Cyberpunk Edition (Reset Server 13579 & BXH > 100M)</p>
+        <p>Bản Cập Nhật 10: Tái Sinh Đạt 100% Reset Toàn Bộ Về 0</p>
     </header>
 
-    <div class="dashboard">
-        <!-- Thống kê thông số -->
-        <div class="metrics-grid">
-            <div class="metric-card">
+    <div class="main-content">
+        <!-- Bảng Thống Kê -->
+        <div class="stats-grid">
+            <div class="stat-card">
                 <h3>Điểm Tích Lũy</h3>
                 <div class="value" id="scoreDisplay">0</div>
             </div>
-            <div class="metric-card">
+            <div class="stat-card">
                 <h3>Tái Sinh (Max 100)</h3>
                 <div class="value" id="rebirthDisplay">0 / 100</div>
             </div>
-            <div class="metric-card">
-                <h3>Hệ Số Buff</h3>
-                <div class="value" id="multiplierDisplay">1.0x</div>
-            </div>
-            <div class="metric-card">
-                <h3>Vinh Quang</h3>
+            <div class="stat-card">
+                <h3>Vinh Quang Mở Khóa</h3>
                 <div class="value" id="achProgressDisplay">0 / 50</div>
             </div>
         </div>
 
-        <!-- Vùng tương tác giữ nút -->
-        <div class="core-action">
-            <h2>⚡ Siêu Buff: Tự Động Tăng Tốc Tái Sinh</h2>
-            <p>Nhấn và giữ nút bên dưới để kích hoạt dòng điện lượng tử, tự động tích lũy điểm số và đẩy chỉ số tái sinh lên cực đại.</p>
-            <button class="btn-cyber-hold" id="holdBtn">BẤM VÀ GIỮ ĐỂ TĂNG ĐIỂM NGAY</button>
+        <!-- Buff Cực Mạnh: Bấm Giữ Tự Động -->
+        <div class="action-section">
+            <h2>⚡ Buff Cực Mạnh: Tự Động Tăng Điểm Tái Sinh</h2>
+            <p>Nhấn và giữ nút bên dưới để hệ thống tự động chạy điểm (Đạt đúng mốc 100 tái sinh sẽ tự động reset toàn bộ về 0).</p>
+            <button class="btn-hold" id="holdBtn">BẤM GIỮ ĐỂ TĂNG ĐIỂM NGAY</button>
         </div>
 
-        <!-- Công cụ phụ: Cược & Lệnh Server -->
-        <div class="split-grid">
-            <div class="tool-panel">
-                <h3>🎲 Cược May Rủi 50/50 (1,000 Điểm)</h3>
-                <div class="gamble-controls">
+        <!-- Công cụ Phụ: 50/50 & Giftcode -->
+        <div class="tools-grid">
+            <!-- 50/50 Gambling -->
+            <div class="tool-box">
+                <h3>🎲 Cược May Rủi 50/50 (Cược 500đ)</h3>
+                <div class="gambling-area">
                     <button class="btn-gamble" onclick="playGamble('tai')">TÀI (X2)</button>
                     <button class="btn-gamble" onclick="playGamble('xiu')">XỈU (X2)</button>
                 </div>
             </div>
 
-            <div class="tool-panel">
-                <h3>🎁 Mã Quà Tặng / Lệnh Reset (13579)</h3>
-                <div class="input-box-group">
-                    <input type="text" id="codeInput" placeholder="Nhập mã code hoặc lệnh hệ thống...">
-                    <button class="btn-submit" onclick="redeemCode()">Gửi</button>
+            <!-- Giftcode -->
+            <div class="tool-box">
+                <h3>🎁 Nhập Giftcode Nhận Thưởng</h3>
+                <div class="input-group">
+                    <input type="text" id="codeInput" placeholder="Nhập mã code...">
+                    <button class="btn-sub" onclick="redeemCode()">Nhận</button>
                 </div>
             </div>
         </div>
 
-        <!-- Bảng Xếp Hạng Server (> 100 Triệu) -->
-        <div class="leaderboard-box">
-            <h3>
-                🏆 Bảng Xếp Hạng Tối Thượng
-                <span style="font-size: 10px; color: var(--text-dim);">Yêu cầu: > 100.000.000 Điểm</span>
-            </h3>
-            <div class="leaderboard-content" id="leaderboardBox">
-                🔒 Truy cập bị từ chối: Cần vượt ngưỡng tối thiểu 100 triệu điểm tích lũy toàn cục.
+        <!-- 50 Cột Mốc Vinh Quang -->
+        <div class="achievements-container">
+            <h2>
+                🏆 Hệ Thống 50 Cột Mốc Vinh Quang
+                <span id="achCountText" style="font-size: 12px; color: var(--text-muted);">Hoàn thành: 0%</span>
+            </h2>
+            <div class="ach-grid" id="achGrid">
+                <!-- Được render động bằng JavaScript -->
             </div>
         </div>
 
-        <!-- 50 Cột mốc Vinh Quang -->
-        <div class="achievements-box">
-            <h2>
-                🎖️ Hệ Thống 50 Cột Mốc Vinh Quang
-                <span id="achCountText" style="font-size: 11px; color: var(--text-dim);">Hoàn thành: 0%</span>
-            </h2>
-            <div class="ach-scroll-grid" id="achGrid"></div>
-        </div>
-
-        <!-- Nhật ký Terminal -->
-        <div class="terminal-box">
+        <!-- Bảng Xử Lý Lỗi & Debug Console -->
+        <div class="debug-console">
             <h3>
-                🛡️ Nhật Ký Kiểm Soát Lõi Hệ Thống
-                <span style="cursor: pointer; color: var(--accent-cyan);" onclick="clearLogs()">[Xóa Nhật Ký]</span>
+                🛡️ Bảng Kiểm Soát Lỗi & Nhật Ký Hệ Thống
+                <span style="cursor: pointer; color: var(--accent-color);" onclick="clearLogs()">[Xóa Log]</span>
             </h3>
-            <div class="terminal-screen" id="logBox">
-                [System v11.2]: Khởi tạo môi trường ảo hóa Cyberpunk thành công. Sẵn sàng nhận lệnh từ Sếp.
+            <div class="log-box" id="logBox">
+                [System]: Khởi tạo thành công bản reset 0 khi đạt 100% tái sinh.
             </div>
         </div>
     </div>
 </div>
 
 <script>
-    /**
-     * Quản lý trạng thái cốt lõi của game
-     */
+    // --- KHỞI TẠO BIẾN TRẠNG THÁI TOÀN CỤC ---
     let gameState = {
         score: 0,
         rebirths: 0,
         maxRebirths: 100,
-        multiplier: 1.0,
         unlockedAchievements: []
     };
 
     const MAX_ACHIEVEMENTS = 50;
     const achievementsList = [];
 
-    // Khởi tạo đầy đủ 50 mốc vinh quang hệ thống
-    for (let i = 1; i <= 50; i++) {
-        achievementsList.push({
-            id: i,
-            name: `Cột Mốc Lượng Tử ${i}`,
-            desc: `Đạt cấp độ tái sinh ${i * 2}`,
-            emoji: ["🔥", "⚡", "💎", "👑", "🚀", "🌟", "🎯", "🛡️", "🏆", "💫", "🔮", "⚡", "🔥", "💎", "👑"][(i - 1) % 15],
-            reward: i * 500
-        });
-    }
+    // --- KHAI BÁO TƯỜNG MINH 50 CỘT MỐC VINH QUANG ---
+    achievementsList.push({ id: 1, name: "Vinh Quang 1", desc: "Đạt cấp độ phát triển 2", emoji: "🔥", reward: 250 });
+    achievementsList.push({ id: 2, name: "Vinh Quang 2", desc: "Đạt cấp độ phát triển 4", emoji: "⚡", reward: 500 });
+    achievementsList.push({ id: 3, name: "Vinh Quang 3", desc: "Đạt cấp độ phát triển 6", emoji: "💎", reward: 750 });
+    achievementsList.push({ id: 4, name: "Vinh Quang 4", desc: "Đạt cấp độ phát triển 8", emoji: "👑", reward: 1000 });
+    achievementsList.push({ id: 5, name: "Vinh Quang 5", desc: "Đạt cấp độ phát triển 10", emoji: "🚀", reward: 1250 });
+    achievementsList.push({ id: 6, name: "Vinh Quang 6", desc: "Đạt cấp độ phát triển 12", emoji: "🌟", reward: 1500 });
+    achievementsList.push({ id: 7, name: "Vinh Quang 7", desc: "Đạt cấp độ phát triển 14", emoji: "🎯", reward: 1750 });
+    achievementsList.push({ id: 8, name: "Vinh Quang 8", desc: "Đạt cấp độ phát triển 16", emoji: "🛡️", reward: 2000 });
+    achievementsList.push({ id: 9, name: "Vinh Quang 9", desc: "Đạt cấp độ phát triển 18", emoji: "🏆", reward: 2250 });
+    achievementsList.push({ id: 10, name: "Vinh Quang 10", desc: "Đạt cấp độ phát triển 20", emoji: "💫", reward: 2500 });
+    
+    achievementsList.push({ id: 11, name: "Vinh Quang 11", desc: "Đạt cấp độ phát triển 22", emoji: "💥", reward: 2750 });
+    achievementsList.push({ id: 12, name: "Vinh Quang 12", desc: "Đạt cấp độ phát triển 24", emoji: "🍀", reward: 3000 });
+    achievementsList.push({ id: 13, name: "Vinh Quang 13", desc: "Đạt cấp độ phát triển 26", emoji: "🔮", reward: 3250 });
+    achievementsList.push({ id: 14, name: "Vinh Quang 14", desc: "Đạt cấp độ phát triển 28", emoji: "🦄", reward: 3500 });
+    achievementsList.push({ id: 15, name: "Vinh Quang 15", desc: "Đạt cấp độ phát triển 30", emoji: "🌈", reward: 3750 });
+    achievementsList.push({ id: 16, name: "Vinh Quang 16", desc: "Đạt cấp độ phát triển 32", emoji: "🔥", reward: 4000 });
+    achievementsList.push({ id: 17, name: "Vinh Quang 17", desc: "Đạt cấp độ phát triển 34", emoji: "⚡", reward: 4250 });
+    achievementsList.push({ id: 18, name: "Vinh Quang 18", desc: "Đạt cấp độ phát triển 36", emoji: "💎", reward: 4500 });
+    achievementsList.push({ id: 19, name: "Vinh Quang 19", desc: "Đạt cấp độ phát triển 38", emoji: "👑", reward: 4750 });
+    achievementsList.push({ id: 20, name: "Vinh Quang 20", desc: "Đạt cấp độ phát triển 40", emoji: "🚀", reward: 5000 });
 
+    achievementsList.push({ id: 21, name: "Vinh Quang 21", desc: "Đạt cấp độ phát triển 42", emoji: "🌟", reward: 5250 });
+    achievementsList.push({ id: 22, name: "Vinh Quang 22", desc: "Đạt cấp độ phát triển 44", emoji: "🎯", reward: 5500 });
+    achievementsList.push({ id: 23, name: "Vinh Quang 23", desc: "Đạt cấp độ phát triển 46", emoji: "🛡️", reward: 5750 });
+    achievementsList.push({ id: 24, name: "Vinh Quang 24", desc: "Đạt cấp độ phát triển 48", emoji: "🏆", reward: 6000 });
+    achievementsList.push({ id: 25, name: "Vinh Quang 25", desc: "Đạt cấp độ phát triển 50", emoji: "💫", reward: 6250 });
+    achievementsList.push({ id: 26, name: "Vinh Quang 26", desc: "Đạt cấp độ phát triển 52", emoji: "💥", reward: 6500 });
+    achievementsList.push({ id: 27, name: "Vinh Quang 27", desc: "Đạt cấp độ phát triển 54", emoji: "🍀", reward: 6750 });
+    achievementsList.push({ id: 28, name: "Vinh Quang 28", desc: "Đạt cấp độ phát triển 56", emoji: "🔮", reward: 7000 });
+    achievementsList.push({ id: 29, name: "Vinh Quang 29", desc: "Đạt cấp độ phát triển 58", emoji: "🦄", reward: 7250 });
+    achievementsList.push({ id: 30, name: "Vinh Quang 30", desc: "Đạt cấp độ phát triển 60", emoji: "🌈", reward: 7500 });
+
+    achievementsList.push({ id: 31, name: "Vinh Quang 31", desc: "Đạt cấp độ phát triển 62", emoji: "🔥", reward: 7750 });
+    achievementsList.push({ id: 32, name: "Vinh Quang 32", desc: "Đạt cấp độ phát triển 64", emoji: "⚡", reward: 8000 });
+    achievementsList.push({ id: 33, name: "Vinh Quang 33", desc: "Đạt cấp độ phát triển 66", emoji: "💎", reward: 8250 });
+    achievementsList.push({ id: 34, name: "Vinh Quang 34", desc: "Đạt cấp độ phát triển 68", emoji: "👑", reward: 8500 });
+    achievementsList.push({ id: 35, name: "Vinh Quang 35", desc: "Đạt cấp độ phát triển 70", emoji: "🚀", reward: 8750 });
+    achievementsList.push({ id: 36, name: "Vinh Quang 36", desc: "Đạt cấp độ phát triển 72", emoji: "🌟", reward: 9000 });
+    achievementsList.push({ id: 37, name: "Vinh Quang 37", desc: "Đạt cấp độ phát triển 74", emoji: "🎯", reward: 9250 });
+    achievementsList.push({ id: 38, name: "Vinh Quang 38", desc: "Đạt cấp độ phát triển 76", emoji: "🛡️", reward: 9500 });
+    achievementsList.push({ id: 39, name: "Vinh Quang 39", desc: "Đạt cấp độ phát triển 78", emoji: "🏆", reward: 9750 });
+    achievementsList.push({ id: 40, name: "Vinh Quang 40", desc: "Đạt cấp độ phát triển 80", emoji: "💫", reward: 10000 });
+
+    achievementsList.push({ id: 41, name: "Vinh Quang 41", desc: "Đạt cấp độ phát triển 82", emoji: "💥", reward: 10250 });
+    achievementsList.push({ id: 42, name: "Vinh Quang 42", desc: "Đạt cấp độ phát triển 84", emoji: "🍀", reward: 10500 });
+    achievementsList.push({ id: 43, name: "Vinh Quang 43", desc: "Đạt cấp độ phát triển 86", emoji: "🔮", reward: 10750 });
+    achievementsList.push({ id: 44, name: "Vinh Quang 44", desc: "Đạt cấp độ phát triển 88", emoji: "🦄", reward: 11000 });
+    achievementsList.push({ id: 45, name: "Vinh Quang 45", desc: "Đạt cấp độ phát triển 90", emoji: "🌈", reward: 11250 });
+    achievementsList.push({ id: 46, name: "Vinh Quang 46", desc: "Đạt cấp độ phát triển 92", emoji: "🔥", reward: 11500 });
+    achievementsList.push({ id: 47, name: "Vinh Quang 47", desc: "Đạt cấp độ phát triển 94", emoji: "⚡", reward: 11750 });
+    achievementsList.push({ id: 48, name: "Vinh Quang 48", desc: "Đạt cấp độ phát triển 96", emoji: "💎", reward: 12000 });
+    achievementsList.push({ id: 49, name: "Vinh Quang 49", desc: "Đạt cấp độ phát triển 98", emoji: "👑", reward: 12250 });
+    achievementsList.push({ id: 50, name: "Vinh Quang 50", desc: "Đạt cấp độ tối đa 100", emoji: "🚀", reward: 15000 });
+
+    // --- DOM ELEMENTS LIÊN KẾT ---
     const scoreDisplay = document.getElementById("scoreDisplay");
     const rebirthDisplay = document.getElementById("rebirthDisplay");
-    const multiplierDisplay = document.getElementById("multiplierDisplay");
     const achProgressDisplay = document.getElementById("achProgressDisplay");
     const achCountText = document.getElementById("achCountText");
     const achGrid = document.getElementById("achGrid");
     const holdBtn = document.getElementById("holdBtn");
     const logBox = document.getElementById("logBox");
     const codeInput = document.getElementById("codeInput");
-    const leaderboardBox = document.getElementById("leaderboardBox");
 
-    /**
-     * Ghi log bảo mật và thông báo hệ thống
-     */
-    function addLog(msg, type = "info") {
+    // --- HỆ THỐNG GHI NHẬT KÝ VÀ BẮT LỖI CHI TIẾT ---
+    function addLog(message, type = "info") {
         try {
-            const time = new Date().toLocaleTimeString();
-            let cls = type === "err" ? "log-err" : (type === "ok" ? "log-ok" : "");
-            logBox.innerHTML += `<div class="${cls}">[${time}]: ${msg}</div>`;
+            const timeStr = new Date().toLocaleTimeString();
+            let cssClass = "";
+            if (type === "error") cssClass = "log-error";
+            if (type === "success") cssClass = "log-success";
+
+            logBox.innerHTML += `<div class="${cssClass}">[${timeStr}]: ${message}</div>`;
             logBox.scrollTop = logBox.scrollHeight;
-        } catch (e) {
-            console.error("Lỗi ghi log:", e);
+        } catch (err) {
+            console.error("Lỗi ghi log:", err);
         }
     }
 
     function clearLogs() {
-        logBox.innerHTML = `<div class="log-ok">[System]: Đã xóa sạch nhật ký hệ thống theo yêu cầu quản trị viên.</div>`;
+        logBox.innerHTML = `<div class="log-success">[System]: Đã dọn sạch nhật ký hệ thống.</div>`;
     }
 
-    /**
-     * Lưu trữ dữ liệu an toàn qua localStorage
-     */
+    // --- LƯU TRỮ VÀ KHÔI PHỤC DỮ LIỆU LOCALSTORAGE ---
     function saveGame() {
         try {
-            localStorage.setItem("CuongPhong_V11_Ultimate", JSON.stringify(gameState));
-        } catch (e) {
-            addLog(`Lỗi ghi dữ liệu xuống localStorage: ${e.message}`, "err");
+            const dataToSave = JSON.stringify(gameState);
+            localStorage.setItem("CuongPhong_State_V10_Reset0", dataToSave);
+        } catch (err) {
+            addLog(`Lỗi lưu game vào bộ nhớ trình duyệt: ${err.message}`, "error");
         }
     }
 
-    /**
-     * Tải và khôi phục trạng thái từ localStorage
-     */
     function loadGame() {
         try {
-            const data = localStorage.getItem("CuongPhong_V11_Ultimate");
-            if (data) {
-                const parsed = JSON.parse(data);
-                gameState.score = parsed.score || 0;
-                gameState.rebirths = parsed.rebirths || 0;
-                gameState.multiplier = parsed.multiplier || 1.0;
-                gameState.unlockedAchievements = parsed.unlockedAchievements || [];
-                addLog("Khôi phục trạng thái phiên làm việc trước thành công.", "ok");
+            const savedData = localStorage.getItem("CuongPhong_State_V10_Reset0");
+            if (savedData !== null) {
+                const parsedData = JSON.parse(savedData);
+                gameState.score = parsedData.score !== undefined ? parsedData.score : 0;
+                gameState.rebirths = parsedData.rebirths !== undefined ? parsedData.rebirths : 0;
+                gameState.unlockedAchievements = parsedData.unlockedAchievements !== undefined ? parsedData.unlockedAchievements : [];
+                addLog("Khôi phục tiến trình người chơi thành công.", "success");
             }
-        } catch (e) {
-            addLog(`Lỗi phân tích dữ liệu cũ: ${e.message}`, "err");
-            localStorage.removeItem("CuongPhong_V11_Ultimate");
+        } catch (err) {
+            addLog(`Phát hiện lỗi dữ liệu cũ, tiến hành khởi tạo mới: ${err.message}`, "error");
+            localStorage.removeItem("CuongPhong_State_V10_Reset0");
         }
     }
 
-    /**
-     * Render giao diện danh sách 50 thành tựu
-     */
+    // --- RENDER GIAO DIỆN 50 VINH QUANG ---
     function renderAchievements() {
         try {
             achGrid.innerHTML = "";
-            let count = gameState.unlockedAchievements.length;
+            let unlockedCount = gameState.unlockedAchievements.length;
 
             for (let i = 0; i < achievementsList.length; i++) {
                 let ach = achievementsList[i];
-                let unlocked = gameState.unlockedAchievements.includes(ach.id);
+                let isUnlocked = gameState.unlockedAchievements.includes(ach.id);
                 
-                let card = document.createElement("div");
-                card.className = unlocked ? "ach-card unlocked" : "ach-card";
-                card.innerHTML = `
-                    <div class="ach-emoji">${ach.emoji}</div>
+                let div = document.createElement("div");
+                div.className = isUnlocked ? "ach-item unlocked" : "ach-item";
+                div.innerHTML = `
+                    <div class="ach-icon">${ach.emoji}</div>
                     <div>
                         <strong>${ach.name}</strong><br>
-                        <span style="color: var(--text-dim);">${ach.desc}</span>
+                        <span style="color: var(--text-muted);">${ach.desc}</span>
                     </div>
                 `;
-                achGrid.appendChild(card);
+                achGrid.appendChild(div);
             }
 
-            achProgressDisplay.innerText = `${count} / ${MAX_ACHIEVEMENTS}`;
-            let percent = Math.floor((count / MAX_ACHIEVEMENTS) * 100);
+            achProgressDisplay.innerText = `${unlockedCount} / ${MAX_ACHIEVEMENTS}`;
+            let percent = Math.floor((unlockedCount / MAX_ACHIEVEMENTS) * 100);
             achCountText.innerText = `Hoàn thành: ${percent}%`;
-        } catch (e) {
-            addLog(`Lỗi hiển thị vinh quang: ${e.message}`, "err");
+        } catch (err) {
+            addLog(`Lỗi hiển thị bảng vinh quang: ${err.message}`, "error");
         }
     }
 
-    /**
-     * Kiểm tra điều kiện mở khóa thành tựu tự động
-     */
+    // --- KIỂM TRA ĐIỀU KIỆN MỞ KHÓA VINH QUANG ---
     function checkAchievements() {
         try {
-            let newlyUnlocked = false;
+            let hasNewUnlock = false;
             for (let i = 0; i < achievementsList.length; i++) {
                 let ach = achievementsList[i];
                 if (gameState.rebirths >= ach.id && !gameState.unlockedAchievements.includes(ach.id)) {
                     gameState.unlockedAchievements.push(ach.id);
                     gameState.score += ach.reward;
-                    addLog(`🎖️ Mở khóa cột mốc [${ach.name}]! Thưởng +${ach.reward} điểm hệ thống.`, "ok");
-                    newlyUnlocked = true;
+                    addLog(`🎉 Mở khóa thành công [${ach.name}]! Nhận thưởng +${ach.reward} điểm.`, "success");
+                    hasNewUnlock = true;
                 }
             }
-            if (newlyUnlocked) renderAchievements();
-        } catch (e) {
-            addLog(`Lỗi kiểm tra vinh quang: ${e.message}`, "err");
-        }
-    }
-
-    /**
-     * Cập nhật trạng thái Bảng Xếp Hạng với điều kiện nghiêm ngặt > 100,000,000 điểm
-     */
-    function updateLeaderboard() {
-        try {
-            const reqScore = 100000000;
-            if (gameState.score >= reqScore) {
-                leaderboardBox.className = "leaderboard-content unlocked";
-                leaderboardBox.innerHTML = `🌟 XUẤT SẮC! Đã vượt ngưỡng mốc định mức, hiện diện trong TOP BXH Sếp Tối Thượng với <strong>${gameState.score.toLocaleString()}</strong> điểm!`;
-            } else {
-                leaderboardBox.className = "leaderboard-content";
-                leaderboardBox.innerHTML = `🔒 Chưa đủ điều kiện vào BXH. Hiện tại: ${gameState.score.toLocaleString()} / 100,000,000 điểm.`;
+            if (hasNewUnlock) {
+                renderAchievements();
             }
-        } catch (e) {
-            console.error("Lỗi cập nhật BXH:", e);
+        } catch (err) {
+            addLog(`Lỗi kiểm tra tiến trình vinh quang: ${err.message}`, "error");
         }
     }
 
-    /**
-     * Xử lý cơ chế bấm giữ chuột/cảm ứng để cày điểm liên tục
-     */
-    let holdTimer = null;
+    // --- BUFF CỰC MẠNH: BẤM GIỮ TỰ ĐỘNG TĂNG ĐIỂM (RESET VỀ 0 KHI ĐẠT 100) ---
+    let holdInterval = null;
 
-    function startHold(e) {
-        if (e) e.preventDefault();
+    function startHolding(event) {
+        if (event) event.preventDefault();
         try {
-            holdBtn.classList.add("active-hold");
-            addLog("⚡ Kích hoạt xung nhịp siêu tốc: Đang tự động tăng điểm & cấp tái sinh.");
+            holdBtn.classList.add("holding");
+            addLog("⚡ Kích hoạt Buff Cực Mạnh: Tự động chạy điểm & tái sinh.");
 
-            holdTimer = setInterval(() => {
+            holdInterval = setInterval(function() {
                 if (gameState.rebirths < gameState.maxRebirths) {
                     gameState.rebirths++;
-                    gameState.score += Math.floor(500 * gameState.multiplier);
+                    gameState.score += 300;
                     checkAchievements();
                     updateUI();
                     saveGame();
                 }
 
-                // Chạm trần 100 tái sinh tự động reset chu kỳ
+                // Nếu đạt đúng mốc tối đa 100, tiến hành reset sạch sẽ toàn bộ về 0
                 if (gameState.rebirths >= gameState.maxRebirths) {
-                    stopHold();
-                    addLog("🚨 Đạt ngưỡng giới hạn 100 tái sinh! Toàn bộ hệ thống tự động reset chu kỳ về 0.", "err");
+                    stopHolding();
+                    addLog("🚨 Đã đạt 100% giới hạn tái sinh! Toàn bộ điểm, tái sinh và vinh quang đã được reset về 0.", "error");
+                    
+                    // Thực hiện reset hoàn toàn
                     gameState.score = 0;
                     gameState.rebirths = 0;
                     gameState.unlockedAchievements = [];
+                    
                     renderAchievements();
                     updateUI();
                     saveGame();
                 }
-            }, 90);
-        } catch (e) {
-            addLog(`Lỗi xử lý luồng bấm giữ: ${e.message}`, "err");
-            stopHold();
+            }, 120);
+        } catch (err) {
+            addLog(`Lỗi khi thực thi buff bấm giữ: ${err.message}`, "error");
+            stopHolding();
         }
     }
 
-    function stopHold() {
-        if (holdTimer) {
-            clearInterval(holdTimer);
-            holdTimer = null;
-            holdBtn.classList.remove("active-hold");
-            addLog("Đã ngắt xung nhịp siêu tốc.");
+    function stopHolding() {
+        if (holdInterval !== null) {
+            clearInterval(holdInterval);
+            holdInterval = null;
+            holdBtn.classList.remove("holding");
+            addLog("Đã dừng buff bấm giữ tự động.");
         }
     }
 
-    holdBtn.addEventListener("mousedown", startHold);
-    holdBtn.addEventListener("mouseup", stopHold);
-    holdBtn.addEventListener("mouseleave", stopHold);
-    holdBtn.addEventListener("touchstart", startHold);
-    holdBtn.addEventListener("touchend", stopHold);
+    holdBtn.addEventListener("mousedown", startHolding);
+    holdBtn.addEventListener("mouseup", stopHolding);
+    holdBtn.addEventListener("mouseleave", stopHolding);
 
-    /**
-     * Hệ thống cược Tài / Xỉu may rủi 50/50
-     */
+    holdBtn.addEventListener("touchstart", startHolding);
+    holdBtn.addEventListener("touchend", stopHolding);
+
+    // --- CƯỢC 50/50 MAY RỦI ---
     function playGamble(choice) {
         try {
-            let betAmount = 1000;
+            let betAmount = 500;
             if (gameState.score < betAmount) {
-                addLog(`Số dư không đủ để tham gia cược! Cần tối thiểu ${betAmount} điểm.`, "err");
+                addLog(`Không đủ điểm cược! Bạn cần ít nhất ${betAmount} điểm.`, "error");
                 return;
             }
 
             gameState.score -= betAmount;
-            let actualResult = Math.random() < 0.5 ? "tai" : "xiu";
+            let randomRoll = Math.random();
+            let result = randomRoll < 0.5 ? "tai" : "xiu";
 
-            if (choice === actualResult) {
-                let rewardWin = betAmount * 2;
-                gameState.score += rewardWin;
-                addLog(`🎲 Phiên cược 50/50 THẮNG (${actualResult.toUpperCase()})! Hoàn vốn + nhận thưởng +${rewardWin} điểm.`, "ok");
+            if (choice === result) {
+                let prize = betAmount * 2;
+                gameState.score += prize;
+                addLog(`🎲 Cược 50/50 THẮNG (${result.toUpperCase()})! Nhận về +${prize} điểm.`, "success");
             } else {
-                addLog(`🎲 Phiên cược 50/50 THUA (${actualResult.toUpperCase()})! Tiêu hao ${betAmount} điểm.`, "err");
+                addLog(`🎲 Cược 50/50 THUA (${result.toUpperCase()})! Bạn mất ${betAmount} điểm.`, "error");
             }
 
             updateUI();
             saveGame();
-        } catch (e) {
-            addLog(`Lỗi xử lý cược: ${e.message}`, "err");
+        } catch (err) {
+            addLog(`Lỗi xử lý cược 50/50: ${err.message}`, "error");
         }
     }
 
-    /**
-     * Danh sách giftcode hệ thống
-     */
-    let giftCodesDatabase = {
-        "CYBERBOSS": 25000,
-        "VIPPRO": 50000,
-        "MAXPOWER": 100000
+    // --- NHẬP GIFTCODE NHẬN THƯỞNG ---
+    let validCodes = {
+        "CUONGPHONG10": 5000,
+        "VIPPRO888": 10000,
+        "UPDATE10": 15000
     };
 
-    /**
-     * Xử lý nhập mã quà tặng hoặc lệnh quản trị đặc biệt `13579`
-     */
     function redeemCode() {
         try {
-            let rawInput = codeInput.value.trim();
-            if (!rawInput) {
-                addLog("Vui lòng cung cấp mã hoặc lệnh hợp lệ vào ô thông tin.", "err");
+            let codeVal = codeInput.value.trim().toUpperCase();
+            if (codeVal === "") {
+                addLog("Vui lòng nhập mã code vào ô trống.", "error");
                 return;
             }
 
-            // LỆNH RESET DỮ LIỆU BẮT BUỘC: 13579
-            if (rawInput === "13579") {
-                addLog("⚠️ CẢNH BÁO QUẢN TRỊ: Kích hoạt mã độc quyền [13579] - Xóa sạch toàn bộ điểm số, tái sinh và thành tựu về 0!", "err");
-                gameState.score = 0;
-                gameState.rebirths = 0;
-                gameState.unlockedAchievements = [];
-                renderAchievements();
-                updateUI();
-                saveGame();
-                codeInput.value = "";
-                return;
-            }
-
-            let codeKey = rawInput.toUpperCase();
-            if (giftCodesDatabase[codeKey] !== undefined) {
-                let bonus = giftCodesDatabase[codeKey];
-                gameState.score += bonus;
-                addLog(`🎁 Kích hoạt mã [${codeKey}] thành công! Nhận ngay +${bonus} điểm vào tài khoản.`, "ok");
-                delete giftCodesDatabase[codeKey]; // Sử dụng một lần duy nhất
+            if (validCodes[codeVal] !== undefined) {
+                let giftReward = validCodes[codeVal];
+                gameState.score += giftReward;
+                addLog(`🎁 Nhập giftcode [${codeVal}] thành công! Nhận ngay +${giftReward} điểm.`, "success");
+                delete validCodes[codeVal];
                 codeInput.value = "";
                 updateUI();
                 saveGame();
             } else {
-                addLog(`🛡️ Cảnh báo bảo mật: Mã lệnh [${rawInput]}]] không hợp lệ hoặc đã hết hạn!`, "err");
-                codeInput.value = "";
+                addLog(`Mã code [${codeVal}] không hợp lệ hoặc đã được sử dụng!`, "error");
             }
-        } catch (e) {
-            addLog(`Lỗi thực thi mã lệnh: ${e.message}`, "err");
+        } catch (err) {
+            addLog(`Lỗi hệ thống khi xử lý giftcode: ${err.message}`, "error");
         }
     }
 
-    /**
-     * Cập nhật toàn bộ giao diện màn hình người dùng
-     */
+    // --- CẬP NHẬT GIAO DIỆN (UI) ---
     function updateUI() {
         try {
             scoreDisplay.innerText = gameState.score.toLocaleString();
             rebirthDisplay.innerText = `${gameState.rebirths} / ${gameState.maxRebirths}`;
-            multiplierDisplay.innerText = `${gameState.multiplier.toFixed(1)}x`;
-            updateLeaderboard();
-        } catch (e) {
-            console.error("Lỗi cập nhật UI:", e);
+        } catch (err) {
+            console.error("Lỗi cập nhật UI:", err);
         }
     }
 
-    // Khởi chạy hệ thống lúc nạp trang
+    // --- KHỞI CHẠY HỆ THỐNG BAN ĐẦU ---
     loadGame();
     renderAchievements();
     updateUI();
-    addLog("Phiên bản Ultimate Cyberpunk v11.2 đã khởi chạy hoàn tất toàn bộ tiến trình.", "ok");
+    addLog("Bản Cập Nhật 10 (Reset 0 khi đạt 100%) đã sẵn sàng hoạt động hoàn hảo!", "success");
 </script>
 
 </body>
