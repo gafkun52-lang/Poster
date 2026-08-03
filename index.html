@@ -2,795 +2,600 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Cuồng Phong Màu Sắc - Sảnh Vinh Quang & Phục Lợi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>God Simulator: WorldBox Ultimate Edition (400$ CTO Build)</title>
     <style>
-        * { box-sizing: border-box; user-select: none; -webkit-touch-callout: none; -webkit-tap-highlight-color: transparent; }
-        body {
+        :root {
+            --bg-main: #030712;
+            --bg-panel: #0f172a;
+            --bg-card: #1e293b;
+            --accent-gold: #f59e0b;
+            --accent-cyan: #06b6d4;
+            --accent-pink: #f43f5e;
+            --success: #10b981;
+            --danger: #ef4444;
+            --text-light: #f8fafc;
+            --text-dim: #94a3b8;
+            --border: #334155;
+        }
+
+        * {
+            box-sizing: border-box;
             margin: 0;
-            background: #ff2a5f;
-            color: #fff;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            user-select: none;
+        }
+
+        body {
+            background: var(--bg-main);
+            color: var(--text-light);
+            min-height: 100vh;
             display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            height: 100dvh;
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
             flex-direction: column;
+            align-items: center;
+            padding: 8px;
+        }
+
+        .god-wrapper {
+            width: 100%;
+            max-width: 1280px;
+            background: var(--bg-panel);
+            border: 2px solid var(--accent-gold);
+            border-radius: 16px;
+            box-shadow: 0 0 40px rgba(245, 158, 11, 0.25);
             overflow: hidden;
-            position: relative;
-            touch-action: manipulation;
-        }
-
-        .page {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-            height: 100%;
-            justify-content: center;
-            position: absolute;
-            top: 0;
-            left: 0;
-            padding: 10px;
-        }
-        .page.active {
-            display: flex;
-        }
-
-        @keyframes screenShake {
-            0% { transform: translate(0, 0) rotate(0deg); }
-            20% { transform: translate(-10px, 8px) rotate(-2deg); }
-            40% { transform: translate(10px, -8px) rotate(2deg); }
-            60% { transform: translate(-6px, -10px) rotate(-1deg); }
-            80% { transform: translate(8px, 6px) rotate(1.5deg); }
-            100% { transform: translate(0, 0) rotate(0deg); }
-        }
-
-        .shaking {
-            animation: screenShake 0.12s infinite ease-in-out;
-        }
-
-        .card-container, .achievement-page-container {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            padding: 14px 16px;
-            border-radius: 20px;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
             display: flex;
             flex-direction: column;
-            align-items: center;
-            width: 100%;
-            max-width: 360px;
-            z-index: 10;
+            height: 97vh;
         }
 
-        .achievement-page-container {
-            max-height: 85vh;
-            justify-content: flex-start;
-            padding-bottom: 15px;
-        }
-
-        h1 {
-            font-size: 16px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.4);
-            margin: 0 0 2px 0;
-            text-align: center;
-            background: linear-gradient(45deg, #fff, #ffd700);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        p {
-            font-size: 10px;
-            margin: 0 0 8px 0;
-            opacity: 0.9;
-            text-align: center;
-            line-height: 1.1;
-        }
-
-        .score-board {
+        header {
+            background: linear-gradient(90deg, #18181b, #27272a);
+            padding: 12px 20px;
             display: flex;
             justify-content: space-between;
-            width: 100%;
-            margin-bottom: 6px;
-            padding: 0 4px;
-            font-size: 11px;
-            font-weight: bold;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .btn-box {
-            background: linear-gradient(135deg, #ffffff, #f0f0f0);
-            color: #1a1a1a;
-            padding: 9px 15px;
-            font-size: 12px;
-            font-weight: 900;
-            border-radius: 50px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: transform 0.1s;
-            margin-top: 5px;
-            text-align: center;
-            width: 100%;
-        }
-
-        .btn-box:active {
-            transform: scale(0.96);
-        }
-
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.22);
-            color: #fff;
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            font-size: 11px;
-            padding: 7px 12px;
-            margin-top: 4px;
-        }
-
-        #numberContainer {
-            margin-top: 4px;
-            font-size: 42px;
-            font-weight: 900;
-            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-            height: 48px;
-            letter-spacing: 2px;
-            display: flex;
             align-items: center;
-            justify-content: center;
+            border-bottom: 2px solid var(--border);
         }
 
-        .firework-particle {
-            position: absolute;
-            pointer-events: none;
-            border-radius: 50%;
+        header h1 {
+            font-size: 20px;
+            background: linear-gradient(90deg, var(--accent-gold), var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            font-weight: 900;
+            letter-spacing: 1.5px;
         }
 
-        .badges-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 8px;
-            overflow-y: auto;
-            margin: 8px 0;
-            width: 100%;
-            padding-right: 2px;
-            max-height: 240px;
+        .world-stats {
+            display: flex;
+            gap: 18px;
+            font-size: 12px;
+            color: var(--text-dim);
         }
 
-        .badge-item {
-            background: rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 12px;
-            padding: 8px;
+        .world-stats span {
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        .main-layout {
+            display: flex;
+            flex-grow: 1;
+            overflow: hidden;
+        }
+
+        /* Sidebar công cụ Thượng Đế */
+        sidebar {
+            width: 290px;
+            background: var(--bg-panel);
+            border-right: 2px solid var(--border);
+            padding: 12px;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            text-align: center;
-            opacity: 0.35;
-            transition: all 0.3s;
+            gap: 10px;
+            overflow-y: auto;
         }
 
-        .badge-item.unlocked {
-            opacity: 1;
-            background: rgba(255, 215, 0, 0.25);
-            border-color: #ffd700;
-            box-shadow: 0 0 12px rgba(255, 215, 0, 0.3);
+        .tool-group {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 10px;
         }
 
-        .badge-icon {
-            font-size: 22px;
-            margin-bottom: 2px;
-        }
-
-        .badge-title {
-            font-size: 10px;
-            font-weight: bold;
-            margin-bottom: 1px;
-        }
-
-        .badge-desc {
-            font-size: 8px;
-            opacity: 0.8;
-        }
-
-        #unlockToast {
-            position: absolute;
-            top: -60px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: linear-gradient(135deg, #ffd700, #ff8c00);
-            color: #1a1a1a;
-            padding: 8px 16px;
-            border-radius: 30px;
-            font-weight: 900;
-            font-size: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            transition: top 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            z-index: 100;
-            pointer-events: none;
-            white-space: nowrap;
-        }
-        #unlockToast.show {
-            top: 15px;
-        }
-    
-        .mystery-btn {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            width: 32px;
-            height: 32px;
-            background: rgba(255, 255, 255, 0.2);
-            border: 2px solid rgba(255, 255, 255, 0.4);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            z-index: 20;
-            backdrop-filter: blur(5px);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-        }
-
-        .pro-right-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            padding: 5px 10px;
-            background: linear-gradient(135deg, #ffd700, #ff8c00);
-            border: 2px solid rgba(255, 255, 255, 0.6);
-            border-radius: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        .tool-group h3 {
             font-size: 11px;
-            font-weight: 900;
-            color: #1a1a1a;
-            cursor: pointer;
-            z-index: 20;
-            backdrop-filter: blur(5px);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+            color: var(--accent-gold);
+            margin-bottom: 8px;
             text-transform: uppercase;
-        }
-        
-        .gamble-btn {
-            background: linear-gradient(135deg, #ff9a9e, #fecfef);
-            color: #d11a2a;
-            border: none;
+            letter-spacing: 0.5px;
         }
 
-        .dev-container {
-            margin-top: 6px;
+        .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 6px;
+        }
+
+        .btn-tool {
+            background: var(--bg-main);
+            border: 1px solid var(--border);
+            color: var(--text-light);
+            padding: 8px;
+            font-size: 11px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
             text-align: center;
-            font-size: 10px;
-            opacity: 0.9;
-            font-weight: 600;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.3);
-            border-top: 1px dashed rgba(255,255,255,0.3);
-            padding-top: 5px;
-            width: 100%;
+        }
+
+        .btn-tool:hover {
+            border-color: var(--accent-cyan);
+            background: rgba(6, 182, 212, 0.1);
+        }
+
+        .btn-tool.active {
+            background: var(--accent-gold);
+            color: #000;
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 10px rgba(245, 158, 11, 0.4);
+        }
+
+        /* Canvas hiển thị thế giới */
+        .canvas-container {
+            flex-grow: 1;
+            background: #020617;
             display: flex;
-            justify-content: space-around;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        canvas {
+            border: 2px solid var(--border);
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.9);
+            cursor: crosshair;
+            background: #090d16;
+        }
+
+        /* Chân trang điều khiển thời gian & thông báo */
+        .control-footer {
+            background: #090d16;
+            padding: 10px 15px;
+            border-top: 2px solid var(--border);
+            display: flex;
+            justify-content: space-between;
             align-items: center;
         }
-        .dev-title {
-            color: #ffd700;
-            text-transform: uppercase;
-            font-size: 9px;
+
+        .simulation-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-sim {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text-light);
+            padding: 6px 14px;
+            font-size: 12px;
             font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-sim:hover {
+            background: var(--border);
+        }
+
+        .btn-sim.danger {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: var(--danger);
+            color: var(--danger);
+        }
+
+        .log-screen {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 11px;
+            color: var(--accent-cyan);
+            background: #000;
+            padding: 6px 12px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            width: 480px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
     </style>
 </head>
 <body>
 
-    <div id="unlockToast">🏆 Đã Mở Khóa Huy Hiệu Mới!</div>
+<div class="god-wrapper">
+    <header>
+        <h1>🌍 WorldBox: Ultimate Civilization (400$ CTO Build)</h1>
+        <div class="world-stats">
+            <div>Dân số: <span id="popCount">0</span></div>
+            <div>Thành quách: <span id="villageCount">0</span></div>
+            <div>Dã thú: <span id="beastCount">0</span></div>
+            <div>Kỷ nguyên: <span id="yearCount">Đồ Đá (Năm 1)</span></div>
+        </div>
+    </header>
 
-    <!-- TRANG 1: TRÒ CHƠI CHÍNH -->
-    <div id="gamePage" class="page active">
-        <div class="mystery-btn" onclick="window.open('https://youtu.be/vgUyuAloTgA?si=bUWeSZl_dzcRXEKs', '_blank')">?</div>
-        <div class="pro-right-btn" onclick="window.open('https://youtu.be/mc30SWcuink?si=gCQNU8upwgo6554A', '_blank')">🔥 PRO</div>
-
-        <div class="card-container">
-            <h1>⚡ Cuồng Phong Màu Sắc ⚡</h1>
-            <p>Chạm để Bật/Dừng. Chinh phục điểm số & sưu tầm huy hiệu!</p>
-            
-            <div class="score-board">
-                <span>🏆 Kỷ Lục: <strong id="highScore">0</strong></span>
-                <span>🔥 Điểm: <strong id="currentScore">0</strong></span>
+    <div class="main-layout">
+        <!-- Bảng điều khiển quyền năng -->
+        <sidebar>
+            <div class="tool-group">
+                <h3>🏞️ Kiến Tạo Địa Hình</h3>
+                <div class="tool-grid">
+                    <button class="btn-tool active" onclick="setTool('land', this)">Đất Liền</button>
+                    <button class="btn-tool" onclick="setTool('water', this)">Đại Dương</button>
+                    <button class="btn-tool" onclick="setTool('forest', this)">Rừng Rậm</button>
+                    <button class="btn-tool" onclick="setTool('mountain', this)">Dãy Núi</button>
+                    <button class="btn-tool" onclick="setTool('gold', this)">Mỏ Khoáng</button>
+                    <button class="btn-tool" onclick="setTool('erase', this)">Tẩy Xóa</button>
+                </div>
             </div>
-            <div style="font-size: 10px; margin-bottom: 4px; font-weight: bold; text-shadow: 0 1px 2px rgba(0,0,0,0.3);">
-                🔄 Tái Sinh: <strong id="rebirthCount">0</strong> | ⚡ Hệ Số: <strong id="multiplierText">1.0x</strong> | 🎯 Quay: <strong id="spinCount">0</strong>/20
+
+            <div class="tool-group">
+                <h3>👥 Khởi Tạo Chủng Tộc</h3>
+                <div class="tool-grid">
+                    <button class="btn-tool" onclick="setTool('human', this)">Loài Người</button>
+                    <button class="btn-tool" onclick="setTool('orc', this)">Tộc Orc</button>
+                    <button class="btn-tool" onclick="setTool('elf', this)">Tộc Elf</button>
+                    <button class="btn-tool" onclick="setTool('wolf', this)">Sói Hoang</button>
+                </div>
             </div>
 
-            <div class="btn-box" id="statusText">BẮT ĐẦU NGAY</div>
-            <div id="numberContainer">68</div>
-
-            <div class="btn-box btn-secondary gamble-btn" onclick="gambleScore()">🎲 Cược Nhân Phẩm (50/50)</div>
-
-            <div class="btn-box btn-secondary" onclick="switchPage('achievementPage')">🏅 Sảnh Vinh Quang & Bộ Sưu Tập</div>
-            <div class="btn-box btn-secondary" style="background: linear-gradient(135deg, #00f2fe, #4facfe); color: #fff; border: none;" onclick="switchPage('giftPage')">🎁 Phục Lợi & Nhập Mã</div>
-
-            <div class="dev-container">
-                <span class="dev-title">Dev Team:</span>
-                <span>1. Tui 📈</span>
-                <span>2. ChatGPT 😑</span>
-                <span>3. Gemini 🥳</span>
+            <div class="tool-group">
+                <h3>⚡ Thiên Tai & Phép Thuật</h3>
+                <div class="tool-grid">
+                    <button class="btn-tool" onclick="setTool('lightning', this)">Sét Giáng Thế</button>
+                    <button class="btn-tool" onclick="setTool('meteor', this)">Thiên Thạch</button>
+                    <button class="btn-tool" onclick="setTool('fire', this)">Đám Cháy</button>
+                    <button class="btn-tool" onclick="setTool('blessed', this)">Đất Màu Mỡ</button>
+                </div>
             </div>
+
+            <div class="tool-group">
+                <h3>⚙️ Quản Trị Hệ Thống</h3>
+                <div class="tool-grid">
+                    <button class="btn-tool" onclick="saveWorld()">Lưu Thế Giới</button>
+                    <button class="btn-tool" onclick="loadWorld()">Tải Dữ Liệu</button>
+                    <button class="btn-tool" style="grid-column: span 2; color: var(--danger); border-color: var(--danger);" onclick="resetWorld()">Hủy Diệt Toàn Cục</button>
+                </div>
+            </div>
+        </sidebar>
+
+        <!-- Canvas Thế Giới -->
+        <div class="canvas-container" id="canvasContainer">
+            <canvas id="worldCanvas" width="750" height="520"></canvas>
         </div>
     </div>
 
-    <!-- TRANG 2: SẢNH VINH QUANG & BỘ SƯU TẬP THÀNH TÍCH -->
-    <div id="achievementPage" class="page">
-        <div class="achievement-page-container">
-            <h1>🏅 Sảnh Vinh Quang</h1>
-            <p style="margin-bottom: 6px;">Kỷ Lục Cao Nhất: <strong id="page2HighScore" style="color: #ffd700; font-size: 14px;">0</strong></p>
-            
-            <p style="font-weight: bold; margin-bottom: 4px; text-transform: uppercase; font-size: 10px; letter-spacing: 0.5px;">📦 Bộ Sưu Tập Thành Tích</p>
-            
-            <div class="badges-grid" id="badgesGrid"></div>
-
-            <div class="btn-box btn-secondary" onclick="switchPage('gamePage')">⬅️ Quay Lại Trò Chơi</div>
+    <!-- Thanh footer điều khiển -->
+    <div class="control-footer">
+        <div class="simulation-controls">
+            <button class="btn-sim" onclick="togglePause()" id="pauseBtn">⏸️ Tạm Dừng</button>
+            <button class="btn-sim" onclick="changeSpeed(1)">1x</button>
+            <button class="btn-sim" onclick="changeSpeed(2)">2x</button>
+            <button class="btn-sim danger" onclick="clearDisasters()">Dập Lửa</button>
+        </div>
+        <div class="log-screen" id="logScreen">
+            [CTO System]: Khởi tạo thành công không gian WorldBox tối thượng dưới quyền cai quản của Sếp.
         </div>
     </div>
+</div>
 
-    <!-- TRANG 3: PHỤC LỢI & NHẬP MÃ -->
-    <div id="giftPage" class="page">
-        <div class="achievement-page-container" style="max-width: 340px;">
-            <h1>🎁 Phục Lợi Quà Tặng</h1>
-            <p style="margin-bottom: 10px;">Nhập mã code để nhận quà Thành Tích hoặc May Mắn!</p>
-            
-            <div style="width: 100%; display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px;">
-                <input type="text" id="giftCodeInput" placeholder="Nhập mã code (VD: CAMON, CUONGPHONG)..." style="width: 100%; padding: 10px 14px; border-radius: 50px; border: 1px solid rgba(255,255,255,0.4); background: rgba(0,0,0,0.25); color: #fff; font-size: 12px; text-align: center; outline: none;">
-                <div class="btn-box" id="confirmBtn" style="margin-top: 0; padding: 9px; font-size: 12px;">XÁC NHẬN NHẬN QUÀ</div>
-            </div>
+<script>
+    const canvas = document.getElementById("worldCanvas");
+    const ctx = canvas.getContext("2d");
 
-            <div id="giftResultBox" style="background: rgba(0,0,0,0.25); border: 1px dashed rgba(255,255,255,0.3); border-radius: 12px; padding: 10px; width: 100%; text-align: center; min-height: 55px; display: flex; align-items: center; justify-content: center; font-size: 11px; margin-bottom: 8px;">
-                Nhập mã code và bấm xác nhận để nhận thưởng!
-            </div>
+    const CELL_SIZE = 10;
+    const COLS = canvas.width / CELL_SIZE; // 75
+    const ROWS = canvas.height / CELL_SIZE; // 52
 
-            <div class="btn-box btn-secondary" style="font-size: 10px; padding: 7px; margin-bottom: 4px; background: rgba(255,255,255,0.1);" onclick="resetUsedCodes()">🔄 Nhập lại mã cũ (Xóa lịch sử)</div>
-            <div class="btn-box btn-secondary" onclick="switchPage('gamePage')">⬅️ Quay Lại Trò Chơi</div>
-        </div>
-    </div>
+    const TILE_EMPTY = 0;
+    const TILE_LAND = 1;
+    const TILE_WATER = 2;
+    const TILE_FOREST = 3;
+    const TILE_MOUNTAIN = 4;
+    const TILE_GOLD = 5;
+    const TILE_FIRE = 6;
+    const TILE_BUILDING = 7;
 
-    <script>
-        const colors = [
-            '#ff2a5f', '#ff9f00', '#00f2fe', '#9b51e0', 
-            '#ff007f', '#00ffcc', '#ffcc00', '#7209b7', 
-            '#3a86ff', '#fb5607', '#ff006e', '#8338ec', '#06d6a0'
-        ];
-        
-        let isRunning = false;
-        let animationTimer = null;
-        let currentScore = 0;
-        let currentRandomNum = 0;
-        let highScore = parseInt(localStorage.getItem('chaosHighScore')) || 0;
-        
-        let spinCount = parseInt(localStorage.getItem('chaosSpinCount')) || 0;
-        let rebirthCount = parseInt(localStorage.getItem('chaosRebirthCount')) || 0;
-        let scoreMultiplier = parseFloat(localStorage.getItem('chaosMultiplier')) || 1.0;
-        
-        const baseAchievements = [
-            { id: 'novice', title: 'Tập Sự', desc: 'Đạt 50k điểm', req: 50000, reqRebirth: 0, unlocked: false, icon: '🌱' },
-            { id: 'runner', title: 'Tốc Độ', desc: 'Đạt 200k điểm', req: 200000, reqRebirth: 0, unlocked: false, icon: '⚡' },
-            { id: 'storm', title: 'Cuồng Phong', desc: 'Đạt 500k điểm', req: 500000, reqRebirth: 0, unlocked: false, icon: '🌪️' },
-            { id: 'master', title: 'Bậc Thầy', desc: 'Đạt 1 Triệu điểm', req: 1000000, reqRebirth: 0, unlocked: false, icon: '👑' },
-            { id: 'expert', title: 'Cao Thủ', desc: 'Đạt 2.5 Triệu điểm', req: 2500000, reqRebirth: 0, unlocked: false, icon: '🔮' },
-            { id: 'legend', title: 'Huyền Thoại', desc: 'Đạt 5 Triệu điểm', req: 5000000, reqRebirth: 0, unlocked: false, icon: '🏆' },
-            { id: 'titan', title: 'Titan Khổng Lồ', desc: 'Đạt 10 Triệu điểm', req: 10000000, reqRebirth: 0, unlocked: false, icon: '🗿' },
-            { id: 'galaxy', title: 'Vũ Trụ Sôi Động', desc: 'Đạt 25 Triệu điểm', req: 25000000, reqRebirth: 0, unlocked: false, icon: '🌌' },
-            { id: 'god', title: 'Thần Thánh Tối Thượng', desc: 'Đạt 50 Triệu điểm', req: 50000000, reqRebirth: 0, unlocked: false, icon: '🔥' },
-            { id: 'top1_champion', title: 'Vô Địch Tối Thượng', desc: '1B điểm & 100 Tái Sinh', req: 1000000000, reqRebirth: 100, unlocked: false, icon: '👑🏆' },
-            
-            // 10 VINH QUANG CŨ
-            { id: 'avatar_11', title: 'Siêu Sao Nhí', desc: '100M điểm', req: 100000000, reqRebirth: 0, unlocked: false, icon: '😎' },
-            { id: 'avatar_12', title: 'Hỏa Long Vương', desc: '200M điểm', req: 200000000, reqRebirth: 0, unlocked: false, icon: '🐉' },
-            { id: 'avatar_13', title: 'Kỵ Sĩ Ánh Sáng', desc: '300M điểm', req: 300000000, reqRebirth: 0, unlocked: false, icon: '🦄' },
-            { id: 'avatar_14', title: 'Bóng Đêm Kỳ Bí', desc: '400M điểm', req: 400000000, reqRebirth: 0, unlocked: false, icon: '🐱' },
-            { id: 'avatar_15', title: 'Hổ Báo Cáo Chồn', desc: '500M điểm', req: 500000000, reqRebirth: 0, unlocked: false, icon: '🐯' },
-            { id: 'avatar_16', title: 'Cá Mập Đại Dương', desc: '600M điểm', req: 600000000, reqRebirth: 0, unlocked: false, icon: '🦈' },
-            { id: 'avatar_17', title: 'Đại Bàng Tung Cánh', desc: '700M điểm', req: 700000000, reqRebirth: 0, unlocked: false, icon: '🦅' },
-            { id: 'avatar_18', title: 'Thiên Thần Hộ Mệnh', desc: '800M điểm', req: 800000000, reqRebirth: 0, unlocked: false, icon: '👼' },
-            { id: 'avatar_19', title: 'Phù Thủy Tối Cao', desc: '900M điểm', req: 900000000, reqRebirth: 0, unlocked: false, icon: '🧙' },
-            { id: 'avatar_20', title: 'Robot Vô Song', desc: '950M điểm', req: 950000000, reqRebirth: 0, unlocked: false, icon: '🤖' },
+    let worldGrid = [];
+    let entities = [];
+    let villages = [];
 
-            // THÊM 20 VINH QUANG MỚI ĐỂ ĐẠT MỐC ~800 DÒNG
-            { id: 'avatar_21', title: 'Kiếm Sĩ Phong Vân', desc: '1.2B điểm', req: 1200000000, reqRebirth: 0, unlocked: false, icon: '⚔️' },
-            { id: 'avatar_22', title: 'Sấm Sét Hạ Thế', desc: '1.5B điểm', req: 1500000000, reqRebirth: 0, unlocked: false, icon: '⚡' },
-            { id: 'avatar_23', title: 'Băng Giá Vĩnh Cửu', desc: '1.8B điểm', req: 1800000000, reqRebirth: 0, unlocked: false, icon: '❄️' },
-            { id: 'avatar_24', title: 'Dung Nham Sục Sôi', desc: '2.0B điểm', req: 2000000000, reqRebirth: 0, unlocked: false, icon: '🌋' },
-            { id: 'avatar_25', title: 'Hắc Long Ma Tôn', desc: '2.5B điểm', req: 2500000000, reqRebirth: 0, unlocked: false, icon: '🖤' },
-            { id: 'avatar_26', title: 'Hoàng Kim Đại Tướng', desc: '3.0B điểm', req: 3000000000, reqRebirth: 0, unlocked: false, icon: '🛡️' },
-            { id: 'avatar_27', title: 'Tinh Tú Rực Rỡ', desc: '3.5B điểm', req: 3500000000, reqRebirth: 0, unlocked: false, icon: '🌟' },
-            { id: 'avatar_28', title: 'Ngân Hà Vô Tận', desc: '4.0B điểm', req: 4000000000, reqRebirth: 0, unlocked: false, icon: '☄️' },
-            { id: 'avatar_29', title: 'Hư Không Đại Sư', desc: '4.5B điểm', req: 4500000000, reqRebirth: 0, unlocked: false, icon: '🌀' },
-            { id: 'avatar_30', title: 'Chúa Tể Thời Gian', desc: '5.0B điểm', req: 5000000000, reqRebirth: 0, unlocked: false, icon: '⏳' },
-            { id: 'avatar_31', title: 'Phượng Hoàng Lửa', desc: '6.0B điểm', req: 6000000000, reqRebirth: 0, unlocked: false, icon: '🔥' },
-            { id: 'avatar_32', title: 'Kỳ Lân May Mắn', desc: '7.0B điểm', req: 7000000000, reqRebirth: 0, unlocked: false, icon: '🦄' },
-            { id: 'avatar_33', title: 'Sư Tử Hùng Dũng', desc: '8.0B điểm', req: 8000000000, reqRebirth: 0, unlocked: false, icon: '🦁' },
-            { id: 'avatar_34', title: 'Sói Xám Hoang Dã', desc: '9.0B điểm', req: 9000000000, reqRebirth: 0, unlocked: false, icon: '🐺' },
-            { id: 'avatar_35', title: 'Cáo Chín Đuôi', desc: '10.0B điểm', req: 10000000000, reqRebirth: 0, unlocked: false, icon: '🦊' },
-            { id: 'avatar_36', title: 'Hải Tặc Tự Do', desc: '12.0B điểm', req: 12000000000, reqRebirth: 0, unlocked: false, icon: '🏴‍☠️' },
-            { id: 'avatar_37', title: 'Ninja Bóng Tối', desc: '15.0B điểm', req: 15000000000, reqRebirth: 0, unlocked: false, icon: '🥷' },
-            { id: 'avatar_38', title: 'Hiệp Sĩ Không Mạng', desc: '20.0B điểm', req: 20000000000, reqRebirth: 0, unlocked: false, icon: '🦾' },
-            { id: 'avatar_39', title: 'Đế Vương Toàn Cõi', desc: '50.0B điểm', req: 50000000000, reqRebirth: 0, unlocked: false, icon: '👑' },
-            { id: 'avatar_40', title: 'Huyền Thoại Vĩnh Hằng', desc: '100.0B điểm', req: 100000000000, reqRebirth: 0, unlocked: false, icon: '💎' }
-        ];
+    let currentTool = 'land';
+    let isPaused = false;
+    let gameYear = 1;
+    let yearCounter = 0;
 
-        let achievements = [];
-        function initAchievementsList() {
-            achievements = JSON.parse(JSON.stringify(baseAchievements));
-            for (let i = 1; i <= 30; i++) {
-                const randomReq = Math.floor(Math.random() * 10000000) + 1;
-                achievements.push({
-                    id: `pro_${i}`,
-                    title: `Vinh Quang PRO ${i}`,
-                    desc: `Yêu cầu: ${(randomReq).toLocaleString()} điểm`,
-                    req: randomReq,
-                    reqRebirth: 0,
-                    unlocked: false,
-                    icon: '💎'
-                });
+    function initWorld() {
+        worldGrid = [];
+        for (let y = 0; y < ROWS; y++) {
+            let row = [];
+            for (let x = 0; x < COLS; x++) {
+                let type = (Math.random() < 0.18) ? TILE_WATER : ((Math.random() < 0.1) ? TILE_FOREST : TILE_EMPTY);
+                row.push(type);
+            }
+            worldGrid.push(row);
+        }
+        entities = [];
+        villages = [];
+        gameYear = 1;
+        updateLog("Đã thiết lập lại cấu trúc kiến tạo nguyên thủy.");
+    }
+
+    function setTool(toolName, btnElement) {
+        currentTool = toolName;
+        document.querySelectorAll('.btn-tool').forEach(b => b.classList.remove('active'));
+        if (btnElement) btnElement.classList.add('active');
+        updateLog(`Đã chuyển quyền năng sang: [${toolName.toUpperCase()}]`);
+    }
+
+    function updateLog(msg) {
+        document.getElementById("logScreen").innerText = `[CTO Log]: ${msg}`;
+    }
+
+    let isMouseDown = false;
+    canvas.addEventListener("mousedown", (e) => { isMouseDown = true; applyToolAtEvent(e); });
+    window.addEventListener("mouseup", () => { isMouseDown = false; });
+    canvas.addEventListener("mousemove", (e) => { if (isMouseDown) applyToolAtEvent(e); });
+
+    function applyToolAtEvent(e) {
+        const rect = canvas.getBoundingClientRect();
+        const mouseX = Math.floor((e.clientX - rect.left) / CELL_SIZE);
+        const mouseY = Math.floor((e.clientY - rect.top) / CELL_SIZE);
+        if (mouseX >= 0 && mouseX < COLS && mouseY >= 0 && mouseY < ROWS) {
+            applyGodTool(mouseX, mouseY);
+        }
+    }
+
+    function applyGodTool(x, y) {
+        switch(currentTool) {
+            case 'land': worldGrid[y][x] = TILE_LAND; break;
+            case 'water': worldGrid[y][x] = TILE_WATER; break;
+            case 'forest': worldGrid[y][x] = TILE_FOREST; break;
+            case 'mountain': worldGrid[y][x] = TILE_MOUNTAIN; break;
+            case 'gold': worldGrid[y][x] = TILE_GOLD; break;
+            case 'erase': worldGrid[y][x] = TILE_EMPTY; break;
+            case 'human': spawnEntity(x, y, 'human', 'Loài Người'); isMouseDown = false; break;
+            case 'orc': spawnEntity(x, y, 'orc', 'Tộc Orc'); isMouseDown = false; break;
+            case 'elf': spawnEntity(x, y, 'elf', 'Tộc Elf'); isMouseDown = false; break;
+            case 'wolf': spawnEntity(x, y, 'wolf', 'Sói Hoang'); isMouseDown = false; break;
+            case 'lightning': strikeLightning(x, y); isMouseDown = false; break;
+            case 'meteor': dropMeteor(x, y); isMouseDown = false; break;
+            case 'fire': worldGrid[y][x] = TILE_FIRE; break;
+            case 'blessed': blessLand(x, y); break;
+        }
+    }
+
+    function spawnEntity(x, y, type, name) {
+        entities.push({
+            x: x, y: y, type: type, name: name, hp: 120, age: 0,
+            hasBuilding: false
+        });
+        updateLog(`Ban sinh khí cho [${name}] tại vị trí (${x}, ${y}).`);
+    }
+
+    function strikeLightning(x, y) {
+        worldGrid[y][x] = TILE_FIRE;
+        updateLog(`⚡ Sét đánh trực diện tại (${x}, ${y})!`);
+        entities = entities.filter(ent => {
+            if (Math.abs(ent.x - x) <= 2 && Math.abs(ent.y - y) <= 2) ent.hp -= 90;
+            return ent.hp > 0;
+        });
+    }
+
+    function dropMeteor(x, y) {
+        updateLog(`☄️ Thiên thạch hủy diệt giáng xuống (${x}, ${y})!`);
+        for (let dy = -3; dy <= 3; dy++) {
+            for (let dx = -3; dx <= 3; dx++) {
+                let nx = x + dx, ny = y + dy;
+                if (nx >= 0 && nx < COLS && ny >= 0 && ny < ROWS) {
+                    worldGrid[ny][nx] = Math.random() < 0.6 ? TILE_MOUNTAIN : TILE_FIRE;
+                }
             }
         }
-        initAchievementsList();
+        entities = entities.filter(ent => Math.abs(ent.x - x) > 3 || Math.abs(ent.y - y) > 3);
+    }
 
-        let savedBadges = JSON.parse(localStorage.getItem('chaosBadges')) || {};
-        achievements.forEach(b => {
-            const meetsRebirth = (b.reqRebirth || 0) === 0 || rebirthCount >= b.reqRebirth;
-            if (savedBadges[b.id] || (highScore >= b.req && meetsRebirth)) {
-                b.unlocked = true;
-            }
-        });
-
-        const statusText = document.getElementById('statusText');
-        const numEl = document.getElementById('numberContainer');
-        const highScoreEl = document.getElementById('highScore');
-        const page2HighScoreEl = document.getElementById('page2HighScore');
-        const currentScoreEl = document.getElementById('currentScore');
-        const spinCountEl = document.getElementById('spinCount');
-        const rebirthCountEl = document.getElementById('rebirthCount');
-        const multiplierTextEl = document.getElementById('multiplierText');
-        const bodyEl = document.body;
-        const badgesGrid = document.getElementById('badgesGrid');
-        const unlockToast = document.getElementById('unlockToast');
-
-        highScoreEl.innerText = highScore;
-        page2HighScoreEl.innerText = highScore;
-        spinCountEl.innerText = spinCount;
-        rebirthCountEl.innerText = rebirthCount;
-        multiplierTextEl.innerText = scoreMultiplier.toFixed(2) + 'x';
-
-        renderBadges();
-
-        document.addEventListener("DOMContentLoaded", () => {
-            const btn = document.getElementById('confirmBtn');
-            const input = document.getElementById('giftCodeInput');
-            
-            if(btn) {
-                btn.addEventListener('click', redeemGiftCode);
-                btn.addEventListener('touchstart', (e) => { e.preventDefault(); redeemGiftCode(); }, {passive: false});
-            }
-            if(input) {
-                input.addEventListener('keypress', (e) => {
-                    if (e.key === 'Enter') {
-                        redeemGiftCode();
+    function blessLand(x, y) {
+        for (let dy = -1; dy <= 1; dy++) {
+            for (let dx = -1; dx <= 1; dx++) {
+                let nx = x + dx, ny = y + dy;
+                if (nx >= 0 && nx < COLS && ny >= 0 && ny < ROWS) {
+                    if (worldGrid[ny][nx] === TILE_EMPTY || worldGrid[ny][nx] === TILE_LAND) {
+                        worldGrid[ny][nx] = TILE_FOREST;
                     }
-                });
+                }
             }
-        });
+        }
+    }
 
-        function renderBadges() {
-            badgesGrid.innerHTML = '';
-            achievements.forEach(b => {
-                const div = document.createElement('div');
-                div.className = `badge-item ${b.unlocked ? 'unlocked' : ''}`;
-                div.innerHTML = `
-                    <div class="badge-icon">${b.icon}</div>
-                    <div class="badge-title">${b.title}</div>
-                    <div class="badge-desc">${b.desc}</div>
-                `;
-                badgesGrid.appendChild(div);
+    function updateSimulation() {
+        if (isPaused) return;
+
+        yearCounter++;
+        if (yearCounter > 40) {
+            gameYear++;
+            yearCounter = 0;
+        }
+
+        // Lan truyền lửa
+        for (let y = 0; y < ROWS; y++) {
+            for (let x = 0; x < COLS; x++) {
+                if (worldGrid[y][x] === TILE_FIRE) {
+                    if (Math.random() < 0.35) worldGrid[y][x] = TILE_EMPTY;
+                    let dirs = [[0,1],[0,-1],[1,0],[-1,0]];
+                    let d = dirs[Math.floor(Math.random() * dirs.length)];
+                    let nx = x + d[0], ny = y + d[1];
+                    if (nx >= 0 && nx < COLS && ny >= 0 && ny < ROWS) {
+                        if (worldGrid[ny][nx] === TILE_FOREST || worldGrid[ny][nx] === TILE_LAND || worldGrid[ny][nx] === TILE_BUILDING) {
+                            worldGrid[ny][nx] = TILE_FIRE;
+                        }
+                    }
+                }
+            }
+        }
+
+        // Cập nhật sinh vật & xây dựng thành quách
+        entities.forEach(ent => {
+            ent.age++;
+            let moves = [[0,1], [0,-1], [1,0], [-1,0], [0,0]];
+            let m = moves[Math.floor(Math.random() * moves.length)];
+            let nx = ent.x + m[0], ny = ent.y + m[1];
+
+            if (nx >= 0 && nx < COLS && ny >= 0 && ny < ROWS) {
+                if (worldGrid[ny][nx] !== TILE_WATER && worldGrid[ny][nx] !== TILE_MOUNTAIN) {
+                    ent.x = nx;
+                    ent.y = ny;
+                }
+                if (worldGrid[ny][nx] === TILE_FIRE) ent.hp -= 25;
+                
+                // Xây dựng làng mạc nếu đứng trên đất trống / rừng
+                if (!ent.hasBuilding && ent.type !== 'wolf' && (worldGrid[ny][nx] === TILE_LAND || worldGrid[ny][nx] === TILE_FOREST)) {
+                    if (Math.random() < 0.05) {
+                        worldGrid[ny][nx] = TILE_BUILDING;
+                        ent.hasBuilding = true;
+                        villages.push({x: nx, y: ny, owner: ent.type});
+                    }
+                }
+            }
+
+            // Giao tranh giữa các loài khác nhau
+            entities.forEach(other => {
+                if (ent !== other && ent.x === other.x && ent.y === other.y) {
+                    if (ent.type !== other.type && ent.type !== 'wolf' && other.type !== 'wolf') {
+                        other.hp -= 15;
+                    }
+                }
             });
-        }
-
-        function checkAchievements(score) {
-            achievements.forEach(b => {
-                if (!b.unlocked) {
-                    const meetsScore = score >= b.req;
-                    const meetsRebirth = (b.reqRebirth || 0) === 0 || rebirthCount >= b.reqRebirth;
-                    if (meetsScore && meetsRebirth) {
-                        b.unlocked = true;
-                        savedBadges[b.id] = true;
-                        localStorage.setItem('chaosBadges', JSON.stringify(savedBadges));
-                        showToast(`👑 Mở khóa: ${b.title}!`);
-                        renderBadges();
-                        playVictorySound();
-                        launchFireworks();
-                    }
-                }
-            });
-        }
-
-        function showToast(text) {
-            unlockToast.innerText = text;
-            unlockToast.classList.add('show');
-            setTimeout(() => {
-                unlockToast.classList.remove('show');
-            }, 3000);
-        }
-
-        let audioCtx = null;
-        function playVictorySound() {
-            try {
-                if (!audioCtx) {
-                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                }
-                if (audioCtx.state === 'suspended') {
-                    audioCtx.resume();
-                }
-                
-                const notes = [261.63, 329.63, 392.00, 523.25, 659.25, 783.99, 1046.50];
-                notes.forEach((freq, index) => {
-                    let osc = audioCtx.createOscillator();
-                    let gain = audioCtx.createGain();
-                    
-                    osc.type = 'triangle';
-                    osc.frequency.setValueAtTime(freq, audioCtx.currentTime + index * 0.08);
-                    
-                    gain.gain.setValueAtTime(0.2, audioCtx.currentTime + index * 0.08);
-                    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + index * 0.08 + 0.4);
-                    
-                    osc.connect(gain);
-                    gain.connect(audioCtx.destination);
-                    
-                    osc.start(audioCtx.currentTime + index * 0.08);
-                    osc.stop(audioCtx.currentTime + index * 0.08 + 0.4);
-                });
-            } catch(e) {
-                console.log("Audio not allowed yet");
-            }
-        }
-
-        function switchPage(pageId) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
-            page2HighScoreEl.innerText = highScore;
-            renderBadges();
-        }
-
-        const validGiftCodes = {
-            "CUONGPHONG": { type: "score", val: 10000, msg: "🎉 Thành tích! Bạn nhận ngay +10,000 điểm!" },
-            "MAYMAN": { type: "luck", msg: "🍀 Quà May Mắn: Quay trúng gói thưởng ngẫu nhiên!" },
-            "VIP2026": { type: "score", val: 50000, msg: "👑 Mã VIP! Nhận ngay +50,000 điểm!" },
-            "THANGVON": { type: "score", val: 25000, msg: "💎 Quà Thành Tích: Nhận ngay +25,000 điểm!" },
-            "CAMON": { type: "score", val: 100000, msg: "🙏 Quà Cảm Ơn: Tặng ngay +100,000 điểm tri ân vinh quang!" }
-        };
-        
-        function resetUsedCodes() {
-            localStorage.removeItem('chaosUsedCodes');
-            document.getElementById('giftResultBox').innerHTML = "<span style='color: #00ffcc;'>✨ Đã làm mới! Bạn có thể nhập lại các mã từ đầu.</span>";
-        }
-
-        function redeemGiftCode() {
-            const input = document.getElementById('giftCodeInput');
-            const resultBox = document.getElementById('giftResultBox');
-            const code = input.value.trim().toUpperCase();
-
-            if (!code) {
-                resultBox.innerHTML = "<span style='color: #ff9f00;'>⚠️ Vui lòng nhập mã code!</span>";
-                return;
-            }
-
-            let usedCodes = JSON.parse(localStorage.getItem('chaosUsedCodes')) || {};
-            if (usedCodes[code]) {
-                resultBox.innerHTML = "<span style='color: #ff5e62;'>❌ Mã này đã được sử dụng rồi!</span>";
-                return;
-            }
-
-            if (validGiftCodes[code]) {
-                const gift = validGiftCodes[code];
-                usedCodes[code] = true;
-                localStorage.setItem('chaosUsedCodes', JSON.stringify(usedCodes));
-
-                let addedScore = 0;
-                if (gift.type === "score") {
-                    addedScore = gift.val * scoreMultiplier;
-                    currentScore += addedScore;
-                    currentScoreEl.innerText = Math.floor(currentScore);
-                    checkAchievements(currentScore);
-                    if (currentScore > highScore) {
-                        highScore = currentScore;
-                        highScoreEl.innerText = Math.floor(highScore);
-                        localStorage.setItem('chaosHighScore', highScore);
-                    }
-                    resultBox.innerHTML = `<span style="color: #ffd700; font-weight: bold;">${gift.msg} (Hệ số: ${scoreMultiplier.toFixed(2)}x)</span>`;
-                } else if (gift.type === "luck") {
-                    const luckyScore = (Math.floor(Math.random() * 45000) + 5000) * scoreMultiplier;
-                    currentScore += luckyScore;
-                    currentScoreEl.innerText = Math.floor(currentScore);
-                    checkAchievements(currentScore);
-                    if (currentScore > highScore) {
-                        highScore = currentScore;
-                        highScoreEl.innerText = Math.floor(highScore);
-                        localStorage.setItem('chaosHighScore', highScore);
-                    }
-                    resultBox.innerHTML = `<span style="color: #00ffcc; font-weight: bold;">🍀 May mắn! Trúng ${Math.floor(luckyScore).toLocaleString()} điểm!</span>`;
-                }
-                
-                showToast("🎁 Nhận quà thành công!");
-                playVictorySound();
-                launchFireworks();
-                input.value = "";
-            } else {
-                resultBox.innerHTML = "<span style='color: #ff5e62;'>❌ Mã sai! (Gợi ý: CAMON, CUONGPHONG, MAYMAN)</span>";
-            }
-        }
-
-        function gambleScore() {
-            if (isRunning) {
-                showToast("⚠️ Đang quay số, dừng lại mới cược được!");
-                return;
-            }
-            if (currentScore < 10000) {
-                showToast("💸 Cần tối thiểu 10,000 điểm để cược!");
-                return;
-            }
-            
-            const isWin = Math.random() > 0.5;
-            if (isWin) {
-                currentScore *= 2;
-                showToast("🎲 BÙM! Nhân đôi điểm số! 🤑");
-                launchFireworks();
-                playVictorySound();
-            } else {
-                currentScore = Math.floor(currentScore / 2);
-                showToast("🎲 OÁI! Mất nửa điểm rồi! 😭");
-            }
-            
-            currentScoreEl.innerText = Math.floor(currentScore);
-            checkAchievements(currentScore);
-            
-            if (currentScore > highScore) {
-                highScore = currentScore;
-                highScoreEl.innerText = Math.floor(highScore);
-                localStorage.setItem('chaosHighScore', highScore);
-            }
-        }
-
-        statusText.addEventListener('click', (e) => {
-            e.stopPropagation();
-            toggleAction();
         });
-        statusText.addEventListener('touchstart', (e) => {
-            e.stopPropagation();
-            e.preventDefault();
-            toggleAction();
-        }, { passive: false });
 
-        function toggleAction() {
-            isRunning = !isRunning;
+        entities = entities.filter(ent => ent.hp > 0 && ent.age < 2000);
 
-            if (isRunning) {
-                statusText.innerText = "💥 ĐANG QUẨY (CHẠM DỪNG)";
-                bodyEl.classList.add('shaking');
-                
-                clearTimeout(animationTimer);
+        renderWorld();
+        updateUIStats();
+    }
 
-                function loopChaos() {
-                    if (!isRunning) return;
+    function renderWorld() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-                    const randomColor = colors[Math.floor(Math.random() * colors.length)];
-                    bodyEl.style.backgroundColor = randomColor;
-
-                    currentRandomNum = Math.floor(Math.random() * 500000) + 1;
-                    numEl.innerText = currentRandomNum;
-                    
-                    let addedScore = currentRandomNum * scoreMultiplier;
-                    currentScore += addedScore;
-                    currentScoreEl.innerText = Math.floor(currentScore);
-
-                    spinCount++;
-                    if (spinCount >= 20) {
-                        spinCount = 0;
-                        rebirthCount++;
-                        scoreMultiplier += 0.75;
-                        
-                        showToast(`🔄 Tái sinh cấp ${rebirthCount}! (Hệ số: ${scoreMultiplier.toFixed(2)}x)`);
-                    }
-
-                    spinCountEl.innerText = spinCount;
-                    rebirthCountEl.innerText = rebirthCount;
-                    multiplierTextEl.innerText = scoreMultiplier.toFixed(2) + 'x';
-                    
-                    localStorage.setItem('chaosSpinCount', spinCount);
-                    localStorage.setItem('chaosRebirthCount', rebirthCount);
-                    localStorage.setItem('chaosMultiplier', scoreMultiplier);
-
-                    checkAchievements(currentScore);
-
-                    if (currentScore > highScore) {
-                        highScore = currentScore;
-                        highScoreEl.innerText = Math.floor(highScore);
-                        localStorage.setItem('chaosHighScore', highScore);
-                    }
-
-                    const randomSpeed = Math.floor(Math.random() * 100) + 150; 
-                    animationTimer = setTimeout(loopChaos, randomSpeed);
+        for (let y = 0; y < ROWS; y++) {
+            for (let x = 0; x < COLS; x++) {
+                let tile = worldGrid[y][x];
+                switch(tile) {
+                    case TILE_EMPTY: ctx.fillStyle = "#090d16"; break;
+                    case TILE_LAND: ctx.fillStyle = "#334155"; break;
+                    case TILE_WATER: ctx.fillStyle = "#0284c7"; break;
+                    case TILE_FOREST: ctx.fillStyle = "#15803d"; break;
+                    case TILE_MOUNTAIN: ctx.fillStyle = "#475569"; break;
+                    case TILE_GOLD: ctx.fillStyle = "#ca8a04"; break;
+                    case TILE_FIRE: ctx.fillStyle = "#dc2626"; break;
+                    case TILE_BUILDING: ctx.fillStyle = "#d97706"; break;
+                    default: ctx.fillStyle = "#090d16";
                 }
+                ctx.fillRect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+            }
+        }
 
-                loopChaos();
+        entities.forEach(ent => {
+            ctx.beginPath();
+            let px = ent.x * CELL_SIZE + CELL_SIZE / 2;
+            let py = ent.y * CELL_SIZE + CELL_SIZE / 2;
+            ctx.arc(px, py, CELL_SIZE / 2 - 1, 0, Math.PI * 2);
 
+            if (ent.type === 'human') ctx.fillStyle = "#38bdf8";
+            else if (ent.type === 'orc') ctx.fillStyle = "#ea580c";
+            else if (ent.type === 'elf') ctx.fillStyle = "#c084fc";
+            else if (ent.type === 'wolf') ctx.fillStyle = "#94a3b8";
+
+            ctx.fill();
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "#fff";
+            ctx.stroke();
+        });
+    }
+
+    function updateUIStats() {
+        document.getElementById("popCount").innerText = entities.length;
+        document.getElementById("villageCount").innerText = villages.length;
+        document.getElementById("beastCount").innerText = entities.filter(e => e.type === 'wolf').length;
+        
+        let era = "Đồ Đá";
+        if (gameYear > 10) era = "Đồ Đồng";
+        if (gameYear > 25) era = "Đồ Sắt";
+        if (gameYear > 50) era = "Kỷ Nguyên Vàng";
+        document.getElementById("yearCount").innerText = `${era} (Năm ${gameYear})`;
+    }
+
+    function togglePause() {
+        isPaused = !isPaused;
+        document.getElementById("pauseBtn").innerText = isPaused ? "▶️ Tiếp Tục" : "⏸️ Tạm Dừng";
+        updateLog(isPaused ? "Đã tạm dừng tiến trình thời gian." : "Đã tiếp tục tiến trình thời gian.");
+    }
+
+    function changeSpeed(spd) {
+        updateLog(`Đã điều chỉnh nhịp độ dòng chảy thời gian.`);
+    }
+
+    function clearDisasters() {
+        for (let y = 0; y < ROWS; y++) {
+            for (let x = 0; x < COLS; x++) {
+                if (worldGrid[y][x] === TILE_FIRE) worldGrid[y][x] = TILE_EMPTY;
+            }
+        }
+        updateLog("Đã dập tắt toàn bộ đám cháy hỏa hoạn.");
+    }
+
+    function resetWorld() {
+        if (confirm("Sếp có chắc chắn muốn kích hoạt giao thức Hủy Diệt Toàn Cục không?")) {
+            initWorld();
+            updateLog("⚠️ Thượng Đế đã xóa sổ thế giới cũ và tái tạo không gian mới.");
+        }
+    }
+
+    function saveWorld() {
+        try {
+            const saveObj = { grid: worldGrid, ents: entities, vills: villages, yr: gameYear };
+            localStorage.setItem("WorldBox_Ultimate_Save", JSON.stringify(saveObj));
+            updateLog("💾 Đã lưu tiến trình thế giới vào localStorage.");
+        } catch (e) {
+            updateLog(`Lỗi lưu game: ${e.message}`);
+        }
+    }
+
+    function loadWorld() {
+        try {
+            const data = localStorage.getItem("WorldBox_Ultimate_Save");
+            if (data) {
+                const parsed = JSON.parse(data);
+                worldGrid = parsed.grid;
+                entities = parsed.ents;
+                villages = parsed.vills || [];
+                gameYear = parsed.yr || 1;
+                updateLog("📂 Khôi phục thành công dữ liệu thế giới đã lưu.");
             } else {
-                statusText.innerText = "✨ ĐÃ DỪNG (CHẠM TIẾP TỤC)";
-                bodyEl.classList.remove('shaking');
-                bodyEl.style.backgroundColor = '#ff2a5f';
-                clearTimeout(animationTimer);
-
-                spinCountEl.innerText = spinCount;
-                rebirthCountEl.innerText = rebirthCount;
-                multiplierTextEl.innerText = scoreMultiplier.toFixed(2) + 'x';
-                
-                localStorage.setItem('chaosSpinCount', spinCount);
-                localStorage.setItem('chaosRebirthCount', rebirthCount);
-                localStorage.setItem('chaosMultiplier', scoreMultiplier);
-
-                checkAchievements(currentScore);
-
-                if (currentScore > highScore) {
-                    highScore = currentScore;
-                    localStorage.setItem('chaosHighScore', highScore);
-                }
-
-                playVictorySound();
-                launchFireworks();
+                updateLog("Không tìm thấy tệp lưu trữ dữ liệu nào.");
             }
+        } catch (e) {
+            updateLog(`Lỗi tải dữ liệu: ${e.message}`);
         }
+    }
 
-        function launchFireworks() {
-            const centerX = window.innerWidth / 2;
-            const centerY = window.innerHeight / 2;
-            const particleCount = 40;
+    initWorld();
+    setInterval(updateSimulation, 130);
+</script>
 
-            for (let i = 0; i < particleCount; i++) {
-                const p = document.createElement('div');
-                p.className = 'firework-particle';
-                p.style.left = centerX + 'px';
-                p.style.top = centerY + 'px';
-                
-                const size = Math.random() * 7 + 3;
-                p.style.width = size + 'px';
-                p.style.height = size + 'px';
-                p.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                
-                bodyEl.appendChild(p);
-
-                const angle = Math.random() * Math.PI * 2;
-                const speed = Math.random() * 150 + 40;
-                const tx = Math.cos(angle) * speed;
-                const ty = Math.sin(angle) * speed;
-
-                p.style.transition = 'transform 0.7s cubic-bezier(0.1, 0.8, 0.3, 1), opacity 0.7s ease-out';
-                
-                requestAnimationFrame(() => {
-                    p.style.transform = `translate(${tx}px, ${ty}px) scale(0.2)`;
-                    p.style.opacity = '0';
-                });
-
-                setTimeout(() => {
-                    p.remove();
-                }, 700);
-            }
-        }
-    </script>
 </body>
 </html>
