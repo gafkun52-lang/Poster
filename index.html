@@ -1,221 +1,246 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vẫn Chẳng Có Gì Cả - Deluxe Edition</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuồng Phong Màu Sắc - v2.0 Full Edition</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            overflow-x: hidden;
+            padding-bottom: 70px; /* Tránh banner quảng cáo che mất nội dung */
+        }
 
-* { box-sizing: border-box; user-select: none; }
-body {
-    margin: 0;
-    background: #0a0a12;
-    color: #fff;
-    font-family: 'Orbitron', sans-serif;
-    text-align: center;
-    overflow: hidden;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    transition: background 0.1s ease;
-}
+        header {
+            text-align: center;
+            margin: 20px 0;
+        }
+        h1 {
+            font-size: 26px;
+            color: #ffde59;
+            text-shadow: 0 2px 8px rgba(255, 222, 89, 0.4);
+        }
+        .stats {
+            font-size: 14px;
+            color: #b2bec3;
+            margin-top: 5px;
+        }
 
-h1 {
-    margin: 0 0 10px 0;
-    font-size: 2.5rem;
-    text-shadow: 0 0 10px rgba(255,255,255,0.5);
-}
+        /* Khung giao diện kính mờ chung (Glassmorphism) */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            padding: 20px;
+            width: 90%;
+            max-width: 420px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            margin-bottom: 15px;
+            text-align: center;
+        }
 
-.dev-info {
-    font-size: 0.85rem;
-    color: #888;
-    margin-bottom: 20px;
-    line-height: 1.4;
-}
+        /* Màn hình Game */
+        #game-screen {
+            height: 220px;
+            position: relative;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px dashed rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .player {
+            width: 35px;
+            height: 35px;
+            background: #ff416c;
+            border-radius: 50%;
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 0 10px #ff416c;
+            cursor: pointer;
+            transition: left 0.1s ease;
+        }
+        .storm-obstacle {
+            width: 30px;
+            height: 30px;
+            background: #00cec9;
+            position: absolute;
+            top: -40px;
+            border-radius: 8px;
+            box-shadow: 0 0 8px #00cec9;
+        }
 
-#so-container {
-    background: rgba(0, 0, 0, 0.6);
-    padding: 20px 40px;
-    border-radius: 20px;
-    border: 2px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 0 20px rgba(0,0,0,0.8);
-    margin-bottom: 20px;
-}
+        /* Nút bấm phong cách */
+        .btn {
+            background: linear-gradient(45deg, #ff416c, #ff4b2b);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 15px;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 65, 108, 0.4);
+            transition: 0.2s;
+            margin: 5px;
+        }
+        .btn:active {
+            transform: scale(0.95);
+        }
+        .btn-shop {
+            background: linear-gradient(45deg, #00b09b, #96c93d);
+            box-shadow: 0 4px 15px rgba(0, 176, 155, 0.4);
+        }
 
-#so {
-    font-size: 80px;
-    font-weight: 900;
-    letter-spacing: 2px;
-    text-shadow: 0 0 20px currentColor;
-}
+        /* Khu vực Shop */
+        .shop-items {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 10px;
+        }
+        .shop-item {
+            font-size: 12px;
+            background: rgba(255,255,255,0.05);
+            padding: 8px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
 
-#play {
-    width: 240px;
-    height: 70px;
-    font-size: 24px;
-    font-family: 'Orbitron', sans-serif;
-    font-weight: 700;
-    color: #fff;
-    background: linear-gradient(45deg, #ff007f, #7f00ff);
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-    box-shadow: 0 5px 20px rgba(255,0,127,0.4);
-    transition: transform 0.1s, box-shadow 0.1s;
-}
-
-#play:active {
-    transform: scale(0.95);
-}
-
-.sub-text {
-    margin-top: 15px;
-    font-size: 0.9rem;
-    color: #aaa;
-}
-
-#highscore {
-    margin-top: 10px;
-    font-size: 1rem;
-    color: #00ffcc;
-    font-weight: bold;
-}
-
-#secret {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    width: 45px;
-    height: 45px;
-    background: #222;
-    color: #fff;
-    border: 2px solid #555;
-    border-radius: 50%;
-    font-size: 20px;
-    font-family: 'Orbitron', sans-serif;
-    cursor: pointer;
-    transition: all 0.3s;
-}
-
-#secret:hover {
-    background: #ff007f;
-    border-color: #ff007f;
-    transform: rotate(90deg);
-}
-
-@keyframes shake {
-    0% { transform: translate(1px, 1px) rotate(0deg); }
-    20% { transform: translate(-3px, 0px) rotate(1deg); }
-    40% { transform: translate(1px, -1px) rotate(-1deg); }
-    60% { transform: translate(-1px, 2px) rotate(0deg); }
-    80% { transform: translate(3px, 1px) rotate(1deg); }
-    100% { transform: translate(0px, 0px) rotate(0deg); }
-}
-.shake-effect {
-    animation: shake 0.2s infinite;
-}
-</style>
+        /* Banner quảng cáo 100% width dưới đáy */
+        #ad-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 55px;
+            background: rgba(15, 15, 25, 0.95);
+            border-top: 2px solid #ffde59;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 13px;
+            color: #ffde59;
+            z-index: 1000;
+            transition: transform 0.4s ease-in-out;
+            box-shadow: 0 -4px 10px rgba(0,0,0,0.5);
+        }
+        .hidden-ad {
+            transform: translateY(100%);
+        }
+    </style>
 </head>
 <body>
 
-<button id="secret">?</button>
+    <header>
+        <h1>Cuồng Phong Màu Sắc</h1>
+        <div class="stats">Kỷ lục: <span id="high-score">0</span> | Điểm: <span id="score">0</span></div>
+    </header>
 
-<h1>🎮 CHẲNG CÓ GÌ CẢ</h1>
-<div class="dev-info">
-    <b>Nhà phát triển:</b> ChatGPT & cogon (Bản độ VIP)
-</div>
+    <!-- Khung Gameplay -->
+    <div class="glass-card">
+        <h3 style="margin-bottom: 10px; font-size: 16px; color: #ff416c;">Vùng Tâm Bão</h3>
+        <div id="game-screen" onclick="handleGameClick(event)">
+            <div class="player" id="player" style="left: 50%;"></div>
+        </div>
+        <p style="font-size: 12px; margin-top: 10px; color: #dfe6e9;">Chạm/Click trái phải để né cuồng phong!</p>
+        <button class="btn" onclick="startGame()">BẮT ĐẦU CHIẾN</button>
+    </div>
 
-<div id="so-container">
-    <div id="so">0</div>
-</div>
+    <!-- Khung Cửa Hàng (Shop) -->
+    <div class="glass-card">
+        <h3 style="margin-bottom: 10px; font-size: 16px; color: #00cec9;">Cửa Hàng Thân Thiện</h3>
+        <div class="shop-items">
+            <div class="shop-item">
+                <p>🎨 Đổi Màu VIP</p>
+                <button class="btn btn-shop" style="padding: 5px 10px; font-size: 12px;" onclick="buySkin('skin')">50 Điểm</button>
+            </div>
+            <div class="shop-item">
+                <p>⚡ Siêu Tốc Độ</p>
+                <button class="btn btn-shop" style="padding: 5px 10px; font-size: 12px;" onclick="buySkin('boost')">100 Điểm</button>
+            </div>
+        </div>
+    </div>
 
-<button id="play">BẤM NGAY</button>
-<div id="highscore">Kỷ lục dừng: Chưa có</div>
-<div class="sub-text">Cố gắng dừng lại ở con số đẹp xem sao...</div>
+    <!-- Banner quảng cáo hệ phái thân thiện (100% width) -->
+    <div id="ad-banner">
+        <span>📢 [Quảng cáo] Nâng cấp tài khoản VIP để tắt quảng cáo vĩnh viễn!</span>
+    </div>
 
-<script>
-const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-function playBeep(freq, type, duration) {
-    if (audioCtx.state === 'suspended') { audioCtx.resume(); }
-    let osc = audioCtx.createOscillator();
-    let gain = audioCtx.createGain();
-    osc.type = type;
-    osc.frequency.value = freq;
-    osc.connect(gain);
-    gain.connect(audioCtx.destination);
-    osc.start();
-    gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + duration);
-    osc.stop(audioCtx.currentTime + duration);
-}
+    <script>
+        // --- 1. LOGIC QUẢNG CÁO (Hiện 20s, ẩn 40s trong chu kỳ 60s) ---
+        const adBanner = document.getElementById('ad-banner');
+        function manageAds() {
+            adBanner.classList.remove('hidden-ad'); // Hiện banner
+            setTimeout(() => {
+                adBanner.classList.add('hidden-ad'); // Ẩn banner sau 20s
+            }, 20000);
+        }
+        manageAds();
+        setInterval(manageAds, 60000); // Lặp lại mỗi 1 phút
 
-const mau = ["#ff0055", "#ff7700", "#ffee00", "#00ff66", "#00ffff", "#0066ff", "#9900ff"];
-let run = false, timer;
-let bestScore = localStorage.getItem('cgn_best') || null;
+        // --- 2. LOGIC GAME & LOCALSTORAGE ---
+        let score = 0;
+        let highScore = localStorage.getItem('cpms_highscore') || 0;
+        document.getElementById('high-score').innerText = highScore;
 
-if(bestScore !== null) {
-    document.getElementById('highscore').innerText = "🏆 Kỷ lục: " + bestScore;
-}
+        const player = document.getElementById('player');
+        const scoreDisplay = document.getElementById('score');
 
-const playBtn = document.getElementById('play');
-const soEl = document.getElementById('so');
-
-playBtn.onclick = function() {
-    if(!run) {
-        run = true;
-        playBtn.innerText = "DỪNG LẠI!";
-        playBtn.style.background = "linear-gradient(45deg, #ff0000, #ff7700)";
-        document.body.classList.add('shake-effect');
-        
-        let i = 0;
-        timer = setInterval(() => {
-            let currentNum = Math.floor(Math.random() * 1000000);
-            soEl.innerText = currentNum;
-            soEl.style.color = mau[i % mau.length];
-            document.body.style.background = mau[i % mau.length] + "22";
-            playBeep(300 + (i % 10) * 50, 'square', 0.05);
-            i++;
-        }, 60);
-    } else {
-        run = false;
-        clearInterval(timer);
-        document.body.classList.remove('shake-effect');
-        playBtn.innerText = "BẤM NGAY";
-        playBtn.style.background = "linear-gradient(45deg, #ff007f, #7f00ff)";
-        document.body.style.background = "#0a0a12";
-        soEl.style.color = "#fff";
-        
-        let finalNum = parseInt(soEl.innerText);
-        playBeep(150, 'sawtooth', 0.3);
-
-        if(bestScore === null || finalNum > parseInt(bestScore)) {
-            bestScore = finalNum;
-            localStorage.setItem('cgn_best', bestScore);
-            document.getElementById('highscore').innerText = "🏆 Kỷ lục mới: " + bestScore;
+        function startGame() {
+            score = 0;
+            scoreDisplay.innerText = score;
+            alert("Trò chơi bắt đầu! Hãy né các chướng ngại vật rơi xuống.");
+            // Giả lập tăng điểm theo thời gian sinh tồn
+            let gameInterval = setInterval(() => {
+                score += 10;
+                scoreDisplay.innerText = score;
+                if(score > highScore) {
+                    highScore = score;
+                    localStorage.setItem('cpms_highscore', highScore);
+                    document.getElementById('high-score').innerText = highScore;
+                }
+            }, 1000);
         }
 
-        setTimeout(() => {
-            alert("🎉 Bạn đã dừng ở số: " + finalNum);
-            alert("...");
-            if(finalNum === 888888 || finalNum === 777777 || finalNum === 123456) {
-                alert("🌟 Ồ! Bạn nhân phẩm cực cao mới trúng số đẹp thế này, nhưng... vẫn chẳng có gì xảy ra cả! 🤣");
+        function handleGameClick(event) {
+            const rect = event.currentTarget.getBoundingClientRect();
+            const clickX = event.clientX - rect.left;
+            // Di chuyển player theo vị trí click trái/phải khung game
+            if(clickX < rect.width / 2) {
+                player.style.left = '25%';
             } else {
-                alert("Và vâng, mọi nỗ lực đều vô nghĩa... Hoàn toàn chẳng có gì xảy ra cả! 🤣");
+                player.style.left = '75%';
             }
-        }, 100);
-    }
-};
+        }
 
-const secretBtn = document.getElementById('secret');
-secretBtn.onclick = function() {
-    playBeep(800, 'sine', 0.1);
-    if(confirm("🤫 Bạn đã tìm thấy nút bí mật tối thượng!\n\nBạn có đủ dũng cảm để mở video bí mật không?")) {
-       location.href = "https://youtu.be/08TzOa-G_YU?si=4UHadX_p4R7dyZqK";
-    }
-};
-</script>
+        function buySkin(item) {
+            if(score >= (item === 'skin' ? 50 : 100)) {
+                score -= (item === 'skin' ? 50 : 100);
+                scoreDisplay.innerText = score;
+                alert("Mua thành công vật phẩm " + item + "!");
+            } else {
+                alert("Không đủ điểm thưởng để mua! Hãy cày thêm đi ông giáo ơi.");
+            }
+        }
+    </script>
 </body>
 </html>
+ml>
