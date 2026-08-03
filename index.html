@@ -244,6 +244,38 @@
         .mystery-btn:active {
             transform: scale(0.9);
         }
+
+        /* NÚT PRO GÓC PHẢI */
+        .pro-right-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 6px 12px;
+            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            border-radius: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 12px;
+            font-weight: 900;
+            color: #1a1a1a;
+            cursor: pointer;
+            z-index: 20;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+            transition: transform 0.2s;
+            text-transform: uppercase;
+        }
+        .pro-right-btn:active {
+            transform: scale(0.9);
+        }
+        
+        .gamble-btn {
+            background: linear-gradient(135deg, #ff9a9e, #fecfef);
+            color: #d11a2a;
+            border: none;
+        }
     </style>
 </head>
 <body>
@@ -253,6 +285,9 @@
     <!-- TRANG 1: TRÒ CHƠI CHÍNH -->
     <div id="gamePage" class="page active">
         <div class="mystery-btn" onclick="window.open('https://youtu.be/vgUyuAloTgA?si=bUWeSZl_dzcRXEKs', '_blank')">?</div>
+        <!-- NÚT PRO GÓC PHẢI -->
+        <div class="pro-right-btn" onclick="window.open('https://youtu.be/mc30SWcuink?si=gCQNU8upwgo6554A', '_blank')">🔥 PRO</div>
+
         <div class="card-container">
             <h1>⚡ Cuồng Phong Màu Sắc ⚡</h1>
             <p>Chạm để Bật/Dừng. Chinh phục các mốc điểm để sưu tầm huy hiệu!</p>
@@ -267,6 +302,9 @@
 
             <div class="btn-box" id="statusText">BẮT ĐẦU NGAY</div>
             <div id="numberContainer">68</div>
+
+            <!-- TÍNH NĂNG MỚI: CƯỢC NHÂN PHẨM -->
+            <div class="btn-box btn-secondary gamble-btn" onclick="gambleScore()">🎲 Cược Nhân Phẩm (50/50)</div>
 
             <div class="btn-box btn-secondary" onclick="switchPage('achievementPage')">🏅 Sảnh Vinh Quang & Bộ Sưu Tập</div>
             <div class="btn-box btn-secondary" style="background: linear-gradient(135deg, #00f2fe, #4facfe); color: #fff; border: none;" onclick="switchPage('giftPage')">🎁 Phục Lợi & Nhập Mã</div>
@@ -287,7 +325,7 @@
         </div>
     </div>
 
-    <!-- TRANG 3: PHỤC LỢI & NHẬP MÃ (THÀNH TÍCH HOẶC MAY MẮN) -->
+    <!-- TRANG 3: PHỤC LỢI & NHẬP MÃ -->
     <div id="giftPage" class="page">
         <div class="achievement-page-container" style="max-width: 340px;">
             <h1>🎁 Phục Lợi Quà Tặng</h1>
@@ -339,12 +377,13 @@
         let achievements = [];
         function initAchievementsList() {
             achievements = JSON.parse(JSON.stringify(baseAchievements));
-            for (let i = 1; i <= 10; i++) {
+            for (let i = 1; i <= 30; i++) {
+                const randomReq = Math.floor(Math.random() * 10000000) + 1;
                 achievements.push({
                     id: `pro_${i}`,
                     title: `Vinh Quang PRO ${i}`,
-                    desc: `Cấp độ vinh quang bổ sung #${i}`,
-                    req: 100000000 * i,
+                    desc: `Yêu cầu ngẫu nhiên: ${(randomReq).toLocaleString()} điểm`,
+                    req: randomReq,
                     unlocked: false,
                     icon: '💎'
                 });
@@ -536,6 +575,38 @@
             }
         }
 
+        /* HÀM CƯỢC NHÂN PHẨM */
+        function gambleScore() {
+            if (isRunning) {
+                showToast("⚠️ Đang quay số, dừng lại mới cược được!");
+                return;
+            }
+            if (currentScore < 10000) {
+                showToast("💸 Nghèo quá! Cần tối thiểu 10,000 điểm để cược!");
+                return;
+            }
+            
+            const isWin = Math.random() > 0.5; // Tỷ lệ 50/50
+            if (isWin) {
+                currentScore *= 2;
+                showToast("🎲 BÙM! Nhân phẩm bùng nổ, NHÂN ĐÔI điểm! 🤑");
+                launchFireworks();
+                playVictorySound();
+            } else {
+                currentScore = Math.floor(currentScore / 2);
+                showToast("🎲 OÁI! Đen thôi đỏ quên đi, MẤT NỬA ĐIỂM! 😭");
+            }
+            
+            currentScoreEl.innerText = Math.floor(currentScore);
+            checkAchievements(currentScore);
+            
+            if (currentScore > highScore) {
+                highScore = currentScore;
+                highScoreEl.innerText = Math.floor(highScore);
+                localStorage.setItem('chaosHighScore', highScore);
+            }
+        }
+
         statusText.addEventListener('click', (e) => {
             e.stopPropagation();
             toggleAction();
@@ -572,7 +643,7 @@
                     if (spinCount >= 20) {
                         spinCount = 0;
                         rebirthCount++;
-                        scoreMultiplier *= 0.75;
+                        scoreMultiplier += 0.75;
                         
                         localStorage.removeItem('chaosHighScore');
                         localStorage.removeItem('chaosBadges');
