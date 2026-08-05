@@ -3,13 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Pixel Arena 8-Bit - Saved Data</title>
+    <title>Pixel Arena 8-Bit - Ultimate Edition v6.0 (Full Audio & Leaderboard)</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg-primary: #020005;
+            --bg-card: #0b0114;
+            --border-main: #ff0055;
+            --accent-cyan: #00ffcc;
+            --accent-yellow: #ffff00;
+            --accent-purple: #7209b7;
+            --accent-orange: #f77f00;
+            --accent-green: #38b000;
+            --text-main: #ffffff;
+            --shadow-color: #000000;
+        }
+
+        * {
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
         body {
             margin: 0;
-            background: #0d001a;
-            color: #00ffcc;
+            background: var(--bg-primary);
+            color: var(--accent-cyan);
             font-family: 'Press Start 2P', monospace;
             display: flex;
             flex-direction: column;
@@ -17,434 +36,1144 @@
             justify-content: flex-start;
             min-height: 100vh;
             overflow-x: hidden;
-            touch-action: manipulation;
-            font-size: 9px;
+            font-size: 8px;
+            padding: 6px;
         }
-        h2 { margin: 12px 0; font-size: 11px; color: #ff0055; text-align: center; text-shadow: 2px 2px #000; }
-        
-        .screen {
+
+        header {
+            text-align: center;
+            margin-bottom: 4px;
+        }
+
+        h1 {
+            font-size: 11px;
+            color: var(--border-main);
+            text-shadow: 2px 2px var(--shadow-color);
+            margin: 3px 0;
+        }
+
+        .container {
             width: 100%;
-            max-width: 420px;
-            padding: 10px;
-            box-sizing: border-box;
+            max-width: 440px;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 8px;
         }
-        .hidden { display: none !important; }
 
-        .card {
-            background: #1a0033;
-            border: 3px solid #ff0055;
-            box-shadow: 4px 4px 0px #000;
-            padding: 10px;
-        }
-        .card h3 { margin-top: 0; font-size: 10px; color: #ffff00; border-bottom: 2px dashed #ff0055; padding-bottom: 6px; }
-
-        label { font-size: 8px; color: #00ffcc; display: block; margin-top: 6px; line-height: 1.4; }
-        input, select {
-            width: 100%;
+        .panel {
+            background: var(--bg-card);
+            border: 4px solid var(--border-main);
+            box-shadow: 4px 4px 0px var(--shadow-color);
             padding: 8px;
-            background: #000;
-            border: 2px solid #00ffcc;
-            color: #fff;
+            position: relative;
+        }
+
+        .panel-title {
+            font-size: 8px;
+            color: var(--accent-yellow);
+            border-bottom: 2px dashed var(--border-main);
+            padding-bottom: 4px;
+            margin-top: 0;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+        }
+
+        label {
+            font-size: 6px;
+            color: var(--accent-cyan);
+            display: block;
+            margin-top: 5px;
+            margin-bottom: 2px;
+            line-height: 1.3;
+        }
+
+        input[type="text"], select {
+            width: 100%;
+            padding: 7px;
+            background: #000000;
+            border: 2px solid var(--accent-cyan);
+            color: var(--text-main);
+            font-family: 'Press Start 2P', monospace;
+            font-size: 7px;
+            outline: none;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 7px;
+            background: #000000;
+            border: 2px solid var(--accent-cyan);
+            color: var(--text-main);
+            font-family: 'Press Start 2P', monospace;
+            font-size: 7px;
+            text-align: center;
+            outline: none;
+        }
+
+        .row {
+            display: flex;
+            gap: 5px;
+        }
+
+        .col {
+            flex: 1;
+        }
+
+        .btn {
+            background: var(--accent-cyan);
+            color: #000000;
+            border: 3px solid var(--text-main);
+            box-shadow: 3px 3px 0px var(--border-main);
+            padding: 10px;
             font-family: 'Press Start 2P', monospace;
             font-size: 8px;
-            margin-top: 4px;
-            box-sizing: border-box;
-        }
-        
-        .btn {
-            background: #00ffcc;
-            color: #000;
-            border: 3px solid #fff;
-            box-shadow: 3px 3px 0px #ff0055;
-            padding: 12px;
-            font-family: 'Press Start 2P', monospace;
-            font-size: 9px;
             font-weight: bold;
             cursor: pointer;
             width: 100%;
             text-align: center;
-            margin-top: 8px;
-        }
-        .btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0px #ff0055; }
-
-        #game-screen { align-items: center; padding: 5px; }
-        .arena-box { display: flex; justify-content: space-between; width: 100%; gap: 8px; }
-        .fighter-panel {
-            flex: 1;
-            background: #1a0033;
-            border: 2px solid #00ffcc;
-            box-shadow: 3px 3px 0px #000;
-            padding: 6px;
-            font-size: 8px;
-        }
-        .hp-bar-bg {
-            width: 100%;
-            height: 10px;
-            background: #330033;
-            border: 2px solid #fff;
-            margin: 4px 0;
-            overflow: hidden;
-        }
-        .hp-bar-fill { height: 100%; background: #00ff00; width: 100%; transition: width 0.2s; }
-        
-        canvas {
-            border: 4px solid #ff0055;
-            background: #000;
-            box-shadow: 5px 5px 0px #00ffcc;
-            width: 100%;
-            max-width: 400px;
-            height: 200px;
-            margin: 8px 0;
-            image-rendering: pixelated;
+            margin-top: 6px;
+            text-transform: uppercase;
+            transition: transform 0.05s, box-shadow 0.05s;
         }
 
-        .skill-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; width: 100%; max-width: 400px; }
-        .skill-btn {
-            background: #26004d;
+        .btn:active {
+            transform: translate(2px, 2px);
+            box-shadow: 1px 1px 0px var(--border-main);
+        }
+
+        .btn-danger {
+            background: var(--border-main);
+            color: var(--text-main);
+            box-shadow: 3px 3px 0px #000000;
+        }
+
+        .btn-secondary {
+            background: var(--accent-purple);
+            color: var(--text-main);
+            box-shadow: 3px 3px 0px #000000;
+        }
+
+        .btn-orange {
+            background: var(--accent-orange);
+            color: #000;
+            box-shadow: 3px 3px 0px #000000;
+        }
+
+        .btn-green {
+            background: var(--accent-green);
             color: #fff;
-            border: 2px solid #ffff00;
-            box-shadow: 2px 2px 0px #000;
-            padding: 10px 5px;
+            box-shadow: 3px 3px 0px #000000;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .arena-header {
+            display: flex;
+            justify-content: space-between;
+            gap: 6px;
+        }
+
+        .fighter-hud {
+            flex: 1;
+            background: var(--bg-card);
+            border: 2px solid var(--accent-cyan);
+            box-shadow: 2px 2px 0px var(--shadow-color);
+            padding: 5px;
+            font-size: 6px;
+        }
+
+        .fighter-hud.right {
+            border-color: var(--border-main);
+            text-align: right;
+        }
+
+        .hp-bar-outer, .mp-bar-outer {
+            width: 100%;
+            height: 8px;
+            background: #11001a;
+            border: 2px solid var(--text-main);
+            margin: 3px 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .hp-bar-inner {
+            height: 100%;
+            background: #00ff00;
+            width: 100%;
+            transition: width 0.2s ease-out;
+        }
+
+        .hp-bar-inner.danger {
+            background: #ff0000;
+        }
+
+        .mp-bar-inner {
+            height: 100%;
+            background: var(--accent-cyan);
+            width: 100%;
+            transition: width 0.2s ease-out;
+        }
+
+        canvas {
+            border: 4px solid var(--border-main);
+            background: #000000;
+            box-shadow: 5px 5px 0px var(--accent-cyan);
+            width: 100%;
+            max-width: 440px;
+            height: 210px;
+            image-rendering: pixelated;
+            display: block;
+            margin: 6px auto;
+        }
+
+        .combat-console {
+            width: 100%;
+            height: 60px;
+            background: #000000;
+            border: 2px solid var(--accent-cyan);
+            box-shadow: 3px 3px 0px var(--bg-card);
+            padding: 5px;
+            font-size: 6px;
+            overflow-y: auto;
+            color: var(--accent-yellow);
+            line-height: 1.3;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5px;
+            width: 100%;
+        }
+
+        .skill-action-btn {
+            background: #14002b;
+            color: var(--text-main);
+            border: 2px solid var(--accent-yellow);
+            box-shadow: 2px 2px 0px var(--shadow-color);
+            padding: 8px 3px;
             font-family: 'Press Start 2P', monospace;
-            font-size: 8px;
+            font-size: 6px;
+            text-align: center;
+            cursor: pointer;
+            line-height: 1.2;
+        }
+
+        .skill-action-btn:active {
+            transform: translate(1px, 1px);
+            background: var(--border-main);
+        }
+
+        .skill-action-btn:disabled {
+            opacity: 0.35;
+            cursor: not-allowed;
+            background: #0d0d0d;
+            border-color: #444;
+        }
+
+        .stats-summary {
+            background: #000;
+            border: 2px dashed var(--accent-cyan);
+            padding: 5px;
+            margin-top: 5px;
+            font-size: 6px;
+            line-height: 1.4;
+        }
+
+        .shop-badge {
+            background: #1b0033;
+            border: 2px solid var(--accent-yellow);
+            padding: 6px;
+            margin-top: 6px;
+            font-size: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .gear-selector {
+            display: flex;
+            gap: 4px;
+            margin-top: 4px;
+        }
+        .gear-btn {
+            flex: 1;
+            background: #000;
+            border: 2px solid #555;
+            color: #aaa;
+            padding: 6px 2px;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 6px;
             text-align: center;
             cursor: pointer;
         }
-        .skill-btn:active { background: #ff0055; transform: translate(1px, 1px); }
+        .gear-btn.active {
+            border-color: var(--accent-yellow);
+            color: var(--accent-yellow);
+            background: #150022;
+        }
 
-        #battle-log {
-            width: 100%;
-            max-width: 400px;
-            height: 55px;
+        .leaderboard-box {
             background: #000;
-            border: 2px solid #00ffcc;
-            box-shadow: 3px 3px 0px #1a0033;
+            border: 2px solid var(--accent-yellow);
             padding: 6px;
-            font-size: 8px;
-            overflow-y: auto;
-            color: #ffff00;
-            line-height: 1.4;
+            margin-top: 6px;
+            font-size: 6px;
+        }
+        .leaderboard-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 3px 0;
+            border-bottom: 1px dotted #333;
         }
     </style>
 </head>
 <body>
 
-    <div id="creator-screen" class="screen">
-        <h2>💾 PIXEL ARENA (LƯU MÁY)</h2>
+    <header>
+        <h1>PIXEL ARENA 8-BIT</h1>
+        <p style="font-size: 5px; color: var(--accent-yellow);">NHÀ PHÁT HÀNH: BẠN | DEV: GEMINI (AI CÔNG THẦN)</p>
+    </header>
+
+    <div class="container">
         
-        <div class="card">
-            <h3>[1] THÔNG TIN NHÂN VẬT</h3>
-            <label>TÊN ANH HÙNG:</label>
-            <input type="text" id="char-name" value="PIXEL_BOY" maxlength="10">
+        <!-- MÀN HÌNH 1: HỒ SƠ & BẢNG XẾP HẠNG TOP 3 -->
+        <div id="screen-creator" class="panel">
+            <h2 class="panel-title">[1] HỒ SƠ ANH HÙNG & KHO TRANG BỊ</h2>
             
-            <label>ĐIỂM CHỈ SỐ (CÒN: <span id="stat-points" style="color:#ffff00">5</span>):</label>
-            <div style="display: flex; gap: 6px; margin-top: 4px;">
-                <div style="flex:1">
+            <div class="shop-badge">
+                <div>💰 VÀNG: <span id="player-gold" style="color:var(--accent-yellow)">200</span></div>
+                <div>⭐ CẤP: <span id="player-level" style="color:var(--accent-cyan)">1</span></div>
+                <div>🏆 THẮNG: <span id="player-wins" style="color:var(--accent-orange)">0</span></div>
+            </div>
+
+            <label>TÊN ANH HÙNG:</label>
+            <input type="text" id="input-name" value="PIXEL_SLAYER" maxlength="10">
+
+            <label>LỰA CHỌN VŨ KHÍ CHIẾN ĐẤU:</label>
+            <div class="gear-selector">
+                <button class="gear-btn active" id="gear-0" onclick="GameEngine.selectWeapon(0)">KIẾM GỖ<br>(+0 DMG)</button>
+                <button class="gear-btn" id="gear-1" onclick="GameEngine.selectWeapon(1)">ĐẠI ĐAO<br>(+3 DMG)</button>
+                <button class="gear-btn" id="gear-2" onclick="GameEngine.selectWeapon(2)">THƯƠNG SÉT<br>(+6 DMG)</button>
+                <button class="gear-btn" id="gear-3" onclick="GameEngine.selectWeapon(3)">THANH LONG<br>(+10 DMG)</button>
+            </div>
+
+            <label>PHÂN BỔ CHỈ SỐ CƠ BẢN (CÒN LẠI: <span id="stat-points-display" style="color:var(--accent-yellow)">5</span>):</label>
+            <div class="row">
+                <div class="col">
                     <label>DMG:</label>
-                    <input type="number" id="stat-str" value="5" min="1" max="12" onchange="updateStatPoints()">
+                    <input type="number" id="input-str" value="5" min="1" max="15" oninput="GameEngine.handleStatChange()">
                 </div>
-                <div style="flex:1">
+                <div class="col">
                     <label>HP:</label>
-                    <input type="number" id="stat-hp" value="5" min="1" max="12" onchange="updateStatPoints()">
+                    <input type="number" id="input-hp" value="5" min="1" max="15" oninput="GameEngine.handleStatChange()">
                 </div>
-                <div style="flex:1">
+                <div class="col">
                     <label>SPD:</label>
-                    <input type="number" id="stat-spd" value="5" min="1" max="12" onchange="updateStatPoints()">
+                    <input type="number" id="input-spd" value="5" min="1" max="15" oninput="GameEngine.handleStatChange()">
+                </div>
+            </div>
+
+            <div class="stats-summary" id="derived-stats-box">
+                HP Tối Đa: 140 | Tổng Sức Đánh: Chuẩn mực
+            </div>
+
+            <h2 class="panel-title" style="margin-top: 8px;">[2] THIẾT KẾ 4 KỸ NĂNG ĐẶC BIỆT</h2>
+            <div id="skills-creator-container" style="display: flex; flex-direction: column; gap: 5px;"></div>
+
+            <div class="row" style="margin-top: 6px;">
+                <div class="col">
+                    <button class="btn btn-secondary" onclick="GameEngine.buyPotionFromShop()">🧪 MUA BÌNH MÁU (50G)</button>
+                </div>
+                <div class="col">
+                    <button class="btn btn-orange" onclick="GameEngine.buyAttackBuffFromShop()">⚡ NÂNG CẤP DMG (75G)</button>
+                </div>
+            </div>
+
+            <button class="btn btn-green" onclick="GameEngine.saveAndLaunchArena()">⚔️ LƯU MÁY & VÀO ĐẤU TRƯỜNG</button>
+
+            <!-- BẢNG XẾP HẠNG TOP 3 -->
+            <div class="leaderboard-box">
+                <div style="color:var(--accent-yellow); margin-bottom:4px; border-bottom:1px solid #444; padding-bottom:2px;">🏆 VINH DANH TOP 3 ANH HÙNG (THẮNG NHIỀU NHẤT)</div>
+                <div id="leaderboard-list">
+                    <!-- Dynamic insert -->
                 </div>
             </div>
         </div>
 
-        <div class="card">
-            <h3>[2] 4 KỸ NĂNG RIÊNG</h3>
-            <div id="skills-creator"></div>
+
+        <!-- MÀN HÌNH 2: ĐẤU TRƯỜNG ÂM THANH & HIỆU ỨNG -->
+        <div id="screen-arena" class="panel hidden">
+            <div class="arena-header">
+                <div class="fighter-hud">
+                    <strong id="hud-p1-name" style="color:var(--accent-cyan)">P1</strong>
+                    <div class="hp-bar-outer"><div id="hud-p1-hp-fill" class="hp-bar-inner"></div></div>
+                    <div class="mp-bar-outer"><div id="hud-p1-mp-fill" class="mp-bar-inner"></div></div>
+                    <span id="hud-p1-status-text">HP:100/100 | MP:50/50</span>
+                </div>
+                <div class="fighter-hud right">
+                    <strong id="hud-p2-name" style="color:var(--border-main)">BOSS</strong>
+                    <div class="hp-bar-outer"><div id="hud-p2-hp-fill" class="hp-bar-inner" style="background:var(--border-main)"></div></div>
+                    <div class="mp-bar-outer"><div id="hud-p2-mp-fill" class="mp-bar-inner" style="background:var(--border-main)"></div></div>
+                    <span id="hud-p2-status-text">HP:100/100 | MP:50/50</span>
+                </div>
+            </div>
+
+            <canvas id="gameCanvas" width="412" height="210"></canvas>
+
+            <div class="combat-console" id="combat-console">
+                <div>> Đấu trường âm thanh & hiệu ứng v6.0 đã sẵn sàng!</div>
+            </div>
+
+            <div style="margin-top: 5px; font-size: 6px; text-align: center; color: var(--accent-yellow);">
+                TRẠNG THÁI: <span id="turn-indicator-text">LƯỢT NGƯỜI CHƠI</span>
+            </div>
+
+            <div class="skills-grid" id="arena-action-buttons" style="margin-top: 5px;"></div>
+
+            <div class="row" style="margin-top: 5px;">
+                <div class="col">
+                    <button class="btn btn-secondary" id="use-potion-btn" onclick="GameEngine.usePlayerPotion()">🧪 BÌNH MÁU (<span id="potion-count-display">2</span>)</button>
+                </div>
+                <div class="col">
+                    <button class="btn btn-danger" onclick="GameEngine.returnToCreator()">⚙️ RỜI ĐẤU TRƯỜNG</button>
+                </div>
+            </div>
         </div>
 
-        <button class="btn" onclick="saveAndStart()">⚔️ LƯU & VÀO ĐẤU TRƯỜNG</button>
-    </div>
-
-    <div id="game-screen" class="screen hidden">
-        <h2>⚔️ PIXEL ARENA BATTLE ⚔️</h2>
-        
-        <div class="arena-box">
-            <div class="fighter-panel">
-                <strong id="p1-title" style="color:#00ffcc">P1</strong>
-                <div class="hp-bar-bg"><div id="p1-hp-fill" class="hp-bar-fill"></div></div>
-                <span id="p1-hp-text">HP:100</span>
-            </div>
-            <div class="fighter-panel" style="text-align: right;">
-                <strong id="p2-title" style="color:#ff0055">BOSS 8B</strong>
-                <div class="hp-bar-bg"><div id="p2-hp-fill" class="hp-bar-fill" style="background:#ff0055;"></div></div>
-                <span id="p2-hp-text">HP:100</span>
-            </div>
-        </div>
-
-        <canvas id="arenaCanvas" width="400" height="180"></canvas>
-
-        <div id="battle-log">> Dữ liệu đã lưu vào máy! Lượt của <span id="turn-indicator">P1</span>.</div>
-
-        <div class="skill-grid" id="action-buttons"></div>
-        
-        <button class="btn" style="background:#ff0055; color:#fff; margin-top:4px;" onclick="resetToCreator()">⚙️ CHỈNH SỬA LẠI TƯỚNG</button>
     </div>
 
 <script>
-let player1 = { name: "", str: 5, hp: 100, maxHp: 100, spd: 5, skills: [], x: 70, y: 110, color: "#00ffcc" };
-let player2 = { name: "GLITCH_BOSS", str: 6, hp: 100, maxHp: 100, spd: 4, skills: [
-    {name: "P-CHÉM", mult: 1.2},
-    {name: "BIT-ĐẤM", mult: 1.7},
-    {name: "BUG-HÚY", mult: 2.1},
-    {name: "CRASH", mult: 2.6}
-], x: 330, y: 110, color: "#ff0055" };
+/**
+ * 8-BIT AUDIO SYNTHESIZER (WEB AUDIO API)
+ */
+class SoundEngine {
+    constructor() {
+        this.ctx = null;
+    }
+    init() {
+        if (!this.ctx) {
+            const AudioContext = window.AudioContext || window.webkitAudioContext;
+            this.ctx = new AudioContext();
+        }
+    }
+    playTone(freq, duration, type = 'square') {
+        try {
+            this.init();
+            if(!this.ctx) return;
+            let osc = this.ctx.createOscillator();
+            let gain = this.ctx.createGain();
+            osc.type = type;
+            osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+            gain.gain.setValueAtTime(0.1, this.ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + duration);
+            osc.connect(gain);
+            gain.connect(this.ctx.destination);
+            osc.start();
+            osc.stop(this.ctx.currentTime + duration);
+        } catch(e) {}
+    }
+    playHit() { this.playTone(150, 0.12, 'sawtooth'); }
+    playSkill() { this.playTone(440, 0.2, 'square'); setTimeout(() => this.playTone(880, 0.15, 'square'), 100); }
+    playWin() { 
+        [300, 450, 600, 900].forEach((f, i) => {
+            setTimeout(() => this.playTone(f, 0.15, 'triangle'), i * 120);
+        });
+    }
+    playLose() {
+        [400, 300, 200, 100].forEach((f, i) => {
+            setTimeout(() => this.playTone(f, 0.2, 'sawtooth'), i * 150);
+        });
+    }
+}
 
-let currentTurn = 1;
-let isAnimating = false;
+const STORAGE_KEY = "pixel_arena_v6_full_leaderboard";
+const LEADERBOARD_KEY = "pixel_arena_v6_top_list";
 
-const creatorDiv = document.getElementById("skills-creator");
-const defaultSkills = [
-    {name: "CHÉM PIXEL", mult: 1.0},
-    {name: "ĐẤM 8-BIT", mult: 1.5},
-    {name: "HỎA THIÊU", mult: 2.0},
-    {name: "TUYỆT KỸ", mult: 2.5}
+const WEAPON_LIST = [
+    { name: "Kiếm Gỗ", bonus: 0, color: "#a0522d" },
+    { name: "Đại Đao", bonus: 3, color: "#ff4500" },
+    { name: "Thương Sét", bonus: 6, color: "#1e90ff" },
+    { name: "Thanh Long", bonus: 10, color: "#00ffcc" }
 ];
 
-// Nạp dữ liệu cũ từ LocalStorage nếu có sẵn trong máy
-function loadSavedData() {
-    let saved = localStorage.getItem("pixel_arena_hero");
-    if (saved) {
+const DEFAULT_SKILLS = [
+    { name: "CHÉM SƠ KHAI", mult: 1.0, mpCost: 0, effect: "normal" },
+    { name: "ĐẤM HỦY DIỆT", mult: 1.6, mpCost: 10, effect: "heavy" },
+    { name: "HỎA CẦU 8B", mult: 2.2, mpCost: 20, effect: "fire" },
+    { name: "TUYỆT KỸ SẤM", mult: 3.2, mpCost: 35, effect: "thunder" }
+];
+
+class Fighter {
+    constructor(config) {
+        this.name = config.name;
+        this.str = config.str;
+        this.hpStat = config.hpStat;
+        this.spd = config.spd;
+        this.weaponIndex = config.weaponIndex !== undefined ? config.weaponIndex : 0;
+        
+        this.weapon = WEAPON_LIST[this.weaponIndex];
+        this.maxHp = 80 + (this.hpStat * 12);
+        this.hp = this.maxHp;
+        this.maxMp = 50;
+        this.mp = this.maxMp;
+        
+        this.skills = config.skills || [];
+        this.x = config.x || 90;
+        this.y = config.y || 150;
+        this.baseX = this.x;
+        this.baseY = this.y;
+        this.color = config.color || "#00ffcc";
+        this.isPlayer = config.isPlayer || false;
+        
+        this.isDefending = false;
+        this.extraDmgBonus = config.extraDmgBonus || 0;
+    }
+
+    calculateDamage(skillMultiplier, targetIsDefending = false) {
+        let effectiveStr = this.str + this.weapon.bonus + this.extraDmgBonus;
+        let baseDmg = effectiveStr * 3.0 * skillMultiplier;
+        let variance = (Math.random() * 8) - 4;
+        let finalDmg = Math.max(1, Math.floor(baseDmg + variance));
+        if (targetIsDefending) {
+            finalDmg = Math.floor(finalDmg * 0.5);
+        }
+        return finalDmg;
+    }
+}
+
+class RenderEngine {
+    constructor(canvasId) {
+        this.canvas = document.getElementById(canvasId);
+        this.ctx = this.canvas.getContext("2d");
+        this.width = this.canvas.width;
+        this.height = this.canvas.height;
+    }
+
+    clear() {
+        this.ctx.clearRect(0, 0, this.width, this.height);
+    }
+
+    drawGridBackground() {
+        const ctx = this.ctx;
+        ctx.strokeStyle = "#120222";
+        ctx.lineWidth = 1;
+        
+        for(let x = 0; x < this.width; x += 24) {
+            ctx.beginPath();
+            ctx.moveTo(x, 0);
+            ctx.lineTo(x, this.height);
+            ctx.stroke();
+        }
+        for(let y = 0; y < this.height; y += 24) {
+            ctx.beginPath();
+            ctx.moveTo(0, y);
+            ctx.lineTo(this.width, y);
+            ctx.stroke();
+        }
+
+        ctx.fillStyle = "#ff0055";
+        ctx.fillRect(0, this.height - 20, this.width, 20);
+        ctx.fillStyle = "#ffff00";
+        ctx.fillRect(0, this.height - 20, this.width, 3);
+    }
+
+    drawFighter(fighter, renderOffsetX = 0) {
+        const ctx = this.ctx;
+        const posX = fighter.x + renderOffsetX;
+        const posY = fighter.y;
+
+        ctx.fillStyle = "rgba(0,0,0,0.6)";
+        ctx.fillRect(posX - 14, posY - 2, 28, 6);
+
+        ctx.fillStyle = fighter.color;
+        ctx.fillRect(posX - 13, posY - 30, 26, 28);
+
+        ctx.fillStyle = fighter.weapon.color;
+        if (fighter.isPlayer) {
+            ctx.fillRect(posX + 12, posY - 22, 6, 16);
+        } else {
+            ctx.fillRect(posX - 18, posY - 22, 6, 16);
+        }
+
+        if (fighter.isDefending) {
+            ctx.strokeStyle = "#00ffcc";
+            ctx.lineWidth = 2;
+            ctx.strokeRect(posX - 16, posY - 33, 32, 33);
+        }
+
+        ctx.fillStyle = "#ffff00";
+        if (fighter.isPlayer) {
+            ctx.fillRect(posX + 2, posY - 24, 5, 5);
+        } else {
+            ctx.fillRect(posX - 7, posY - 24, 5, 5);
+        }
+
+        ctx.fillStyle = "#ffffff";
+        ctx.font = "6px 'Press Start 2P'";
+        ctx.textAlign = "center";
+        ctx.fillText(fighter.name, posX, posY - 38);
+    }
+
+    drawSkillEffect(effectType, targetX, targetY) {
+        const ctx = this.ctx;
+        ctx.save();
+        if (effectType === "fire") {
+            ctx.fillStyle = "#ff4500";
+            ctx.beginPath();
+            ctx.arc(targetX, targetY - 15, 18 + Math.random() * 8, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = "#ffff00";
+            ctx.fillRect(targetX - 8, targetY - 20, 16, 16);
+        } else if (effectType === "thunder") {
+            ctx.strokeStyle = "#00ffcc";
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(targetX, targetY - 45);
+            ctx.lineTo(targetX - 10, targetY - 15);
+            ctx.lineTo(targetX + 8, targetY - 15);
+            ctx.lineTo(targetX - 4, targetY + 5);
+            ctx.stroke();
+        } else if (effectType === "heavy") {
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(targetX - 15, targetY - 25, 30, 30);
+        }
+        ctx.restore();
+    }
+
+    renderScene(fighter1, fighter2, offset1 = 0, offset2 = 0, activeEffect = null) {
+        this.clear();
+        this.drawGridBackground();
+        this.drawFighter(fighter1, offset1);
+        this.drawFighter(fighter2, offset2);
+
+        if (activeEffect) {
+            let targetX = activeEffect.onPlayer ? fighter1.x : fighter2.x;
+            let targetY = activeEffect.onPlayer ? fighter1.y : fighter2.y;
+            this.drawSkillEffect(activeEffect.type, targetX, targetY);
+        }
+    }
+}
+
+class GameController {
+    constructor() {
+        this.renderer = new RenderEngine("gameCanvas");
+        this.sound = new SoundEngine();
+        this.player = null;
+        this.bot = null;
+        this.currentTurn = 1;
+        this.isLocked = false;
+        
+        this.gold = 200;
+        this.level = 1;
+        this.wins = 0;
+        this.potions = 2;
+        this.extraDmgBonus = 0;
+        this.selectedWeaponIndex = 0;
+
+        this.initCreatorScreen();
+    }
+
+    initCreatorScreen() {
+        this.loadGameData();
+        this.renderSkillInputs();
+        this.handleStatChange();
+        this.updateProfileUI();
+        this.updateWeaponUI();
+        this.renderLeaderboard();
+    }
+
+    loadGameData() {
         try {
-            let data = JSON.parse(saved);
-            document.getElementById("char-name").value = data.name || "HERO";
-            document.getElementById("stat-str").value = data.str || 5;
-            document.getElementById("stat-hp").value = data.hpStat || 5;
-            document.getElementById("stat-spd").value = data.spd || 5;
-            
-            if (data.skills && data.skills.length === 4) {
-                for(let i=0; i<4; i++) {
-                    defaultSkills[i].name = data.skills[i].name;
-                    defaultSkills[i].mult = data.skills[i].mult;
+            const raw = localStorage.getItem(STORAGE_KEY);
+            if (raw) {
+                const data = JSON.parse(raw);
+                document.getElementById("input-name").value = data.name || "PIXEL_SLAYER";
+                document.getElementById("input-str").value = data.str || 5;
+                document.getElementById("input-hp").value = data.hpStat || 5;
+                document.getElementById("input-spd").value = data.spd || 5;
+                this.gold = data.gold !== undefined ? data.gold : 200;
+                this.level = data.level !== undefined ? data.level : 1;
+                this.wins = data.wins !== undefined ? data.wins : 0;
+                this.potions = data.potions !== undefined ? data.potions : 2;
+                this.extraDmgBonus = data.extraDmgBonus !== undefined ? data.extraDmgBonus : 0;
+                this.selectedWeaponIndex = data.selectedWeaponIndex !== undefined ? data.selectedWeaponIndex : 0;
+
+                if (data.skills && data.skills.length === 4) {
+                    for(let i=0; i<4; i++) {
+                        DEFAULT_SKILLS[i].name = data.skills[i].name;
+                        DEFAULT_SKILLS[i].mult = data.skills[i].mult;
+                        DEFAULT_SKILLS[i].mpCost = data.skills[i].mpCost !== undefined ? data.skills[i].mpCost : 10;
+                        DEFAULT_SKILLS[i].effect = data.skills[i].effect || "normal";
+                    }
                 }
             }
         } catch(e) {}
     }
-    updateStatPoints();
-    renderCreatorSkills();
-}
 
-function renderCreatorSkills() {
-    creatorDiv.innerHTML = "";
-    for(let i=0; i<4; i++) {
-        creatorDiv.innerHTML += `
-            <div style="margin-bottom: 6px; border-bottom: 1px dotted #ff0055; padding-bottom: 4px;">
-                <label>SKILL ${i+1}:</label>
-                <div style="display: flex; gap: 4px;">
-                    <input type="text" id="skill-name-${i}" value="${defaultSkills[i].name}" style="flex:2" maxlength="9">
-                    <select id="skill-mult-${i}" style="flex:1">
-                        <option value="1.0" ${defaultSkills[i].mult==1.0?'selected':''}>Yếu (1.0x)</option>
-                        <option value="1.5" ${defaultSkills[i].mult==1.5?'selected':''}>Vừa (1.5x)</option>
-                        <option value="2.0" ${defaultSkills[i].mult==2.0?'selected':''}>Mạnh (2.0x)</option>
-                        <option value="2.5" ${defaultSkills[i].mult==2.5?'selected':''}>Cực (2.5x)</option>
-                    </select>
+    saveGameDataToStorage() {
+        try {
+            let craftedSkills = [];
+            for(let i=0; i<4; i++) {
+                let sName = document.getElementById(`skill-name-${i}`).value.trim() || `SKILL ${i+1}`;
+                let sMult = parseFloat(document.getElementById(`skill-mult-${i}`).value) || 1.0;
+                let sMp = parseInt(document.getElementById(`skill-mp-${i}`).value) || 10;
+                let sEff = document.getElementById(`skill-eff-${i}`).value || "normal";
+                craftedSkills.push({ name: sName, mult: sMult, mpCost: sMp, effect: sEff });
+            }
+
+            let heroName = document.getElementById("input-name").value.trim() || "HERO";
+            const savePayload = {
+                name: heroName,
+                str: parseInt(document.getElementById("input-str").value) || 5,
+                hpStat: parseInt(document.getElementById("input-hp").value) || 5,
+                spd: parseInt(document.getElementById("input-spd").value) || 5,
+                gold: this.gold,
+                level: this.level,
+                wins: this.wins,
+                potions: this.potions,
+                extraDmgBonus: this.extraDmgBonus,
+                selectedWeaponIndex: this.selectedWeaponIndex,
+                skills: craftedSkills
+            };
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(savePayload));
+            this.updateLeaderboardData(heroName, this.wins);
+        } catch(e) {}
+    }
+
+    updateLeaderboardData(name, wins) {
+        try {
+            let list = [];
+            let rawList = localStorage.getItem(LEADERBOARD_KEY);
+            if (rawList) list = JSON.parse(rawList);
+
+            let existingIndex = list.findIndex(item => item.name === name);
+            if (existingIndex >= 0) {
+                if (wins > list[existingIndex].wins) {
+                    list[existingIndex].wins = wins;
+                }
+            } else {
+                list.push({ name: name, wins: wins });
+            }
+
+            list.sort((a, b) => b.wins - a.wins);
+            list = list.slice(0, 3); // Giữ Top 3
+            localStorage.setItem(LEADERBOARD_KEY, JSON.stringify(list));
+            this.renderLeaderboard();
+        } catch(e) {}
+    }
+
+    renderLeaderboard() {
+        const container = document.getElementById("leaderboard-list");
+        container.innerHTML = "";
+        try {
+            let rawList = localStorage.getItem(LEADERBOARD_KEY);
+            let list = rawList ? JSON.parse(rawList) : [
+                { name: "PIXEL_KING", wins: 10 },
+                { name: "CYBER_SLAYER", wins: 5 },
+                { name: "NOVICE_BOT", wins: 1 }
+            ];
+
+            list.forEach((entry, idx) => {
+                let medals = ["🥇", "🥈", "🥉"];
+                container.innerHTML += `
+                    <div class="leaderboard-item">
+                        <span>${medals[idx] || '🏅'} ${entry.name}</span>
+                        <span style="color:var(--accent-yellow)">${entry.wins} Thắng</span>
+                    </div>
+                `;
+            });
+        } catch(e) {
+            container.innerHTML = `<div>Chưa có dữ liệu xếp hạng</div>`;
+        }
+    }
+
+    selectWeapon(index) {
+        this.selectedWeaponIndex = index;
+        this.updateWeaponUI();
+        this.handleStatChange();
+    }
+
+    updateWeaponUI() {
+        for(let i=0; i<4; i++) {
+            let btn = document.getElementById(`gear-${i}`);
+            if(i === this.selectedWeaponIndex) btn.classList.add("active");
+            else btn.classList.remove("active");
+        }
+    }
+
+    renderSkillInputs() {
+        const container = document.getElementById("skills-creator-container");
+        container.innerHTML = "";
+        for(let i=0; i<4; i++) {
+            let skill = DEFAULT_SKILLS[i];
+            container.innerHTML += `
+                <div style="background:#000; padding:5px; border:2px solid #330033;">
+                    <label>SKILL ${i+1}: Tên | Hệ số | MP | Hiệu ứng</label>
+                    <div class="row">
+                        <div class="col" style="flex:2;">
+                            <input type="text" id="skill-name-${i}" value="${skill.name}" maxlength="11">
+                        </div>
+                        <div class="col" style="flex:1;">
+                            <select id="skill-mult-${i}">
+                                <option value="1.0" ${skill.mult==1.0?'selected':''}>1.0x</option>
+                                <option value="1.6" ${skill.mult==1.6?'selected':''}>1.6x</option>
+                                <option value="2.2" ${skill.mult==2.2?'selected':''}>2.2x</option>
+                                <option value="3.2" ${skill.mult==3.2?'selected':''}>3.2x</option>
+                            </select>
+                        </div>
+                        <div class="col" style="flex:1;">
+                            <input type="number" id="skill-mp-${i}" value="${skill.mpCost}" min="0" max="50">
+                        </div>
+                        <div class="col" style="flex:1.2;">
+                            <select id="skill-eff-${i}">
+                                <option value="normal" ${skill.effect=='normal'?'selected':''}>Thường</option>
+                                <option value="heavy" ${skill.effect=='heavy'?'selected':''}>Nặng</option>
+                                <option value="fire" ${skill.effect=='fire'?'selected':''}>Lửa</option>
+                                <option value="thunder" ${skill.effect=='thunder'?'selected':''}>Sét</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            `;
+        }
+    }
+
+    updateProfileUI() {
+        document.getElementById("player-gold").innerText = this.gold;
+        document.getElementById("player-level").innerText = this.level;
+        document.getElementById("player-wins").innerText = this.wins;
+        document.getElementById("potion-count-display").innerText = this.potions;
+    }
+
+    handleStatChange() {
+        let str = parseInt(document.getElementById("input-str").value) || 0;
+        let hpStat = parseInt(document.getElementById("input-hp").value) || 0;
+        let spd = parseInt(document.getElementById("input-spd").value) || 0;
+
+        let totalAllocated = str + hpStat + spd;
+        let remaining = 20 - totalAllocated;
+
+        let pointDisplay = document.getElementById("stat-points-display");
+        pointDisplay.innerText = remaining;
+        pointDisplay.style.color = remaining < 0 ? "#ff0000" : "var(--accent-yellow)";
+
+        let weaponBonus = WEAPON_LIST[this.selectedWeaponIndex].bonus;
+        let estMaxHp = 80 + (hpStat * 12);
+        document.getElementById("derived-stats-box").innerHTML = `
+            HP Tối Đa: <b>${estMaxHp}</b> | Vũ khí: <b>+${weaponBonus} DMG</b> | Thưởng: <b>+${this.extraDmgBonus} DMG</b>
+        `;
+    }
+
+    buyPotionFromShop() {
+        if (this.gold >= 50) {
+            this.gold -= 50;
+            this.potions++;
+            this.updateProfileUI();
+            this.saveGameDataToStorage();
+            this.sound.playTone(600, 0.1);
+            alert("Đã mua thành công 1 Bình Máu!");
+        } else {
+            alert("Không đủ vàng! Cần ít nhất 50 Xu Vàng.");
+        }
+    }
+
+    buyAttackBuffFromShop() {
+        if (this.gold >= 75) {
+            this.gold -= 75;
+            this.extraDmgBonus += 1;
+            this.updateProfileUI();
+            this.handleStatChange();
+            this.saveGameDataToStorage();
+            this.sound.playTone(700, 0.1);
+            alert("Đã nâng cấp vĩnh viễn +1 DMG!");
+        } else {
+            alert("Không đủ vàng! Cần ít nhất 75 Xu Vàng.");
+        }
+    }
+
+    saveAndLaunchArena() {
+        this.saveGameDataToStorage();
+        
+        let name = document.getElementById("input-name").value.trim() || "HERO";
+        let str = parseInt(document.getElementById("input-str").value) || 5;
+        let hpStat = parseInt(document.getElementById("input-hp").value) || 5;
+        let spd = parseInt(document.getElementById("input-spd").value) || 5;
+
+        let craftedSkills = [];
+        for(let i=0; i<4; i++) {
+            let sName = document.getElementById(`skill-name-${i}`).value.trim() || `SKILL ${i+1}`;
+            let sMult = parseFloat(document.getElementById(`skill-mult-${i}`).value) || 1.0;
+            let sMp = parseInt(document.getElementById(`skill-mp-${i}`).value) || 10;
+            let sEff = document.getElementById(`skill-eff-${i}`).value || "normal";
+            craftedSkills.push({ name: sName, mult: sMult, mpCost: sMp, effect: sEff });
+        }
+
+        this.player = new Fighter({
+            name: name, str: str, hpStat: hpStat, spd: spd,
+            weaponIndex: this.selectedWeaponIndex,
+            skills: craftedSkills, x: 90, y: 150, color: "#00ffcc", isPlayer: true,
+            extraDmgBonus: this.extraDmgBonus
+        });
+
+        this.bot = new Fighter({
+            name: `BOSS_V${this.level}`,
+            str: 5 + Math.floor(this.level * 1.6),
+            hpStat: 6 + this.level,
+            spd: spd,
+            weaponIndex: Math.min(3, Math.floor(this.level / 2)),
+            skills: [
+                { name: "BUG CHÉM", mult: 1.2, mpCost: 0, effect: "normal" },
+                { name: "RAM ĐẬP", mult: 1.8, mpCost: 10, effect: "heavy" },
+                { name: "VIRUS LỬA", mult: 2.3, mpCost: 20, effect: "fire" },
+                { name: "CRASH SÉT", mult: 3.2, mpCost: 30, effect: "thunder" }
+            ],
+            x: 320, y: 150, color: "#ff0055", isPlayer: false
+        });
+
+        document.getElementById("screen-creator").classList.add("hidden");
+        document.getElementById("screen-arena").classList.remove("hidden");
+
+        this.updateArenaHUD();
+        this.logMessage(`Trận chiến bắt đầu: ${this.player.name} vs ${this.bot.name}!`);
+        this.renderer.renderScene(this.player, this.bot);
+        this.buildActionButtons();
+    }
+
+    returnToCreator() {
+        this.isLocked = false;
+        document.getElementById("screen-arena").classList.add("hidden");
+        document.getElementById("screen-creator").classList.remove("hidden");
+        this.initCreatorScreen();
+    }
+
+    logMessage(text) {
+        const consoleBox = document.getElementById("combat-console");
+        consoleBox.innerHTML += `<div>> ${text}</div>`;
+        consoleBox.scrollTop = consoleBox.scrollHeight;
+    }
+
+    updateArenaHUD() {
+        let p1HpPct = Math.max(0, (this.player.hp / this.player.maxHp) * 100);
+        let p1MpPct = Math.max(0, (this.player.mp / this.player.maxMp) * 100);
+        let p1Fill = document.getElementById("hud-p1-hp-fill");
+        p1Fill.style.width = p1HpPct + "%";
+        if (p1HpPct < 30) p1Fill.classList.add("danger"); else p1Fill.classList.remove("danger");
+        document.getElementById("hud-p1-mp-fill").style.width = p1MpPct + "%";
+        document.getElementById("hud-p1-status-text").innerText = `HP:${Math.max(0, this.player.hp)}/${this.player.maxHp} | MP:${this.player.mp}/${this.player.maxMp}`;
+        document.getElementById("hud-p1-name").innerText = this.player.name;
+
+        let p2HpPct = Math.max(0, (this.bot.hp / this.bot.maxHp) * 100);
+        let p2MpPct = Math.max(0, (this.bot.mp / this.bot.maxMp) * 100);
+        let p2Fill = document.getElementById("hud-p2-hp-fill");
+        p2Fill.style.width = p2HpPct + "%";
+        if (p2HpPct < 30) p2Fill.classList.add("danger"); else p2Fill.classList.remove("danger");
+        document.getElementById("hud-p2-mp-fill").style.width = p2MpPct + "%";
+        document.getElementById("hud-p2-status-text").innerText = `HP:${Math.max(0, this.bot.hp)}/${this.bot.maxHp} | MP:${this.bot.mp}/${this.bot.maxMp}`;
+        document.getElementById("hud-p2-name").innerText = this.bot.name;
+
+        document.getElementById("potion-count-display").innerText = this.potions;
+    }
+
+    buildActionButtons() {
+        const grid = document.getElementById("arena-action-buttons");
+        grid.innerHTML = "";
+
+        if (this.currentTurn !== 1 || this.isLocked) return;
+
+        document.getElementById("turn-indicator-text").innerText = `LƯỢT CỦA ${this.player.name}`;
+        
+        if (this.player.mp < this.player.maxMp) {
+            this.player.mp = Math.min(this.player.maxMp, this.player.mp + 8);
+        }
+
+        this.player.skills.forEach((skill) => {
+            let btn = document.createElement("button");
+            btn.className = "skill-action-btn";
+            let canUse = this.player.mp >= skill.mpCost;
+            btn.innerHTML = `${skill.name}<br><span style="color:var(--accent-cyan)">${skill.mult}x | MP:${skill.mpCost}</span>`;
+            if (!canUse) {
+                btn.disabled = true;
+            } else {
+                btn.onclick = () => {
+                    this.sound.playSkill();
+                    this.executeCombatTurn(this.player, this.bot, skill, () => {
+                        if (this.bot.hp <= 0) {
+                            this.handleVictory();
+                            return;
+                        }
+                        this.currentTurn = 2;
+                        document.getElementById("turn-indicator-text").innerText = `LƯỢT CỦA ${this.bot.name} (Đang ra đòn...)`;
+                        grid.innerHTML = "";
+                        setTimeout(() => this.runBotTurn(), 800);
+                    });
+                };
+            }
+            grid.appendChild(btn);
+        });
+
+        let defendBtn = document.createElement("button");
+        defendBtn.className = "skill-action-btn";
+        defendBtn.style.gridColumn = "span 2";
+        defendBtn.style.borderColor = "var(--accent-cyan)";
+        defendBtn.innerHTML = `🛡️ PHÒNG THỦ CHIẾN LƯỢC (+15 MP, GIẢM 50% SÁT THƯƠNG)`;
+        defendBtn.onclick = () => {
+            if (this.isLocked) return;
+            this.isLocked = true;
+            this.player.isDefending = true;
+            this.player.mp = Math.min(this.player.maxMp, this.player.mp + 15);
+            this.sound.playTone(300, 0.1, 'triangle');
+            this.logMessage(`${this.player.name} thủ thế vững chắc và hồi 15 MP!`);
+            this.updateArenaHUD();
+
+            setTimeout(() => {
+                this.isLocked = false;
+                if (this.bot.hp <= 0) { this.handleVictory(); return; }
+                this.currentTurn = 2;
+                document.getElementById("turn-indicator-text").innerText = `LƯỢT CỦA ${this.bot.name}...`;
+                grid.innerHTML = "";
+                setTimeout(() => this.runBotTurn(), 800);
+            }, 550);
+        };
+        grid.appendChild(defendBtn);
+    }
+
+    usePlayerPotion() {
+        if (this.isLocked || this.currentTurn !== 1) return;
+        if (this.potions <= 0) {
+            alert("Bạn đã hết Bình Máu! Hãy ghé cửa hàng để mua thêm.");
+            return;
+        }
+
+        this.potions--;
+        let healAmount = Math.floor(this.player.maxHp * 0.45);
+        this.player.hp = Math.min(this.player.maxHp, this.player.hp + healAmount);
+        this.sound.playTone(500, 0.15, 'sine');
+        this.logMessage(`🧪 ${this.player.name} dùng Bình Máu hồi phục ${healAmount} HP!`);
+        this.updateArenaHUD();
+        this.saveGameDataToStorage();
+    }
+
+    executeCombatTurn(attacker, defender, skill, callback) {
+        if (this.isLocked) return;
+        this.isLocked = true;
+
+        attacker.mp -= skill.mpCost;
+        if (attacker.isPlayer) {
+            attacker.isDefending = false;
+        }
+
+        let startX = attacker.x;
+        let targetX = defender.x + (attacker.isPlayer ? -32 : 32);
+        let totalFrames = 5;
+        let currentFrame = 0;
+
+        let forwardInterval = setInterval(() => {
+            currentFrame++;
+            let progress = currentFrame / totalFrames;
+            let currentOffset = (targetX - startX) * progress;
+
+            let off1 = attacker.isPlayer ? currentOffset : 0;
+            let off2 = !attacker.isPlayer ? currentOffset : 0;
+            this.renderer.renderScene(this.player, this.bot, off1, off2);
+
+            if (currentFrame >= totalFrames) {
+                clearInterval(forwardInterval);
+
+                let damage = attacker.calculateDamage(skill.mult, defender.isDefending);
+                defender.hp -= damage;
+                this.sound.playHit();
+                
+                let effectPayload = { type: skill.effect, onPlayer: !attacker.isPlayer };
+                this.renderer.renderScene(this.player, this.bot, attacker.isPlayer ? (targetX - startX) : 0, !attacker.isPlayer ? (targetX - startX) : 0, effectPayload);
+
+                this.logMessage(`${attacker.name} dùng [${skill.name}] gây ${damage} sát thương (${skill.effect.toUpperCase()})!`);
+                this.updateArenaHUD();
+
+                setTimeout(() => {
+                    let backFrame = 0;
+                    let backwardInterval = setInterval(() => {
+                        backFrame++;
+                        let backProgress = 1 - (backFrame / totalFrames);
+                        let backOffset = (targetX - startX) * backProgress;
+
+                        let bo1 = attacker.isPlayer ? backOffset : 0;
+                        let bo2 = !attacker.isPlayer ? backOffset : 0;
+                        this.renderer.renderScene(this.player, this.bot, bo1, bo2);
+
+                        if (backFrame >= totalFrames) {
+                            clearInterval(backwardInterval);
+                            this.renderer.renderScene(this.player, this.bot, 0, 0);
+                            this.isLocked = false;
+                            callback();
+                        }
+                    }, 28);
+                }, 220);
+            }
+        }, 28);
+    }
+
+    runBotTurn() {
+        if (this.bot.hp <= 0) return;
+
+        if (this.bot.mp < this.bot.maxMp) {
+            this.bot.mp = Math.min(this.bot.maxMp, this.bot.mp + 8);
+        }
+
+        let availableSkills = this.bot.skills.filter(s => s.mpCost <= this.bot.mp);
+        if (availableSkills.length === 0) availableSkills = [this.bot.skills[0]];
+
+        let selectedSkill = availableSkills[Math.floor(Math.random() * availableSkills.length)];
+        this.logMessage(`${this.bot.name} phản công mãnh liệt...`);
+
+        this.executeCombatTurn(this.bot, this.player, selectedSkill, () => {
+            if (this.player.hp <= 0) {
+                this.handleDefeat();
+                return;
+            }
+            this.currentTurn = 1;
+            this.buildActionButtons();
+        });
+    }
+
+    handleVictory() {
+        this.isLocked = true;
+        this.sound.playWin();
+        let rewardGold = 90 + (this.level * 35);
+        this.gold += rewardGold;
+        this.wins++;
+        this.level++;
+        this.saveGameDataToStorage();
+
+        this.logMessage(`🏆 CHIẾN THẮNG! Nhận ${rewardGold} Xu Vàng và thăng cấp lên Lv.${this.level}!`);
+        document.getElementById("turn-indicator-text").innerText = "CHIẾN THẮNG HUY HOÀNG!";
+        document.getElementById("arena-action-buttons").innerHTML = `
+            <button class="btn btn-green" style="grid-column: span 2;" onclick="GameEngine.saveAndLaunchArena()">TIẾP TỤC ĐẤU BOSS CẤP CAO</button>
+        `;
+    }
+
+    handleDefeat() {
+        this.isLocked = true;
+        this.sound.playLose();
+        this.logMessage(`💀 BẠN ĐÃ GỤC NGÃ TRƯỚC BOSS ĐẦY SỨC MẠNH!`);
+        document.getElementById("turn-indicator-text").innerText = "THẤT BẠI - HỆ THỐNG SẬP NGUỒN";
+        document.getElementById("arena-action-buttons").innerHTML = `
+            <button class="btn btn-danger" style="grid-column: span 2;" onclick="GameEngine.returnToCreator()">QUAY VỀ NÂNG CẤP VŨ KHÍ & TƯỚNG</button>
         `;
     }
 }
 
-function updateStatPoints() {
-    let s = parseInt(document.getElementById("stat-str").value) || 0;
-    let h = parseInt(document.getElementById("stat-hp").value) || 0;
-    let d = parseInt(document.getElementById("stat-spd").value) || 0;
-    let total = s + h + d;
-    let remain = 20 - total;
-    document.getElementById("stat-points").innerText = remain;
-}
-
-function saveAndStart() {
-    player1.name = document.getElementById("char-name").value || "HERO";
-    player1.str = parseInt(document.getElementById("stat-str").value) || 5;
-    let hpStat = parseInt(document.getElementById("stat-hp").value) || 5;
-    player1.maxHp = 70 + (hpStat * 12);
-    player1.hp = player1.maxHp;
-    player1.spd = parseInt(document.getElementById("stat-spd").value) || 5;
-
-    player1.skills = [];
-    let rawSkills = [];
-    for(let i=0; i<4; i++) {
-        let name = document.getElementById(`skill-name-${i}`).value || `SKILL${i+1}`;
-        let mult = parseFloat(document.getElementById(`skill-mult-${i}`).value) || 1.0;
-        player1.skills.push({name, mult});
-        rawSkills.push({name, mult});
-    }
-
-    // Gói dữ liệu lại và lưu vào bộ nhớ máy (LocalStorage)
-    let saveObject = {
-        name: player1.name,
-        str: player1.str,
-        hpStat: hpStat,
-        spd: player1.spd,
-        skills: rawSkills
-    };
-    localStorage.setItem("pixel_arena_hero", JSON.stringify(saveObject));
-
-    document.getElementById("p1-title").innerText = player1.name;
-    document.getElementById("creator-screen").classList.add("hidden");
-    document.getElementById("game-screen").classList.remove("hidden");
-
-    updateUI();
-    logMessage(`Đã tải nhân vật [${player1.name}] từ bộ nhớ máy thành công!`);
-    renderScene();
-    buildSkillButtons();
-}
-
-function logMessage(msg) {
-    const log = document.getElementById("battle-log");
-    log.innerHTML += `<div>> ${msg}</div>`;
-    log.scrollTop = log.scrollHeight;
-}
-
-function updateUI() {
-    document.getElementById("p1-hp-fill").style.width = Math.max(0, (player1.hp / player1.maxHp * 100)) + "%";
-    document.getElementById("p1-hp-text").innerText = `HP:${Math.max(0, player1.hp)}`;
-
-    document.getElementById("p2-hp-fill").style.width = Math.max(0, (player2.hp / player2.maxHp * 100)) + "%";
-    document.getElementById("p2-hp-text").innerText = `HP:${Math.max(0, player2.hp)}`;
-}
-
-const canvas = document.getElementById("arenaCanvas");
-const ctx = canvas.getContext("2d");
-
-function renderScene(offsetX1 = 0, offsetX2 = 0) {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    ctx.strokeStyle = "#1a0033";
-    ctx.lineWidth = 1;
-    for(let i=0; i<canvas.width; i+=20) {
-        ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, canvas.height); ctx.stroke();
-    }
-    for(let j=0; j<canvas.height; j+=20) {
-        ctx.beginPath(); ctx.moveTo(0, j); ctx.lineTo(canvas.width, j); ctx.stroke();
-    }
-
-    ctx.fillStyle = "#ff0055";
-    ctx.fillRect(0, canvas.height - 25, canvas.width, 25);
-
-    ctx.fillStyle = player1.color;
-    ctx.fillRect(player1.x + offsetX1 - 12, player1.y - 24, 24, 24);
-    ctx.fillStyle = "#ffff00";
-    ctx.fillRect(player1.x + offsetX1 - 6, player1.y - 20, 6, 6);
-    ctx.fillStyle = "#fff";
-    ctx.font = "8px 'Press Start 2P'";
-    ctx.fillText(player1.name, player1.x + offsetX1 - 30, player1.y - 32);
-
-    ctx.fillStyle = player2.color;
-    ctx.fillRect(player2.x + offsetX2 - 12, player2.y - 24, 24, 24);
-    ctx.fillStyle = "#00ffcc";
-    ctx.fillRect(player2.x + offsetX2, player2.y - 20, 6, 6);
-    ctx.fillStyle = "#fff";
-    ctx.fillText(player2.name, player2.x + offsetX2 - 35, player2.y - 32);
-}
-
-function buildSkillButtons() {
-    const container = document.getElementById("action-buttons");
-    container.innerHTML = "";
-    
-    if (currentTurn === 1) {
-        document.getElementById("turn-indicator").innerText = player1.name;
-        player1.skills.forEach((skill, idx) => {
-            let btn = document.createElement("button");
-            btn.className = "skill-btn";
-            btn.innerHTML = `${skill.name}<br><span style="color:#00ffcc">${skill.mult}x</span>`;
-            btn.onclick = () => executeTurn(player1, player2, skill, 25, () => {
-                if (player2.hp <= 0) {
-                    logMessage(`★ VICTORY! ${player1.name} WIN! ★`);
-                    container.innerHTML = `<button class="btn" onclick="resetToCreator()">ĐẤU LẠI</button>`;
-                    return;
-                }
-                currentTurn = 2;
-                setTimeout(botTurn, 700);
-            });
-            container.appendChild(btn);
-        });
-    } else {
-        document.getElementById("turn-indicator").innerText = player2.name;
-    }
-}
-
-function executeTurn(attacker, defender, skill, moveOffset, callback) {
-    if (isAnimating) return;
-    isAnimating = true;
-    document.getElementById("action-buttons").innerHTML = "";
-
-    let startX = attacker.x;
-    let targetX = defender.x + (attacker === player1 ? -25 : 25);
-    let step = 0;
-    
-    let anim = setInterval(() => {
-        step++;
-        let currentOff = (targetX - startX) * (step / 4);
-        let off1 = attacker === player1 ? currentOff : 0;
-        let off2 = attacker === player2 ? currentOff : 0;
-        renderScene(off1, off2);
-
-        if (step >= 4) {
-            clearInterval(anim);
-            let dmg = Math.floor(attacker.str * 2.5 * skill.mult + Math.random() * 4);
-            defender.hp -= dmg;
-            logMessage(`${attacker.name} DÙNG [${skill.name}] GÂY ${dmg} DMG!`);
-            updateUI();
-
-            setTimeout(() => {
-                let backStep = 0;
-                let backAnim = setInterval(() => {
-                    backStep++;
-                    let backOff = (targetX - startX) * (1 - backStep / 4);
-                    let bo1 = attacker === player1 ? backOff : 0;
-                    let bo2 = attacker === player2 ? backOff : 0;
-                    renderScene(bo1, bo2);
-                    if (backStep >= 4) {
-                        clearInterval(backAnim);
-                        renderScene(0, 0);
-                        isAnimating = false;
-                        callback();
-                    }
-                }, 30);
-            }, 250);
-        }
-    }, 30);
-}
-
-function botTurn() {
-    if (player2.hp <= 0) return;
-    let randomSkill = player2.skills[Math.floor(Math.random() * player2.skills.length)];
-    logMessage(`${player2.name} PHẢN CÔNG...`);
-
-    executeTurn(player2, player1, randomSkill, -25, () => {
-        if (player1.hp <= 0) {
-            logMessage(`💀 GAME OVER! ${player2.name} ĐÃ THẮNG!`);
-            document.getElementById("action-buttons").innerHTML = `<button class="btn" onclick="resetToCreator()">THỬ LẠI</button>`;
-            return;
-        }
-        currentTurn = 1;
-        buildSkillButtons();
-    });
-}
-
-function resetToCreator() {
-    player1.hp = player1.maxHp;
-    player2.hp = player2.maxHp;
-    currentTurn = 1;
-    document.getElementById("game-screen").classList.add("hidden");
-    document.getElementById("creator-screen").classList.remove("hidden");
-    loadSavedData(); // Tải lại thông tin đã lưu lên màn hình tạo
-}
-
-// Chạy tải dữ liệu khi vừa mở trang
-window.onload = loadSavedData;
+let GameEngine = null;
+window.addEventListener("DOMContentLoaded", () => {
+    GameEngine = new GameController();
+});
 </script>
 
 </body>
 </html>
-
