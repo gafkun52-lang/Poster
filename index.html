@@ -1,33 +1,28 @@
-// ==========================================
-// 🚀 NEURAL EXPRESSIVE UI - GLOBAL CONFIG
-// ==========================================
+import os
+from google import genai
+from google.genai import types
 
-export interface AppConfig {
-  readonly environment: 'development' | 'staging' | 'production';
-  readonly version: string;
-  readonly theme: {
-    readonly primaryColor: string;
-    readonly hapticFeedback: boolean;
-    readonly animationDuration: number;
-  };
-  readonly features: Record<string, boolean>;
-}
+# 1. Khởi tạo client (Tự động lấy API key từ biến môi trường GEMINI_API_KEY)
+client = genai.Client()
 
-export const GLOBAL_CONFIG: AppConfig = {
-  environment: 'production',
-  version: '3.5.0-lite',
-  
-  theme: {
-    primaryColor: '#6366F1', // Indigo Vibrant
-    hapticFeedback: true,
-    animationDuration: 300,  // ms
-  },
+# 2. Cấu hình nội dung cuộc trò chuyện
+prompt = "Chào Gemini! Hãy giới thiệu ngắn gọn về bản thân bạn bằng một câu thật ấn tượng."
 
-  features: {
-    neuralExpressiveUI: true,
-    advancedAnalytics: false,
-    realtimeSync: true,
-    aiStorybookGenerator: true,
-  },
-} as const;
-getElementById
+print(f"🤖 Đang gửi yêu cầu: '{prompt}'\n")
+
+# 3. Gọi model Gemini 2.5 Flash (hoặc model phù hợp)
+response = client.models.generate_content(
+    model="gemini-2.5-flash",
+    contents=prompt,
+    config=types.GenerateContentConfig(
+        temperature=0.7,  # Độ sáng tạo (0.0 - 2.0)
+        max_output_tokens=150,  # Giới hạn độ dài phản hồi
+    ),
+)
+
+# 4. Hiển thị kết quả
+print("✨ Phản hồi từ Gemini:")
+print("-" * 40)
+print(response.text)
+print("-" * 40)
+
